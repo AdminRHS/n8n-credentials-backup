@@ -1,0 +1,18 @@
+{
+  "createdAt": "2025-04-17T15:44:00.449Z",
+  "updatedAt": "2025-04-17T15:44:00.449Z",
+  "id": "mLl9tPgnQQy9XlLl",
+  "name": "credentials backup",
+  "active": false,
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "223bfd73-c8c1-40d0-acba-a25bbe9c36f3",
+  "triggerCount": 0,
+  "tags": []
+}
