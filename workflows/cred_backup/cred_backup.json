@@ -1,0 +1,414 @@
+{
+  "createdAt": "2025-04-18T22:14:26.013Z",
+  "updatedAt": "2025-04-18T23:17:04.000Z",
+  "id": "hG4KyDjwfOFGYTKB",
+  "name": "cred backup",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "command": "git -C repo3 config user.name \"AdminRHS\" && git -C repo3 config user.email \"admin@rh-s.com\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        980,
+        100
+      ],
+      "id": "65acbd34-311a-47f9-95f7-16bfd8fc0ba2",
+      "name": "git config"
+    },
+    {
+      "parameters": {
+        "command": "git -C repo3 remote set-url origin \"https://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@github.com/AdminRHS/n8n-credentials-backup.git\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        100
+      ],
+      "id": "0556186c-b724-4251-833c-32c0c4ac61a3",
+      "name": "set-url"
+    },
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "hour": 0
+            },
+            {
+              "hour": 12
+            },
+            {
+              "hour": 6
+            },
+            {
+              "hour": 18
+            }
+          ]
+        }
+      },
+      "name": "Cron1",
+      "type": "n8n-nodes-base.cron",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "6fe8c945-6bde-4e21-86e0-84b7424ad52d"
+    },
+    {
+      "parameters": {},
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        0,
+        200
+      ],
+      "typeVersion": 1,
+      "id": "ce7f9d13-3f38-438e-86a5-12e54d2887cd"
+    },
+    {
+      "parameters": {
+        "command": "rm -rf repo repo2 repo3"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        220,
+        100
+      ],
+      "id": "dc5d3d19-29f5-4743-b620-92d52d040fed",
+      "name": "delete repo-s"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        380,
+        100
+      ],
+      "id": "336fdd6c-9f27-4775-8d7a-f46d89b535d6",
+      "name": "Wait",
+      "webhookId": "55984cc8-5049-46b1-bdb8-24440f54f9e8"
+    },
+    {
+      "parameters": {
+        "command": "mkdir -p repo3"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        520,
+        100
+      ],
+      "id": "073f4bdb-50ed-4c03-aaf7-04fb4174155f",
+      "name": "create repo"
+    },
+    {
+      "parameters": {
+        "command": "git clone https://github.com/AdminRHS/n8n-credentials-backup.git repo3"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        660,
+        100
+      ],
+      "id": "beaf9909-bede-4782-b8a3-28a7b8cd7a6e",
+      "name": "git clone node"
+    },
+    {
+      "parameters": {
+        "command": "cd repo3 && git branch -M main"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        820,
+        100
+      ],
+      "id": "24db0500-2fa5-4e5f-a9fc-f4978f79f43f",
+      "name": "git branch"
+    },
+    {
+      "parameters": {
+        "command": "npx n8n export:workflow --backup --output repo3/workflows/"
+      },
+      "name": "Export Workflows",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [
+        1280,
+        100
+      ],
+      "typeVersion": 1,
+      "id": "502b603a-ffef-43a2-af07-4c21b2aeb42c"
+    },
+    {
+      "parameters": {
+        "command": "npx n8n export:credentials --backup --output repo3/credentials/"
+      },
+      "name": "Export Credentials",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [
+        1440,
+        100
+      ],
+      "typeVersion": 1,
+      "id": "4501c84f-34b0-4958-8246-1a740fe7494c"
+    },
+    {
+      "parameters": {
+        "command": "git -C repo3 add ."
+      },
+      "name": "git add",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [
+        2020,
+        100
+      ],
+      "typeVersion": 1,
+      "id": "43918d2d-06c3-4679-9ae2-cce782156d0b"
+    },
+    {
+      "parameters": {
+        "command": "=git -C repo3 commit -m \"Auto backup ({{ new Date().toISOString() }})\""
+      },
+      "name": "git commit",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [
+        2180,
+        100
+      ],
+      "typeVersion": 1,
+      "id": "31f0cbbf-acf8-4ec5-8a56-75ca73d40e70"
+    },
+    {
+      "parameters": {
+        "command": "git -C repo3 push"
+      },
+      "name": "git push",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [
+        2340,
+        100
+      ],
+      "typeVersion": 1,
+      "id": "fc19ef3e-408b-4658-8732-de6141c4845f"
+    },
+    {
+      "parameters": {
+        "command": "cd repo3/workflows && for f in *.json; do name=$(jq -r '.name' \"$f\" | tr ' ' '_' | tr -cd '[:alnum:]_-'); mkdir -p \"$name\"; mv \"$f\" \"$name/${name}.json\"; done\n"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        100
+      ],
+      "id": "d06786c8-4ac4-4056-a898-c49da7af490a",
+      "name": "set names instead of workflows IDs"
+    },
+    {
+      "parameters": {
+        "command": "cd repo3/credentials && for f in *.json; do name=$(jq -r '.name' \"$f\" | tr ' ' '_' | tr -cd '[:alnum:]_-'); mv \"$f\" \"${name}.json\"; done\n"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        100
+      ],
+      "id": "5ccea059-8bf9-42a7-b66c-cc92bd9cd551",
+      "name": "set names instead of credentials IDs"
+    }
+  ],
+  "connections": {
+    "git config": {
+      "main": [
+        [
+          {
+            "node": "set-url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set-url": {
+      "main": [
+        [
+          {
+            "node": "Export Workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cron1": {
+      "main": [
+        [
+          {
+            "node": "delete repo-s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "delete repo-s",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete repo-s": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "create repo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create repo": {
+      "main": [
+        [
+          {
+            "node": "git clone node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "git clone node": {
+      "main": [
+        [
+          {
+            "node": "git branch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "git branch": {
+      "main": [
+        [
+          {
+            "node": "git config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Export Workflows": {
+      "main": [
+        [
+          {
+            "node": "Export Credentials",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Export Credentials": {
+      "main": [
+        [
+          {
+            "node": "set names instead of credentials IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "git add": {
+      "main": [
+        [
+          {
+            "node": "git commit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "git commit": {
+      "main": [
+        [
+          {
+            "node": "git push",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set names instead of workflows IDs": {
+      "main": [
+        [
+          {
+            "node": "git add",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "set names instead of credentials IDs": {
+      "main": [
+        [
+          {
+            "node": "set names instead of workflows IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "83f8a665-9b2a-4d65-a345-78b0ee7f36ce",
+  "triggerCount": 0,
+  "tags": [
+    {
+      "createdAt": "2025-04-14T06:20:08.111Z",
+      "updatedAt": "2025-04-14T06:20:08.111Z",
+      "id": "V564abE1n9H9aucn",
+      "name": "Backup"
+    }
+  ]
+}
