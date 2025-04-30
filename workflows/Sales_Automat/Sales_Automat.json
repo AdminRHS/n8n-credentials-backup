@@ -1,9 +1,9 @@
 {
   "createdAt": "2025-04-09T11:11:33.733Z",
-  "updatedAt": "2025-04-18T06:56:10.000Z",
+  "updatedAt": "2025-04-30T11:40:22.000Z",
   "id": "pQNEGi3yfeUhmfcn",
   "name": "Sales Automat",
-  "active": false,
+  "active": true,
   "nodes": [
     {
       "parameters": {
@@ -3621,7 +3621,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4580,
+        4740,
         1820
       ],
       "id": "29a98b0d-7749-470e-9d30-41ff86e146fd",
@@ -3649,7 +3649,7 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        4820,
+        5060,
         1820
       ],
       "id": "9a044c7e-677d-4234-b4dd-fb4108bd6b00",
@@ -3668,7 +3668,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5080,
+        5300,
         1820
       ],
       "id": "0a3c9881-fc6d-4f6d-b1db-5d11398e5ef1",
@@ -3684,7 +3684,7 @@
       "type": "n8n-nodes-base.googleDocs",
       "typeVersion": 1,
       "position": [
-        5380,
+        5600,
         1820
       ],
       "id": "8df4c1f9-2725-4175-bd22-1a5d187f713e",
@@ -3703,7 +3703,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5660,
+        5860,
         1820
       ],
       "id": "1dd3e742-1c18-4e51-9578-4025836d269f"
@@ -3729,7 +3729,7 @@
       "type": "n8n-nodes-base.discord",
       "typeVersion": 2,
       "position": [
-        5960,
+        6140,
         1820
       ],
       "id": "3877fada-235f-4341-8ca7-460460c361a0",
@@ -3737,8 +3737,8 @@
       "webhookId": "0dd4c953-a86e-41eb-9258-01d9a011e87a",
       "credentials": {
         "discordBotApi": {
-          "id": "ATASGOhmkeLExW1R",
-          "name": "Discord Bot account"
+          "id": "oEHKlFa6ZgVOyl6U",
+          "name": "DD discord Report bot"
         }
       }
     },
@@ -3747,8 +3747,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3,
       "position": [
-        4360,
-        1820
+        4380,
+        1800
       ],
       "id": "c2df71da-33da-4f9f-9200-4c6b1ad7c5cf",
       "name": "Merge LLMs of LG call"
@@ -4174,24 +4174,12 @@
     },
     "Follow Up. Extract Calendar Data": {
       "main": [
-        [
-          {
-            "node": "Follow Up Sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Interview": {
       "main": [
-        [
-          {
-            "node": "Interview Sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Interview Sheet": {
@@ -4262,13 +4250,7 @@
     },
     "Intro call": {
       "main": [
-        [
-          {
-            "node": "Intro call Sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Intro call Sheet": {
@@ -4432,13 +4414,7 @@
     },
     "Intorductory call": {
       "main": [
-        [
-          {
-            "node": "Intorductory Sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "Intorductory Sheet": {
@@ -4498,13 +4474,7 @@
     },
     "Kick off call": {
       "main": [
-        [
-          {
-            "node": "Kick off Sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "OpenRouter Chat Model8": {
@@ -4863,13 +4833,17 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
+  "staticData": {
+    "node:1 Hour Trigger": {
+      "recurrenceRules": []
+    }
+  },
   "meta": {
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "4f3f2d90-d366-40e8-acf0-59cf642d4bfb",
-  "triggerCount": 0,
+  "versionId": "56670e91-15bf-44b7-9586-cfd439171264",
+  "triggerCount": 1,
   "tags": [
     {
       "createdAt": "2025-03-17T12:52:07.245Z",

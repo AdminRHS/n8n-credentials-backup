@@ -1,21 +1,20 @@
 {
   "createdAt": "2025-04-15T12:50:40.326Z",
-  "updatedAt": "2025-04-18T06:44:14.000Z",
+  "updatedAt": "2025-04-30T11:04:59.000Z",
   "id": "llHyu5eJMTWgwI4S",
   "name": "Sales automat part 2",
-  "active": false,
+  "active": true,
   "nodes": [
     {
       "parameters": {
         "operation": "getAll",
         "calendar": {
           "__rl": true,
-          "value": "sales@rh-s.com",
+          "value": "lg@rh-s.com",
           "mode": "list",
-          "cachedResultName": "sales@rh-s.com"
+          "cachedResultName": "lg@rh-s.com"
         },
-        "timeMin": "={{ $now.plus( {hours: 1, minutes: 30})  }}",
-        "timeMax": "={{ $now }}",
+        "timeMax": "={{ $now.plus({ hours: 1 }) }}",
         "options": {}
       },
       "type": "n8n-nodes-base.googleCalendar",
@@ -26,6 +25,7 @@
       ],
       "id": "a56e7893-cbc7-4c4e-8676-c92ff13c3645",
       "name": "Google Calendar2",
+      "alwaysOutputData": false,
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "dCmWpdsYiSYHC7XA",
@@ -38,8 +38,7 @@
         "rule": {
           "interval": [
             {
-              "field": "hours",
-              "triggerAtMinute": 30
+              "field": "hours"
             }
           ]
         }
@@ -249,8 +248,8 @@
           "conditions": [
             {
               "id": "e699edf6-00f3-4023-a233-525130f62ff6",
-              "leftValue": "{{ $json.summary }}",
-              "rightValue": "Remote Helpers",
+              "leftValue": "={{ $json.summary }}",
+              "rightValue": "- Remote Helpers",
               "operator": {
                 "type": "string",
                 "operation": "contains"
@@ -285,7 +284,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Получаем HTML-текст из предыдущей ноды\nlet description = $input.first().json.description;\n\n// Массив для хранения результатов с URL и датой\nlet records = [];\n\n// Обновлённое регулярное выражение, которое ищет блок \"Company website:\" и затем либо тег <a href=\"...\">, либо прямую ссылку (http/https)\nconst regex = /<b>\\s*Company website:\\s*<\\/b>\\s*(?:<a\\s+href=\"([^\"]+)\"|((?:https?:\\/\\/)[^\\s<]+))/gi;\n\n// Регулярное выражение для поиска даты в формате \"YYYY-MM-DD\"\n// Если у вас формат даты другой, замените регулярное выражение на подходящий\nconst dateRegex = /(\\d{4}-\\d{2}-\\d{2})/;\n\nlet match;\nwhile ((match = regex.exec(description)) !== null) {\n  // Если группа 1 существует, значит ссылка взята из тега <a>, иначе из группы 2 — из plain-текста\n  let href = match[1] || match[2];\n  let outputUrl = href;\n  \n  // Если ссылка проходит через редирект Google, извлекаем значение параметра q\n  const googleRegex = /https:\\/\\/www\\.google\\.com\\/url\\?q=([^&]+)/i;\n  const googleMatch = href.match(googleRegex);\n  if (googleMatch) {\n    outputUrl = googleMatch[1];\n  }\n  \n  // Извлекаем дату из текста, прилегающего к найденному блоку.\n  // Здесь берём 200 символов начиная с позиции совпадения.\n  let context = description.slice(match.index, match.index + 200);\n  let dateMatch = dateRegex.exec(context);\n  let dateObj = dateMatch ? new Date(dateMatch[1]) : null;\n  \n  // Добавляем объект с URL и датой в массив результатов\n  records.push({ url: outputUrl, date: dateObj });\n}\n\n// Если записей не найдено, возвращаем объект с сообщением (чтобы всегда возвращались данные)\nif (records.length === 0) {\n  return [ { json: { message: \"No matching records found\" } } ];\n}\n\nlet now = new Date();\n\n// Фильтруем записи, у которых есть корректная дата\nlet recordsWithDate = records.filter(r => r.date !== null);\n\n// Если ни у одной записи нет даты, возвращаем первую найденную запись\nif (recordsWithDate.length === 0) {\n  return [ { json: records[0] } ];\n}\n\n// Находим запись, дата которой по абсолютной разнице с текущей датой минимальна\nlet closestRecord = recordsWithDate.reduce((prev, curr) => {\n  let prevDiff = Math.abs(now - prev.date);\n  let currDiff = Math.abs(now - curr.date);\n  return currDiff < prevDiff ? curr : prev;\n});\n\n// Возвращаем результат, обернутый в объект json\nreturn [ { json: closestRecord } ];\n"
+        "jsCode": "// Получаем HTML-текст из предыдущей ноды\nlet description = $input.first().json.description;\n\n// Массив для хранения результатов с URL и датой\nlet records = [];\n\n// Расширённое регулярное выражение, которое ищет блок \"Company website:\"\n//   — либо <a href=\"...\">,\n//   — либо ссылку с http/https,\n//   — либо ссылку без протокола (www.example.com или example.com)\nconst regex = /(?:<b>\\s*)?Company website:\\s*(?:<\\/b>)?\\s*(?:<a\\s+href=\"([^\"]+)\"|((?:https?:\\/\\/)?(?:www\\.)?[^\\s<]+\\.[^\\s<]+))/gi;\n\n// Регулярное выражение для поиска даты в формате \"YYYY-MM-DD\"\nconst dateRegex = /(\\d{4}-\\d{2}-\\d{2})/;\n\nlet match;\nwhile ((match = regex.exec(description)) !== null) {\n  // Ссылка из группы 1 (тег <a>) или из группы 2 (plain-text)\n  let href = match[1] || match[2];\n\n  // Если без протокола, добавляем https://\n  if (!/^https?:\\/\\//i.test(href)) {\n    href = 'https://' + href;\n  }\n\n  // Если ссылка — Google redirect, извлекаем параметр q\n  const googleMatch = href.match(/https:\\/\\/www\\.google\\.com\\/url\\?q=([^&]+)/i);\n  let outputUrl = googleMatch ? googleMatch[1] : href;\n\n  // Извлекаем дату в контексте\n  let context = description.slice(match.index, match.index + 200);\n  let dateMatch = dateRegex.exec(context);\n  let dateObj = dateMatch ? new Date(dateMatch[1]) : null;\n\n  records.push({ url: outputUrl, date: dateObj });\n}\n\n// Если ничего не найдено\nif (records.length === 0) {\n  return [ { json: { message: \"No matching records found\" } } ];\n}\n\nlet now = new Date();\nlet withDate = records.filter(r => r.date);\nif (withDate.length === 0) {\n  return [ { json: records[0] } ];\n}\n\n// Находим запись с датой, ближайшей к текущей\nlet closest = withDate.reduce((prev, curr) => {\n  return (Math.abs(now - curr.date) < Math.abs(now - prev.date)) ? curr : prev;\n});\n\nreturn [ { json: closest } ];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -348,7 +347,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Получаем текст из входящего JSON\nconst text = $input.first().json.joinedText;\n\n// Регулярное выражение для извлечения названия компании\nconst regex = /^\\*\\*company name\\*\\*: ([^\\n]+)\\n/;\nconst match = text.match(regex);\nconst companyName = match ? match[1].trim() : \"\";\n\n// Возвращаем объект с двумя полями: название компании и полный текст\nreturn { json: { companyName, fullText: text } };\n"
+        "jsCode": "// Получаем текст из входящего JSON\nconst text = $input.first().json.joinedText;\n\n// Регулярное выражение для извлечения названия компании\nconst regex = /^\\*\\*(?:company[ _]name)\\*\\*:\\s*([^\\r\\n]+)/im;\n\nconst match = text.match(regex);\nconst companyName = match ? match[1].trim() : \"\";\n\n// Возвращаем объект с двумя полями: название компании и полный текст\nreturn { json: { companyName, fullText: text } };\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -408,7 +407,7 @@
     },
     {
       "parameters": {
-        "jsCode": "for (const item of $input.all()) {\n  // Получаем контент из входящих данных\n  const content = item.json.content || \"\";\n  \n  // Используем регулярное выражение для поиска текста после \"**company name**:\"\n  // - \\*\\*company name\\*\\* ищет буквальное \"**company name**:\" (без учёта регистра благодаря флагу i)\n  // - \\s* — допускает наличие пробелов после двоеточия\n  // - ([^\\n]+) — захватывает все символы до первого переноса строки, то есть само название компании\n  const match = content.match(/\\*\\*company name\\*\\*:\\s*([^\\n]+)/i);\n  const companyName = match ? match[1].trim() : \"Not found\";\n  \n  // Превращаем documentId в ссылку на Google Документ\n  const docId = item.json.documentId || \"\";\n  const googleDocLink = docId ? `https://docs.google.com/document/d/${docId}` : \"\";\n  \n  // Формируем поля для вывода:\n  // - companyName: извлечённое название компании\n  // - fullText: исходный текст\n  // - googleDocLink: полноценная ссылка на Google Документ\n  item.json.companyName = companyName;\n  item.json.fullText = content;\n  item.json.googleDocLink = googleDocLink;\n}\n\nreturn $input.all();\n"
+        "jsCode": "for (const item of $input.all()) {\n  // Получаем контент из входящих данных\n  const content = item.json.content || \"\";\n  \n  // Используем регулярное выражение для поиска текста после \"**company name**:\"\n  // - \\*\\*company name\\*\\* ищет буквальное \"**company name**:\" (без учёта регистра благодаря флагу i)\n  // - \\s* — допускает наличие пробелов после двоеточия\n  // - ([^\\n]+) — захватывает все символы до первого переноса строки, то есть само название компании\n  const match = content.match(/^\\*\\*(?:company[ _]name)\\*\\*:\\s*([^\\r\\n]+)/im);\n  const companyName = match ? match[1].trim() : \"Not found\";\n  \n  // Превращаем documentId в ссылку на Google Документ\n  const docId = item.json.documentId || \"\";\n  const googleDocLink = docId ? `https://docs.google.com/document/d/${docId}` : \"\";\n  \n  // Формируем поля для вывода:\n  // - companyName: извлечённое название компании\n  // - fullText: исходный текст\n  // - googleDocLink: полноценная ссылка на Google Документ\n  item.json.companyName = companyName;\n  item.json.fullText = content;\n  item.json.googleDocLink = googleDocLink;\n}\n\nreturn $input.all();\n"
       },
       "name": "Extracts company name and link",
       "type": "n8n-nodes-base.code",
@@ -448,8 +447,8 @@
       "webhookId": "0dd4c953-a86e-41eb-9258-01d9a011e87a",
       "credentials": {
         "discordBotApi": {
-          "id": "ATASGOhmkeLExW1R",
-          "name": "Discord Bot account"
+          "id": "oEHKlFa6ZgVOyl6U",
+          "name": "DD discord Report bot"
         }
       }
     },
@@ -571,7 +570,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Loop over input items\nfor (const item of $input.all()) {\n  // Достаём documentId и формируем полную ссылку\n  const docId = item.json.documentId;\n  const googleDocLink = `https://docs.google.com/document/d/${docId}`;\n\n  // Достаём content и ищем в нём Company Name\n  const content = item.json.content || '';\n  // С помощью RegExp ищем строку: \"Company Name: ....\"\n  const companyNameMatch = content.match(/Company name: \\s*(.*)/i);\n  const companyName = companyNameMatch ? companyNameMatch[1].trim() : 'Not found';\n\n  // Добавляем новые поля к исходным данным\n  item.json.googleDocLink = googleDocLink;\n  item.json.companyName = companyName;\n}\n\nreturn $input.all();\n"
+        "jsCode": "// Loop over input items\nfor (const item of $input.all()) {\n  // Достаём documentId и формируем полную ссылку\n  const docId = item.json.documentId;\n  const googleDocLink = `https://docs.google.com/document/d/${docId}`;\n\n  // Достаём content и ищем в нём Company Name\n  const content = item.json.content || '';\n  // С помощью RegExp ищем строку: \"Company Name: ....\"\n  const companyNameMatch = content.match(/^(?:\\*\\*)?\\s*company[ _]name\\s*(?:\\*\\*)?\\s*:\\s*([^\\r\\n]+)/im);\n\n  const companyName = companyNameMatch ? companyNameMatch[1].trim() : 'Not found';\n\n  // Добавляем новые поля к исходным данным\n  item.json.googleDocLink = googleDocLink;\n  item.json.companyName = companyName;\n}\n\nreturn $input.all();\n"
       },
       "name": "Adds link and company name",
       "type": "n8n-nodes-base.code",
@@ -611,8 +610,8 @@
       "webhookId": "0dd4c953-a86e-41eb-9258-01d9a011e87a",
       "credentials": {
         "discordBotApi": {
-          "id": "ATASGOhmkeLExW1R",
-          "name": "Discord Bot account"
+          "id": "oEHKlFa6ZgVOyl6U",
+          "name": "DD discord Report bot"
         }
       }
     }
@@ -854,13 +853,19 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger1": {
+      "recurrenceRules": [
+        6
+      ]
+    }
+  },
   "meta": {
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "3dc6f804-ced3-47ad-997c-2ad7fe723b13",
-  "triggerCount": 0,
+  "versionId": "32c0ffe3-4501-42cd-b735-80bdf9856276",
+  "triggerCount": 1,
   "tags": [
     {
       "createdAt": "2025-03-17T12:52:07.245Z",

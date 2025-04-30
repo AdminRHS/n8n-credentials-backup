@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-04-18T22:14:26.013Z",
-  "updatedAt": "2025-04-18T23:17:04.000Z",
+  "updatedAt": "2025-04-30T21:22:50.000Z",
   "id": "hG4KyDjwfOFGYTKB",
   "name": "cred backup",
   "active": false,
@@ -12,7 +12,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        980,
+        1060,
         100
       ],
       "id": "65acbd34-311a-47f9-95f7-16bfd8fc0ba2",
@@ -20,12 +20,12 @@
     },
     {
       "parameters": {
-        "command": "git -C repo3 remote set-url origin \"https://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@github.com/AdminRHS/n8n-credentials-backup.git\""
+        "command": "git -C repo3 remote set-url origin \"https://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@github.com/AdminRHS/n8n-credentials-backup.git\""
       },
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        1120,
+        1200,
         100
       ],
       "id": "0556186c-b724-4251-833c-32c0c4ac61a3",
@@ -130,37 +130,11 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        820,
+        900,
         100
       ],
       "id": "24db0500-2fa5-4e5f-a9fc-f4978f79f43f",
       "name": "git branch"
-    },
-    {
-      "parameters": {
-        "command": "npx n8n export:workflow --backup --output repo3/workflows/"
-      },
-      "name": "Export Workflows",
-      "type": "n8n-nodes-base.executeCommand",
-      "position": [
-        1280,
-        100
-      ],
-      "typeVersion": 1,
-      "id": "502b603a-ffef-43a2-af07-4c21b2aeb42c"
-    },
-    {
-      "parameters": {
-        "command": "npx n8n export:credentials --backup --output repo3/credentials/"
-      },
-      "name": "Export Credentials",
-      "type": "n8n-nodes-base.executeCommand",
-      "position": [
-        1440,
-        100
-      ],
-      "typeVersion": 1,
-      "id": "4501c84f-34b0-4958-8246-1a740fe7494c"
     },
     {
       "parameters": {
@@ -169,7 +143,7 @@
       "name": "git add",
       "type": "n8n-nodes-base.executeCommand",
       "position": [
-        2020,
+        2240,
         100
       ],
       "typeVersion": 1,
@@ -177,12 +151,12 @@
     },
     {
       "parameters": {
-        "command": "=git -C repo3 commit -m \"Auto backup ({{ new Date().toISOString() }})\""
+        "command": "=git -C repo3 commit -m \"Auto backup $(date -u +'%Y-%m-%dT%H:%M:%SZ')\""
       },
       "name": "git commit",
       "type": "n8n-nodes-base.executeCommand",
       "position": [
-        2180,
+        2400,
         100
       ],
       "typeVersion": 1,
@@ -195,7 +169,7 @@
       "name": "git push",
       "type": "n8n-nodes-base.executeCommand",
       "position": [
-        2340,
+        2560,
         100
       ],
       "typeVersion": 1,
@@ -208,7 +182,7 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        1840,
+        2040,
         100
       ],
       "id": "d06786c8-4ac4-4056-a898-c49da7af490a",
@@ -221,11 +195,37 @@
       "type": "n8n-nodes-base.executeCommand",
       "typeVersion": 1,
       "position": [
-        1640,
+        1840,
         100
       ],
       "id": "5ccea059-8bf9-42a7-b66c-cc92bd9cd551",
       "name": "set names instead of credentials IDs"
+    },
+    {
+      "parameters": {
+        "command": "npx n8n export:workflow --backup --output \"repo3/workflows/\"\nnpx n8n export:credentials --backup --output \"repo3/credentials/\""
+      },
+      "name": "export workflows and credentials",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        100
+      ],
+      "id": "06ce9b06-9381-4c4f-b9d2-5fc3a164ab65"
+    },
+    {
+      "parameters": {
+        "command": "git -C repo3 rm -rf ."
+      },
+      "name": "clean repo",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [
+        1620,
+        100
+      ],
+      "typeVersion": 1,
+      "id": "8cfc1eb1-3689-4770-b51e-90dde3f2073d"
     }
   ],
   "connections": {
@@ -244,7 +244,7 @@
       "main": [
         [
           {
-            "node": "Export Workflows",
+            "node": "export workflows and credentials",
             "type": "main",
             "index": 0
           }
@@ -328,28 +328,6 @@
         ]
       ]
     },
-    "Export Workflows": {
-      "main": [
-        [
-          {
-            "node": "Export Credentials",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Export Credentials": {
-      "main": [
-        [
-          {
-            "node": "set names instead of credentials IDs",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "git add": {
       "main": [
         [
@@ -393,6 +371,28 @@
           }
         ]
       ]
+    },
+    "export workflows and credentials": {
+      "main": [
+        [
+          {
+            "node": "clean repo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "clean repo": {
+      "main": [
+        [
+          {
+            "node": "set names instead of credentials IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -401,7 +401,7 @@
   "staticData": null,
   "meta": null,
   "pinData": {},
-  "versionId": "83f8a665-9b2a-4d65-a345-78b0ee7f36ce",
+  "versionId": "9978e928-50e3-4d83-8962-7e619310b356",
   "triggerCount": 0,
   "tags": [
     {

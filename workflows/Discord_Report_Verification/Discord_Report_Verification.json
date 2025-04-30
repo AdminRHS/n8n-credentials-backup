@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-03-19T08:22:46.925Z",
-  "updatedAt": "2025-04-16T13:07:32.000Z",
+  "updatedAt": "2025-04-30T08:44:01.000Z",
   "id": "8V6KaPGZEhdTUccO",
   "name": "Discord Report Verification",
   "active": true,
@@ -314,8 +314,8 @@
       "webhookId": "15cedc03-0e12-43a0-9732-33260de960c1",
       "credentials": {
         "discordBotApi": {
-          "id": "ATASGOhmkeLExW1R",
-          "name": "Discord Bot account"
+          "id": "oEHKlFa6ZgVOyl6U",
+          "name": "DD discord Report bot"
         }
       },
       "onError": "continueRegularOutput"
@@ -350,8 +350,8 @@
       "webhookId": "223801da-9451-4237-b55c-85df150c6492",
       "credentials": {
         "discordBotApi": {
-          "id": "ATASGOhmkeLExW1R",
-          "name": "Discord Bot account"
+          "id": "oEHKlFa6ZgVOyl6U",
+          "name": "DD discord Report bot"
         }
       },
       "onError": "continueRegularOutput"
@@ -2019,7 +2019,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "379c71cf-afa9-4084-a101-f8fa95fda9f0",
+  "versionId": "d2610965-0042-4e15-9eb7-2abde99996e1",
   "triggerCount": 1,
   "tags": [
     {
