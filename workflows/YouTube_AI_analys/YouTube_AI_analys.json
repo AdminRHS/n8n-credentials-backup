@@ -1,0 +1,924 @@
+{
+  "createdAt": "2025-05-01T14:25:34.686Z",
+  "updatedAt": "2025-05-02T14:23:36.000Z",
+  "id": "4knuqjqMJ0PLaqoY",
+  "name": "YouTube AI analys",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "542dc144-25f4-47a2-9087-b1cfac13077e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UUPjNBjflYl0-HQtUvOx0Ibw",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        -500
+      ],
+      "id": "1a068f33-e325-47d8-8f29-c6dc7793defc",
+      "name": "Greg Isenberg",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UUbo-KbSjJDG6JWQ_MTZ_rNA",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        -300
+      ],
+      "id": "900640c4-c00f-49f5-8cd7-9d3829aac422",
+      "name": "Nick Saraev",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UU08Fah8EIryeOZRkjBRohcQ",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        -120
+      ],
+      "id": "40ca1cbc-5aef-48d0-aea3-089d799f6825",
+      "name": "Creator Magic",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UUMwVTLZIRRUyyVrkjDpn4pA",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        120
+      ],
+      "id": "3d5d3f74-d3e1-4b12-a8d6-3696dbbdfa84",
+      "name": "Cole Medin",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UUI4xxi0p97BghIqgEPYx6sw",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        320
+      ],
+      "id": "4d90034a-3366-42fd-8209-6bba486affdf",
+      "name": "Your AI Workflow",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UUc-FovAyBAQDw2Y7PQ_v0Zw",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        520
+      ],
+      "id": "57e2f9c8-48e9-4e6f-b229-b6ce5b8f9539",
+      "name": "Julian Goldie SEO",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 6
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        720,
+        -80
+      ],
+      "id": "c0794ac1-4a45-48bf-b6e2-71624e0e41a5",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "// отфильтровать только элементы без ошибки и с определённым transcript\nreturn items.filter(item => {\n  // если есть поле error или transcript === undefined, пропускаем\n  if (item.json.error) return false;\n  if (item.json.transcript === undefined) return false;\n  return true;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        -20
+      ],
+      "id": "bb78f923-8449-4bf6-88ff-f1028cb00ebf",
+      "name": "Error Filter"
+    },
+    {
+      "parameters": {
+        "url": "https://youtube-transcript3.p.rapidapi.com/api/transcript",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "videoId",
+              "value": "={{ $json.videoId }}"
+            },
+            {
+              "name": "Title",
+              "value": "={{ $json.title }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "=X-RapidAPI-Host",
+              "value": "=youtube-transcript3.p.rapidapi.com"
+            },
+            {
+              "name": "=X-RapidAPI-Key",
+              "value": "=f7f02f04f5mshc37f3e7eedb6f29p111f4djsn60e622f16916"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 100000
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1480,
+        -180
+      ],
+      "id": "7ffd3eee-efff-4825-809b-33d7e0aa1757",
+      "name": "youtube video parser"
+    },
+    {
+      "parameters": {
+        "jsCode": "// вычисляем метку времени «неделю назад»\nconst oneWeekAgo = Date.now() - 1 * 24 * 60 * 60 * 1000;\n\n// фильтруем элементы по дате публикации из snippet.publishedAt\nconst recentItems = items.filter(item => {\n  const pubDate = new Date(item.json.snippet.publishedAt).getTime();\n  return pubDate >= oneWeekAgo;\n});\n\nreturn recentItems;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        -20
+      ],
+      "id": "25249b4c-315f-4cc3-96fc-91e00a76a907",
+      "name": "24 hours"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "=Authorization",
+              "value": "=Bearer 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"
+            },
+            {
+              "name": "=Content-Type",
+              "value": "=application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"model\": \"google/gemini-2.5-pro-exp-03-25\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a translator. Your only task is to take the user’s input and output its English translation — nothing more. Do not add any commentary, explanations, apologies or extra sentences. If the input is already English, return it verbatim.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"{{ $json.transcript_original }}\"\n    }\n  ]\n}\n",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2420,
+        -140
+      ],
+      "id": "b8257f31-848d-430b-ba31-9362ca99fd9d",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// объединим все сегменты transcript в один текст\nconst segs = $json.transcript || [];\nconst fullText = segs.map(s => s.text).join(' ');\n// передадим дальше оригинальные поля + новое\nreturn [{\n  json: {\n    ...$json,\n    transcript_original: fullText\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2200,
+        -20
+      ],
+      "id": "11690ba9-a3f8-4925-9fd4-b52ca86461dc",
+      "name": "add transcript_original"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{\n  JSON.stringify({\n    model: \"google/gemini-2.5-pro-exp-03-25\",\n    messages: [\n      {\n        role: \"system\",\n        content: \"You are an instructional designer. Given the user’s transcript text, identify the 4–6 major topics covered and for each provide a concise, detailed description (2–3 sentences). Output the result as a JSON array of objects with the schema [{\\\"topic\\\":\\\"...\\\",\\\"detail\\\":\\\"...\\\"}, …]. Do not add any extra commentary.\"\n      },\n      {\n        role: \"user\",\n        content: $json.chunk\n      }\n    ]\n  })\n}}\n",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 10000
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3180,
+        -160
+      ],
+      "id": "a4dd0a31-cf26-4290-bde5-defe8016e61e",
+      "name": "Chat Completion"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Берём исходный текст и метаданные из первого элемента\nconst input = items[0].json;\nconst fullText = input.choices[0].message.content;\nconst { title, url, publishedAt, videoId } = input;\n\n// Максимальная длина чанка\nconst maxLen = 3000;\n\n// Разбиваем на массив предложений (учитываем точки, воскл. и вопросит. знаки)\nconst sentences = fullText.match(/[^\\.!\\?]+[\\.!\\?]+/g) || [fullText];\n\n// Накопитель\nlet chunks = [];\nlet current = '';\n\n// Проходим по каждому предложению\nfor (const sentence of sentences) {\n  if ((current + sentence).length <= maxLen) {\n    current += sentence + ' ';\n  } else {\n    if (current) chunks.push(current.trim());\n    current = sentence + ' ';\n  }\n}\n// Последний чанк\nif (current) chunks.push(current.trim());\n\n// Преобразуем в items, добавляя метаданные только в первый\nreturn chunks.map((textChunk, index) => {\n  const base = { chunk: textChunk };\n  if (index === 0) {\n    // добавляем поля только для первого элемента\n    return {\n      json: {\n        ...base,\n        title,\n        url,\n        publishedAt,\n        videoId,\n      },\n    };\n  }\n  // последующие — только chunk\n  return { json: base };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2960,
+        -20
+      ],
+      "id": "cfbef56e-90f4-4384-a1b4-3390054695a7",
+      "name": "Split to Chunks"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Инициализируем пустую строку для сбора текста из всех входных айтемов\nlet allFullText = '';\n\n// Переменные для метаданных, берем их из первого айтема\nlet title, url, publishedAt, videoId;\n\n// Берем метаданные только из первого входного айтема, если он существует\nif (items.length > 0 && items[0].json) {\n  const firstItemJson = items[0].json;\n  title = firstItemJson.title;\n  url = firstItemJson.url;\n  publishedAt = firstItemJson.publishedAt;\n  videoId = firstItemJson.videoId;\n}\n\n\n// Проходим по всем входным айтемам и собираем текст\nfor (const item of items) {\n  // Проверяем, существует ли поле с текстом в текущем айтеме\n  if (item.json && item.json.choices && item.json.choices[0] && item.json.choices[0].message && item.json.choices[0].message.content) {\n    // Добавляем текст текущего айтема к общей строке.\n    // Добавляем перевод строки между текстами разных айтемов для лучшего разделения.\n    allFullText += item.json.choices[0].message.content + '\\n';\n  }\n}\n\n// Максимальная длина чанка (остается прежней)\nconst maxLen = 3000;\n\n// Разбиваем объединенный текст на предложения\n// Учитываем случай, если allFullText пустой\nconst sentences = allFullText.match(/[^\\.!\\?]+[\\.!\\?]+/g) || (allFullText ? [allFullText] : []);\n\n\n// Собираем чанки из объединенных предложений (логика остается прежней)\nlet chunks = [];\nlet current = '';\nfor (const sentence of sentences) {\n  // Убираем лишние пробелы из начала/конца предложения перед проверкой длины\n  const trimmedSentence = sentence.trim();\n  if (!trimmedSentence) continue; // Пропускаем пустые строки после trim\n\n  // Проверяем, поместится ли предложение в текущий чанк\n  // Учитываем пробел, который добавим после предложения\n  if ((current + trimmedSentence).length + (current ? 1 : 0) <= maxLen) {\n    current += trimmedSentence + ' ';\n  } else {\n    // Если текущий чанк не пустой, добавляем его в список чанков\n    if (current) chunks.push(current.trim());\n    // Начинаем новый чанк с текущего предложения\n    current = trimmedSentence + ' ';\n  }\n}\n// Добавляем последний чанк, если он не пустой\nif (current) chunks.push(current.trim());\n\n\n// Преобразуем чанки в выходные айтемы.\n// Метаданные добавляем только к первому чанку общего текста.\nreturn chunks.map((text, idx) => {\n  const base = { summary_points: text };\n  if (idx === 0) {\n    // Только в первом выходном айтеме (первом чанке) добавляем метаданные из первого входного айтема\n    return {\n      json: {\n        ...base,\n        title, // Метаданные из первого входного айтема\n        url,\n        publishedAt,\n        videoId,\n      }\n    };\n  }\n  // Для последующих чанков возвращаем только текст\n  return { json: base };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3640,
+        -20
+      ],
+      "id": "de080fd8-d7aa-4c0c-b76b-4634851217df",
+      "name": "Summarizer"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dfbf6c71-b36f-4806-9a24-18b29f384c32",
+              "name": "summary_text",
+              "value": "={{ $json.summary_points }}",
+              "type": "string"
+            },
+            {
+              "id": "dad3cedf-da6f-4576-b190-3fa97a69e69d",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "042dda18-169a-43e8-8ba2-5235071a9ab6",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "8a0e6015-4f55-445c-988b-27a3f63b27ec",
+              "name": "publishedAt",
+              "value": "={{ $json.publishedAt }}",
+              "type": "string"
+            },
+            {
+              "id": "1b468378-1dcc-4ea0-9b3f-c3c9fe4c96f5",
+              "name": "videoId",
+              "value": "={{ $json.videoId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4220,
+        -200
+      ],
+      "id": "866177d6-8d01-4413-b4c3-66835bad8441",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "60d0d292-7f04-40b4-acf3-8a64c13acd26",
+              "name": "title",
+              "value": "={{ $json.snippet.title }}",
+              "type": "string"
+            },
+            {
+              "id": "753c7ef6-4008-4b16-81f0-7fbe291f015a",
+              "name": "url",
+              "value": "=https://youtube.com/watch?v={{ $json.snippet.resourceId.videoId }}",
+              "type": "string"
+            },
+            {
+              "id": "b51008a2-7ca7-408c-b212-f8a441d7c3e5",
+              "name": "publishedAt",
+              "value": "={{ $json.snippet.publishedAt }}",
+              "type": "string"
+            },
+            {
+              "id": "32915e1e-22a5-452f-a234-8371d3993da3",
+              "name": "videoId",
+              "value": "={{ $json.snippet.resourceId.videoId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1260,
+        -20
+      ],
+      "id": "d0e6b142-8d7d-4a02-af47-6f6dbc0be845",
+      "name": "Parse title ulr and publishedAt"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1700,
+        -40
+      ],
+      "id": "72845b20-1e57-4adb-98f1-da266ced7ca4",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2700,
+        -20
+      ],
+      "id": "6b565cff-30ed-4ca2-ae86-a18d07ecb4e4",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        3420,
+        -20
+      ],
+      "id": "d175c838-8fff-4687-8af1-03fd4f0a33f0",
+      "name": "Merge3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Node 1: Clean the raw string containing the JSON array\n\n// Инициализируем переменную для сбора всех частей сырой JSON строки из входных айтемов\nlet combinedRawJsonString = '';\n\n// Переменные для метаданных, берем их из первого входного айтема\nlet title, url;\n\n// Берем метаданные (title, url) только из первого входного айтема, если он существует\nif (items.length > 0 && items[0].json) {\n    const firstInputItemJson = items[0].json;\n    title = firstInputItemJson.title;\n    url = firstInputItemJson.url;\n    // publishedAt и videoId также доступны, но в оригинале не использовались в выходе этого узла.\n}\n\n// Проходим по всем входным айтемам и собираем содержимое поля summary_points\nfor (const item of items) {\n    // Проверяем, существует ли поле summary_points в текущем айтеме\n    if (item.json && item.json.summary_points) {\n        // Добавляем содержимое summary_points текущего айтема к общей строке\n        // Просто конкатенируем, т.к. чистка ниже должна справиться с возможными разрывами\n        combinedRawJsonString += item.json.summary_points;\n    }\n}\n\n// Теперь работаем с объединенной сырой строкой\nlet cleanedJsonString = combinedRawJsonString;\n\n// --- Cleaning Steps ---\n\n// 1. Remove potential leading 'json' marker and surrounding whitespace/newlines.\ncleanedJsonString = cleanedJsonString.replace(/^\\s*```?\\s*json\\s*\\n*/, '');\n\n// 2. Remove potential trailing backticks (``` or `) and surrounding whitespace/newlines.\ncleanedJsonString = cleanedJsonString.replace(/\\s*```?\\s*$/, '');\n\n// 3. Trim any remaining leading/trailing whitespace.\ncleanedJsonString = cleanedJsonString.trim();\n\n// --- !!! WARNING !!! ---\n// The following step removes JSON structure characters ([ ] { }).\n// As noted in the original code, this makes the string invalid JSON and JSON.parse() in the next node WILL FAIL\n// if the next node expects valid JSON. This logic is kept as per your original code.\n\n// 4. Remove square brackets ([ ]) and curly braces ({ }) using a regex\ncleanedJsonString = cleanedJsonString.replace(/[\\[\\]\\{\\}]/g, '');\n\n// --- Prepare Output for the next node ---\n// Мы возвращаем один айтем, содержащий очищенную объединенную строку и метаданные из первого входного айтема.\nreturn [{\n    json: {\n        cleanedJsonString: cleanedJsonString, // Очищенная объединенная строка\n        title: title,                         // Оригинальный title из первого входного айтема\n        url: url                              // Оригинальный URL из первого входного айтема\n    }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3900,
+        -20
+      ],
+      "id": "1e5cc7c5-6547-44ce-b307-46945c4372ae",
+      "name": "remove json"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем очищенную строку из предыдущего узла\nconst cleanedJsonString = items[0].json.cleanedJsonString;\n\n// Шаблон для парсинга — регулярное выражение для извлечения topic и detail\nconst regex = /\"topic\":\\s*\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"\\s*,\\s*\"detail\":\\s*\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"/gs;\n\n// Массив для хранения результата\nlet result = [];\nlet match;\n\n// Извлекаем метаданные из первого элемента\nconst title = items[0].json.title;\nconst url = items[0].json.url;\n\n// Проходим по строкам и извлекаем значения для topic и description\nlet isFirstRow = true; // Переменная для отслеживания первой строки\nwhile ((match = regex.exec(cleanedJsonString)) !== null) {\n    // match[1] содержит значение 'topic'\n    // match[3] содержит значение 'detail'\n    let row = {\n        json: {\n            Topic: match[1],       // Тема\n            Description: match[3]  // Описание\n        }\n    };\n\n    // Добавляем title и url только для первой строки\n    if (isFirstRow) {\n        row.json.title = title;\n        row.json.url = url;\n        isFirstRow = false; // После первой строки устанавливаем флаг в false\n    }\n\n    result.push(row);\n}\n\n// Возвращаем результат в формате, где каждая строка представляет собой объект с Topic, Description, title и url (для первой строки)\nreturn result;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4120,
+        -20
+      ],
+      "id": "a4710b64-f678-422a-b41b-9cb0433a109b",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1pongTk5EFZI1D6RRpYwz_Ex_Tt3lsHfD0jHcGgnAq0k/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Parsing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1pongTk5EFZI1D6RRpYwz_Ex_Tt3lsHfD0jHcGgnAq0k/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $json.title }}",
+            "Topic": "={{ $json.Topic }}",
+            "Description": "={{ $json.Description }}",
+            "Link": "={{ $json.url }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Topic",
+              "displayName": "Topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        4380,
+        -20
+      ],
+      "id": "dfcc26a9-bcdd-4d32-9476-f205b0fe0c31",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JWf1dYTj83NVJtf5",
+          "name": "Google Sheets account 2"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Greg Isenberg",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Nick Saraev",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Creator Magic",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Cole Medin",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Your AI Workflow",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Julian Goldie SEO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Greg Isenberg": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nick Saraev": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Creator Magic": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Cole Medin": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Your AI Workflow": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Julian Goldie SEO": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "24 hours",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "youtube video parser": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "24 hours": {
+      "main": [
+        [
+          {
+            "node": "Parse title ulr and publishedAt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Filter": {
+      "main": [
+        [
+          {
+            "node": "add transcript_original",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add transcript_original": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split to Chunks": {
+      "main": [
+        [
+          {
+            "node": "Chat Completion",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Chat Completion": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarizer": {
+      "main": [
+        [
+          {
+            "node": "remove json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse title ulr and publishedAt": {
+      "main": [
+        [
+          {
+            "node": "youtube video parser",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Error Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Split to Chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Summarizer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "remove json": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "875c234a-a04a-444b-b4e4-4962fbfc65f5",
+  "triggerCount": 0,
+  "tags": []
+}
