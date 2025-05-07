@@ -1,0 +1,385 @@
+{
+  "createdAt": "2025-05-02T07:23:16.934Z",
+  "updatedAt": "2025-05-06T07:47:09.000Z",
+  "id": "RCsxwZ5rviB045LZ",
+  "name": "Job Application AI Parser",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "47581417-54fe-47fc-a9ae-d7780ecfb672",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "simple": false,
+        "filters": {
+          "receivedAfter": "2025-05-02T00:00:00"
+        },
+        "options": {
+          "downloadAttachments": true
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        260,
+        -40
+      ],
+      "id": "f8c9ad09-c21b-45bb-99cb-85a885035287",
+      "name": "Find Gmails from meetings-noreply",
+      "webhookId": "fd589834-de5f-4a43-9809-04de4bcc6b08",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "WMUbbRHqLGJ2P4MI",
+          "name": "DEV Gmail API account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Проверьте, является ли это письмо откликом на вакансию. Если да, то строго пишите \"да\". Не нужно писать ничего другого, например, \"спасибо за информацию\" или \"я просмотрел(а) ваше письмо\". Или даже синонимы слова \"да\", например \"конечно\" или \"безусловно\". Ты можешь писать только да,  если ты видишь что письмо является ответом на вакансию. Если письмо не является ответом на вакансию,  то так же строго пишите \"нет. \n\n<email-content>\n{{ $json.html }}\n</email-content>\n</email-topic>\n{{ $json.subject }}\n</email-topic>\n\nОриентируйся на тег email-content для оценки содержания письма на предмет соответствия типу «отклик» на вакансию и email-topic для оценки темы письма  ",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        600,
+        -40
+      ],
+      "id": "83d28923-8ea3-47dd-9e49-1f4909f16379",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        520,
+        180
+      ],
+      "id": "bb43a4aa-3add-4aa2-8c53-73a011a0f288",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "xM1Kdr0j4QvJ4iaw",
+          "name": "AdminN8N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "нет",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "80a2efdc-0238-48e9-820c-4d0ba9a807d3"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Нет"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "968f12f4-ce47-489d-877c-6efc8c4db867",
+                    "leftValue": "={{ $json.output }} ",
+                    "rightValue": "=да",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "да - читать текст"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1100,
+        -40
+      ],
+      "id": "56a2a075-2f38-44bd-8daf-51f3b14e94b2",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Find Gmails from meetings-noreply').item.json.text }}\n\n\nНапиши только результат, без блоков кода и твоих комментариев. То есть, не нужно заключать json в блок кода, а также писать те фразы, которые не относятся к json. Также не нужно сокращать json и отходить от той структуры, которая у тебя в инструкциях прописана. Строго соблюдай поля, регистр в полях, язык полей. \nВ поле с описанием пиши только текст сообщения без сервисной информации. То есть, в поле description нужно цитировать ключевую информацию. Причем не надо писать ту информацию, которая есть в остальных полях json. Пиши исключительно те данные, что касаются сообщения человека.\nУбедись, что Description не больше 4 предложений, но при этом содержит все ключевые данные из переписки. Он включает в себя основные моменты, указанные пользователем, перечисленные через запятую. Не нужно додумывать, будь кратким и ясным.\nУбедись, что Follow Up date соответствует формату DD-MM-YYYY, то есть, содержит две цифры для дня, две для месяца и четыре для года, разделённые дефисами. Например, 31-12-2025. Не нужно писать  такие три неправильные варианта дат, как 01-1-2025, 2025-12-31, 31/12/2025.\n\nВот шаблон правильного запроса, который тебе нужно заполнить\n\n{\n  \"Profile\": {\n    \"Name\": \"<Name>\",\n    \"Gender\": \"<Gender>\",\n    \"Country\": \"<Country>\",\n    \"City\": \"<City>\",\n    \"Status\": \"<Status>\",\n    \"Job Posts\": [\n      \"<Job Post 1>\",\n      \"<Job Post 2>\"\n    ],\n    \"Professions\": [\n      \"<Profession 1>\",\n      \"<Profession 2>\"\n    ]\n  },\n  \"Communications\": [\n    {\n      \"Account\": \"<Account>\",\n      \"Communication Type\": \"<Communication Type>\",\n      \"Date\": \"<DD-MM-YYYY>\",\n      \"Note\": \"<Note>\",\n      \"Follow Up Date\": \"<DD-MM-YYYY>\",\n      \"Description\": \"<Description>\"\n    }\n  ],\n  \"Contacts\": [\n    {\n      \"Tool\": \"<Tool>\",\n      \"Value\": \"<Value>\"\n    },\n    {\n      \"Tool\": \"<Tool>\",\n      \"Value\": \"<Value>\"\n    }\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        1500,
+        -20
+      ],
+      "id": "1d56303d-4a3c-4335-ba70-f2f3790365ae",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        200
+      ],
+      "id": "e860c6e1-6a6b-451e-a6e9-727bcfa593a8",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "2TbftrJQ6ppFHQ2j",
+          "name": "OpenRouter pr account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=<instructions>\nТы - корректор JSON. Твоя задача - исправлять ошибки в джсон, который я тебе даю на вход. В частности, убедись, что дата соответствует формату дд-мм-гггг. То есть, правильно будет написать: \"02-12-2020, а не 2-12-2020 или 02-2-2020. Не исправляй остальной JSON. Оставь его таким же, каким он был до этого. Просто исправь ошибки в дате.Также убедись, что заметка не больше четырех предложений.\nУбери '''json и не заключай результат в блок кода\n</json>\n\n{{ $json.text }}\n\n<result>\nИсправленный json, не заключённый в блок кода без начала '''jsonи без одирарных кавычек в конце. Без использования блоков кода и без форматирования markdown  \n</result>"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        1920,
+        -20
+      ],
+      "id": "29254dea-3b02-415f-a49f-57f85c7bb916",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-4b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1900,
+        180
+      ],
+      "id": "1294ee28-51ba-4c5c-8187-be7e2c7bd042",
+      "name": "OpenRouter Chat Model2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "2TbftrJQ6ppFHQ2j",
+          "name": "OpenRouter pr account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $items('Basic LLM Chain1');\nreturn items.map(item => {\n  const md = item.json.text;\n  const jsonStr = md.replace(/```[^\\n]*\\n?/, '').replace(/```$/, '').trim();\n  return { json: JSON.parse(jsonStr) };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2260,
+        -20
+      ],
+      "id": "e9a5aacb-7a92-4eca-bd57-d9a56cddac07",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://new.crm-s.com/api/job-applications",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "uwGaGFIbEiFu4bGfvDW7SR621iNOgkIcd04CpKTk1N8V42EuCIA3GU71VSDhnlja"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2480,
+        -20
+      ],
+      "id": "75edc020-57ca-4eba-a93d-6c5050b5bf78",
+      "name": "HTTP Request"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Find Gmails from meetings-noreply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Gmails from meetings-noreply": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "3812aca9-f9a9-4af1-b78e-1904fc8ff2dd",
+  "triggerCount": 0,
+  "tags": []
+}
