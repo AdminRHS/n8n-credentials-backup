@@ -1,0 +1,18 @@
+{
+  "createdAt": "2025-05-02T13:56:38.501Z",
+  "updatedAt": "2025-05-02T13:56:38.501Z",
+  "id": "7ie6WMdLO8SXyHE5",
+  "name": "Notion WriteTask",
+  "active": false,
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "68c83d5a-d209-490c-9d2e-6db17cd0a755",
+  "triggerCount": 0,
+  "tags": []
+}
