@@ -1,0 +1,428 @@
+{
+  "createdAt": "2025-04-29T08:21:06.661Z",
+  "updatedAt": "2025-05-05T11:53:29.000Z",
+  "id": "hTKG2MhxJllTWVcS",
+  "name": "Work UA",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "functionCode": "// Возьмём массив откликов из первого (и единственного) результата:\nconst responses = items[0].json.items;\n\nconst twoWeeksAgo = new Date();\n// Переводим в Киевское время и отнимаем 14 дней\nconst utc = twoWeeksAgo.getTime() + twoWeeksAgo.getTimezoneOffset() * 60000;\ntwoWeeksAgo.setTime(utc + 3 * 3600000);\ntwoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);\n\nreturn responses\n  .filter(r => new Date(r.date) >= twoWeeksAgo)\n  .map(r => {\n    const dateObj = new Date(r.date);\n    const formattedDate = dateObj.toLocaleString('ru-RU', {\n      day:   'numeric',\n      month: 'long',\n      year:  'numeric',\n      hour:   '2-digit',\n      minute: '2-digit',\n      hour12: false,\n      timeZone: 'Europe/Kiev',\n    });\n\n    return {\n      json: {\n        id:           r.id,\n        candidate_id: r.candidate_id,\n        date:         formattedDate,\n        fio:          r.fio,\n        email:        r.email,\n        phone:        r.phone?.trim() ? r.phone : 'Phone not provided',\n        type:         r.type,\n        text:         r.text,\n        job_id:       r.job_id,\n        sourceLogin:  items[0].json.sourceLogin || null, // если нужно сохранять логин\n      }\n    };\n  });\n"
+      },
+      "id": "06477b26-9b21-4450-b77d-e4f26740ef9e",
+      "name": "Filter & Transform",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        880
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "basicAuth",
+        "url": "https://api.work.ua/jobs/responses",
+        "options": {
+          "fullResponse": false
+        }
+      },
+      "id": "89a66fdc-f441-4863-8281-0a541baa088e",
+      "name": "Get WorkUA Responses1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        -580,
+        880
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "KEElHjyKMSdTchDp",
+          "name": "Work UA API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1XUwU-6wV0l2bspGpxvoGRG8fVf2HQN53oVsTTvak0mo/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "main",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XUwU-6wV0l2bspGpxvoGRG8fVf2HQN53oVsTTvak0mo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id ": "={{ $json.id }}",
+            "candidate_id ": "={{ $json.candidate_id }}",
+            "date ": "={{ $json.date }}",
+            "fio ": "={{ $json.fio }}",
+            "email ": "={{ $json.email }}",
+            "phone": "={{ $json.phone }}",
+            "type ": "={{ $json.type }}",
+            "text": "={{ $json.text }}"
+          },
+          "matchingColumns": [
+            "id "
+          ],
+          "schema": [
+            {
+              "id": "id ",
+              "displayName": "id ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "candidate_id ",
+              "displayName": "candidate_id ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date ",
+              "displayName": "date ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "fio ",
+              "displayName": "fio ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email ",
+              "displayName": "email ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "type ",
+              "displayName": "type ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -80,
+        880
+      ],
+      "id": "0f63e8d1-e92a-42cd-852f-2524ebd844ef",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JWf1dYTj83NVJtf5",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "basicAuth",
+        "url": "https://api.work.ua/jobs/responses",
+        "options": {
+          "fullResponse": false
+        }
+      },
+      "id": "e90136f2-d26a-4d4a-9aed-1cea7287af36",
+      "name": "Get WorkUA Responses2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        1460
+      ],
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "HvhrnvZEmQjgMvDY",
+          "name": "Work UA API 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "// Возьмём массив откликов из первого (и единственного) результата:\nconst responses = items[0].json.items;\n\nconst twoWeeksAgo = new Date();\n// Переводим в Киевское время и отнимаем 14 дней\nconst utc = twoWeeksAgo.getTime() + twoWeeksAgo.getTimezoneOffset() * 60000;\ntwoWeeksAgo.setTime(utc + 3 * 3600000);\ntwoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);\n\nreturn responses\n  .filter(r => new Date(r.date) >= twoWeeksAgo)\n  .map(r => {\n    const dateObj = new Date(r.date);\n    const formattedDate = dateObj.toLocaleString('ru-RU', {\n      day:   'numeric',\n      month: 'long',\n      year:  'numeric',\n      hour:   '2-digit',\n      minute: '2-digit',\n      hour12: false,\n      timeZone: 'Europe/Kiev',\n    });\n\n    return {\n      json: {\n        id:           r.id,\n        candidate_id: r.candidate_id,\n        date:         formattedDate,\n        fio:          r.fio,\n        email:        r.email,\n        phone:        r.phone?.trim() ? r.phone : 'Phone not provided',\n        type:         r.type,\n        text:         r.text,\n        job_id:       r.job_id,\n        sourceLogin:  items[0].json.sourceLogin || null, // если нужно сохранять логин\n      }\n    };\n  });\n"
+      },
+      "id": "3909e943-39f8-4df5-a593-34c0e8a753ca",
+      "name": "Filter & Transform1",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        1460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1XUwU-6wV0l2bspGpxvoGRG8fVf2HQN53oVsTTvak0mo/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 15522683,
+          "mode": "list",
+          "cachedResultName": "second-main",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XUwU-6wV0l2bspGpxvoGRG8fVf2HQN53oVsTTvak0mo/edit#gid=15522683"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id ": "={{ $json.id }}",
+            "candidate_id ": "={{ $json.candidate_id }}",
+            "date ": "={{ $json.date }}",
+            "fio ": "={{ $json.fio }}",
+            "email ": "={{ $json.email }}",
+            "phone": "={{ $json.phone }}",
+            "type ": "={{ $json.type }}",
+            "text": "={{ $json.text }}"
+          },
+          "matchingColumns": [
+            "id "
+          ],
+          "schema": [
+            {
+              "id": "id ",
+              "displayName": "id ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "candidate_id ",
+              "displayName": "candidate_id ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date ",
+              "displayName": "date ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "fio ",
+              "displayName": "fio ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email ",
+              "displayName": "email ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "type ",
+              "displayName": "type ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -80,
+        1460
+      ],
+      "id": "ba95dac7-333c-4f41-8e6e-d88f7e5dbb28",
+      "name": "Google Sheets3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JWf1dYTj83NVJtf5",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "hour": 2
+            }
+          ]
+        }
+      },
+      "id": "000484d4-cd86-403d-a8f1-7d7df943c53f",
+      "name": "Start",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        -900,
+        1220
+      ]
+    }
+  ],
+  "connections": {
+    "Filter & Transform": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get WorkUA Responses1": {
+      "main": [
+        [
+          {
+            "node": "Filter & Transform",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get WorkUA Responses2": {
+      "main": [
+        [
+          {
+            "node": "Filter & Transform1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter & Transform1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        []
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Get WorkUA Responses1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get WorkUA Responses2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "59459d24-ea83-449a-b3ea-53819bf7ebf1",
+  "triggerCount": 1,
+  "tags": []
+}
