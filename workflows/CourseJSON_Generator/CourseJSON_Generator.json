@@ -1,0 +1,131 @@
+{
+  "createdAt": "2025-05-13T14:19:17.174Z",
+  "updatedAt": "2025-05-13T14:20:23.000Z",
+  "id": "VbQSEVRl8VWCiuXt",
+  "name": "CourseJSON Generator",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "messages": {
+          "messageValues": [
+            {},
+            {}
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        220,
+        0
+      ],
+      "id": "2a4e80e3-64a6-40fa-8a6f-e1ae4bd35fe4",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        280,
+        220
+      ],
+      "id": "df966a9b-99cf-42a9-8f72-95edb2edb1aa",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "PrqIbmbNAb3ME4eF",
+          "name": "OpenRouter Sales account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "CourseJSONGenerator",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -120,
+        220
+      ],
+      "id": "e79b5b1b-d607-4c88-a363-6469394304e5",
+      "name": "Webhook",
+      "webhookId": "8f08ec5f-bc5e-4874-8c27-65ca21fc03a1"
+    }
+  ],
+  "connections": {
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "aa616a16-a656-466a-830e-4063e7d61174",
+  "triggerCount": 0,
+  "tags": [
+    {
+      "createdAt": "2025-05-13T14:20:15.668Z",
+      "updatedAt": "2025-05-13T14:20:15.668Z",
+      "id": "0VUURrJm77Y2zHCC",
+      "name": "generator"
+    },
+    {
+      "createdAt": "2025-05-13T14:20:13.639Z",
+      "updatedAt": "2025-05-13T14:20:13.639Z",
+      "id": "75ekeNpi1wLMIwAX",
+      "name": "json"
+    },
+    {
+      "createdAt": "2025-03-17T12:51:58.346Z",
+      "updatedAt": "2025-03-17T12:51:58.346Z",
+      "id": "CO1guCcQNZgNjhhs",
+      "name": "bot"
+    },
+    {
+      "createdAt": "2025-05-13T14:20:12.005Z",
+      "updatedAt": "2025-05-13T14:20:12.005Z",
+      "id": "Ca15t5dw65lILi6Y",
+      "name": "onboarding"
+    },
+    {
+      "createdAt": "2025-03-04T15:18:45.103Z",
+      "updatedAt": "2025-03-04T15:18:45.103Z",
+      "id": "Lv0IHVqEPpRYfyh7",
+      "name": "AI Onboarding"
+    }
+  ]
+}
