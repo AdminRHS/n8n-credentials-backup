@@ -1,0 +1,1370 @@
+{
+  "createdAt": "2025-04-15T12:50:40.326Z",
+  "updatedAt": "2025-05-14T09:05:47.000Z",
+  "id": "llHyu5eJMTWgwI4S",
+  "name": "Sales automat part 2",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "lg@rh-s.com",
+          "mode": "list",
+          "cachedResultName": "lg@rh-s.com"
+        },
+        "timeMax": "={{ $now.plus({ hours: 1 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -1000,
+        -200
+      ],
+      "id": "a56e7893-cbc7-4c4e-8676-c92ff13c3645",
+      "name": "Google Calendar2",
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "dCmWpdsYiSYHC7XA",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1280,
+        -200
+      ],
+      "id": "ecee5b6a-5c6e-474d-9548-de4342eca840",
+      "name": "Schedule Trigger1"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "732698343951695963",
+          "mode": "list",
+          "cachedResultName": "Remote Helpers",
+          "cachedResultUrl": "https://discord.com/channels/732698343951695963"
+        },
+        "sendTo": "user",
+        "userId": {
+          "__rl": true,
+          "value": "910144676881903646",
+          "mode": "id"
+        },
+        "content": "=Deepresearch of {{ $json.companyName }} :\n{{ $json.googleDocLink }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        3840,
+        -540
+      ],
+      "id": "e7ecb70a-a6ad-4cd3-b99f-58961a49d2ff",
+      "name": "Nikolay",
+      "webhookId": "0dd4c953-a86e-41eb-9258-01d9a011e87a",
+      "credentials": {
+        "discordBotApi": {
+          "id": "ATASGOhmkeLExW1R",
+          "name": "Discord Bot account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-4b-it:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        100
+      ],
+      "id": "6a5e320b-a769-471b-b4f8-f93ebef0a947",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "PrqIbmbNAb3ME4eF",
+          "name": "OpenRouter Sales account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "732698343951695963",
+          "mode": "list",
+          "cachedResultName": "Remote Helpers",
+          "cachedResultUrl": "https://discord.com/channels/732698343951695963"
+        },
+        "sendTo": "user",
+        "userId": {
+          "__rl": true,
+          "value": "910144676881903646",
+          "mode": "id"
+        },
+        "content": "=Summary of deepresearch {{ $json.companyName }}: \n{{ $json.googleDocLink }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        4260,
+        -340
+      ],
+      "id": "aee567af-051d-49ee-9aa2-c6182351e2a7",
+      "name": "Nikolay1",
+      "webhookId": "0dd4c953-a86e-41eb-9258-01d9a011e87a",
+      "credentials": {
+        "discordBotApi": {
+          "id": "ATASGOhmkeLExW1R",
+          "name": "Discord Bot account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "732698343951695963",
+          "mode": "list",
+          "cachedResultName": "Remote Helpers",
+          "cachedResultUrl": "https://discord.com/channels/732698343951695963"
+        },
+        "sendTo": "user",
+        "userId": {
+          "__rl": true,
+          "value": "910144676881903646",
+          "mode": "id"
+        },
+        "content": "={{ $json.joinedText }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        4060,
+        -480
+      ],
+      "id": "8f7c5c07-62c7-4610-8e97-72d42d48171b",
+      "name": "Nikolay2",
+      "webhookId": "0dd4c953-a86e-41eb-9258-01d9a011e87a",
+      "credentials": {
+        "discordBotApi": {
+          "id": "ATASGOhmkeLExW1R",
+          "name": "Discord Bot account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Deep Research",
+        "height": 260,
+        "width": 2280,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        -460
+      ],
+      "id": "0f8afc02-40a0-4392-a999-2461e4698b4b",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# Short Deep Research\n",
+        "height": 460,
+        "width": 3860,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        -160
+      ],
+      "id": "aaf1954c-c828-4999-b353-b59796e8d59c",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# Generation Deep Research",
+        "height": 360,
+        "width": 2480,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1360,
+        -320
+      ],
+      "id": "457e18ed-9d29-489b-bc21-4c6bcf2287db",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -80
+      ],
+      "id": "f0d0c103-deae-43fc-afb5-c67f246e9c54",
+      "name": "If summary does not contains Remote Helpers"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e699edf6-00f3-4023-a233-525130f62ff6",
+              "leftValue": "={{ $json.summary }}",
+              "rightValue": "- Remote Helpers",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "3eb83c59-0d18-44de-b7ec-3d04eccb7cf6",
+              "leftValue": "={{ $json.summary }}",
+              "rightValue": "Remote Helpers",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -780,
+        -200
+      ],
+      "id": "53f93be4-44f4-4882-8b64-f64975279bec",
+      "name": "If summary contains Remote Helpers"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Функция для округления времени до ближайшего полчасового интервала (с использованием UTC)\n// Если минуты меньше 30, округляем до :30, иначе до начала следующего часа\nfunction getHalfHourBlockUTC(dateString) {\n  const dateObj = new Date(dateString);\n  if (isNaN(dateObj.getTime())) return \"\";\n  let hours = dateObj.getUTCHours();\n  const minutes = dateObj.getUTCMinutes();\n  \n  if (minutes < 30) {\n    return `${String(hours).padStart(2, '0')}:30`;\n  } else {\n    hours = hours + 1;\n    if (hours === 24) {\n      hours = 0;\n    }\n    return `${String(hours).padStart(2, '0')}:00`;\n  }\n}\n\n// Этап 1. Получаем все входящие элементы и проводим обработку полей summary, description и end\nconst items = $input.all();\n\n// Проверяем, что items – массив\nif (!Array.isArray(items)) {\n  throw new Error(\"Ожидался массив входящих элементов\");\n}\n\nconst tempResults = items.map(item => {\n  // Если структура не соответствует ожиданиям, пропускаем элемент\n  if (!item || !item.json) return null;\n  \n  const jsonData = item.json;\n  \n  // Извлекаем поля summary и description, остальные поля сохраняем в restFields\n  const summary = jsonData.summary || \"\";\n  const description = jsonData.description || \"Нет описания\";\n  \n  // Очищаем поле summary: удаляем подстроку \"- Remote Helpers\" (без учета регистра)\n  let cleanedSummary = summary.replace(/-\\s*Remote\\s*Helpers\\s*/gi, \"\").trim();\n  \n  // Получаем оригинальное время окончания из jsonData.end\n  let originalEnd = \"\";\n  if (jsonData.end) {\n    originalEnd = jsonData.end.dateTime || jsonData.end.date || \"\";\n  }\n  \n  // Форматируем время окончания в формате HH:MM (округление до ближайшего полчасового интервала)\n  const formattedTime = originalEnd ? getHalfHourBlockUTC(originalEnd) : \"\";\n  \n  // Формируем итоговый объект.\n  // Сохраняем оригинальное время окончания (_originalEnd) для фильтрации и сортировки.\n  const finalData = {\n    ...jsonData,\n    summary: cleanedSummary,\n    description: description,\n    formattedTime: formattedTime,  // переименованное значение end\n    _originalEnd: originalEnd\n  };\n  \n  return { json: finalData };\n})\n// Фильтруем элементы, у которых не удалось сформировать объект\n.filter(item => item !== null);\n\n// Этап 2. Фильтрация дубликатов с использованием комбинации summary и округленного времени (UTC)\n// Используем _originalEnd для определения уникальности\nconst seenKeys = new Set();\nconst uniqueResults = tempResults.filter(item => {\n  const currentSummary = item.json.summary;\n  const originalEndTime = item.json._originalEnd;\n  \n  // Если время окончания задано, округляем его по UTC, иначе оставляем пустую строку\n  const normalizedTime = originalEndTime ? getHalfHourBlockUTC(originalEndTime) : \"\";\n  \n  // Если у события есть уникальный id, используем его; иначе – комбинацию summary и нормализованного времени\n  const uniqueId = item.json.id;\n  const dedupKey = uniqueId ? uniqueId : `${currentSummary}__${normalizedTime}`;\n  \n  if (seenKeys.has(dedupKey)) {\n    return false;\n  } else {\n    seenKeys.add(dedupKey);\n    return true;\n  }\n});\n\n// Этап 3. Сортировка по оригинальному времени окончания (используя _originalEnd)\nuniqueResults.sort((a, b) => {\n  const timeA = new Date(a.json._originalEnd);\n  const timeB = new Date(b.json._originalEnd);\n  return timeA - timeB;\n});\n\n// Удаляем вспомогательное поле _originalEnd из финального вывода\nconst finalResults = uniqueResults.map(item => {\n  delete item.json._originalEnd;\n  return item;\n});\n\n// Возвращаем итоговый массив уникальных, отсортированных по времени окончания\nreturn finalResults;\n"
+      },
+      "name": "Prepares and sorts unique events",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        -220
+      ],
+      "id": "fb3acffd-d89d-4fad-946a-0c164dd0adcb"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем HTML-текст из предыдущей ноды\nlet description = $input.first().json.description;\n\n// Массив для хранения результатов с URL и датой\nlet records = [];\n\n// Расширённое регулярное выражение, которое ищет блок \"Company website:\"\n//   — либо <a href=\"...\">,\n//   — либо ссылку с http/https,\n//   — либо ссылку без протокола (www.example.com или example.com)\nconst regex = /(?:<b>\\s*)?Company website:\\s*(?:<\\/b>)?\\s*(?:<a\\s+href=\"([^\"]+)\"|((?:https?:\\/\\/)?(?:www\\.)?[^\\s<]+\\.[^\\s<]+))/gi;\n\n// Регулярное выражение для поиска даты в формате \"YYYY-MM-DD\"\nconst dateRegex = /(\\d{4}-\\d{2}-\\d{2})/;\n\nlet match;\nwhile ((match = regex.exec(description)) !== null) {\n  // Ссылка из группы 1 (тег <a>) или из группы 2 (plain-text)\n  let href = match[1] || match[2];\n\n  // Если без протокола, добавляем https://\n  if (!/^https?:\\/\\//i.test(href)) {\n    href = 'https://' + href;\n  }\n\n  // Если ссылка — Google redirect, извлекаем параметр q\n  const googleMatch = href.match(/https:\\/\\/www\\.google\\.com\\/url\\?q=([^&]+)/i);\n  let outputUrl = googleMatch ? googleMatch[1] : href;\n\n  // Извлекаем дату в контексте\n  let context = description.slice(match.index, match.index + 200);\n  let dateMatch = dateRegex.exec(context);\n  let dateObj = dateMatch ? new Date(dateMatch[1]) : null;\n\n  records.push({ url: outputUrl, date: dateObj });\n}\n\n// Если ничего не найдено\nif (records.length === 0) {\n  return [ { json: { message: \"No matching records found\" } } ];\n}\n\nlet now = new Date();\nlet withDate = records.filter(r => r.date);\nif (withDate.length === 0) {\n  return [ { json: records[0] } ];\n}\n\n// Находим запись с датой, ближайшей к текущей\nlet closest = withDate.reduce((prev, curr) => {\n  return (Math.abs(now - curr.date) < Math.abs(now - prev.date)) ? curr : prev;\n});\n\nreturn [ { json: closest } ];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -180,
+        -220
+      ],
+      "id": "81cc3fb9-5303-428d-b368-1c2efb69b388",
+      "name": "Finds company website and closest date"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hook.eu2.make.com/ha0xladgffsp156aqzplnmlxwx8iq5np",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message",
+              "value": "=Conduct a detailed and in-depth research of the company at the address {{ $json.url }} using open sources and marketing analysis, extracting the following details:\n\ncompany name\nbusiness description (segment, main products/services)\nfounding year and development history\nheadquarters and office locations\nofficial website, contact email, phone\nsocial media profiles (platform, handle, follower count, last post date)\nindustry affiliation\nwebsite last updated date and key metrics (traffic estimates, SEO indicators)\nrecent job postings (titles, departments, dates)\ncompany status (active/inactive, registration, licenses, certifications)\nfinancial overview (revenue, funding, investments if public)\nkey people (names, titles, LinkedIn profiles)\nrecent news and press releases (date, summary)\nonline activity evaluation (engagement metrics, content themes)\ncurrent projects and initiatives\n\nPlease output only the extracted information in structured format, starting from “company name,” with no additional commentary."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        400,
+        -200
+      ],
+      "id": "f353fe06-886f-410a-9b65-fa99383f69d4",
+      "name": "HTTP Request to make.com"
+    },
+    {
+      "parameters": {
+        "jsCode": "function cleanText(inputText) {\n  if (typeof inputText !== 'string') {\n    // В реальной среде автоматизации лучше выбрасывать ошибку\n    // throw new Error(\"Input must be a string.\");\n    console.error(\"Input must be a string.\");\n    return ''; // Возвращаем пустую строку в случае ошибки типа\n  }\n  const thinkTagRegex = /<think>.*?<\\/think>/gs;\n  let cleanedText = inputText.replace(thinkTagRegex, '');\n  const bracketNumberRegex = /\\[\\d+\\]/g;\n  cleanedText = cleanedText.replace(bracketNumberRegex, '');\n  return cleanedText;\n}\n\n/**\n * Cleans the input text and structures the result as an array of objects,\n * where each object represents a non-empty line from the cleaned text.\n * (Без изменений)\n * @param {string} inputText The original string with think tags and bracketed numbers.\n * @returns {Array<object>} An array of objects, e.g., [{ id: 0, lineContent: \"...\" }, ...].\n */\nfunction cleanAndStructureOutput(inputText) {\n  const cleanedFullText = cleanText(inputText);\n  const lines = cleanedFullText.split('\\n');\n  const outputArray = [];\n  let idCounter = 0;\n  for (const line of lines) {\n    const trimmedLine = line.trim();\n    if (trimmedLine !== '') {\n      outputArray.push({\n        id: idCounter++,\n        lineContent: trimmedLine\n      });\n    }\n  }\n  return outputArray;\n}\n\nconst text = $input.first().json.data; // Или $input[0].json.data в стандартном JS\nconst result = cleanAndStructureOutput(text);\nreturn result;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        920,
+        -220
+      ],
+      "id": "4f7e7128-0300-4a76-b126-09cef9a52dc4",
+      "name": "Cleans text and splits into lines"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst joinedText = items.map(item => item.json.lineContent).join('\\n');\nreturn [{ json: { joinedText } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1140,
+        -220
+      ],
+      "id": "e7cd8f6b-decf-4bce-a9fb-bc58ff7ae33e",
+      "name": "Joins lines into single text"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем текст из входящего JSON\nconst text = $input.first().json.joinedText;\n\n// Регулярное выражение для извлечения названия компании\nconst regex = /^\\*\\*\\s*(company[ _]name)\\s*\\*\\*:\\s*([^\\r\\n]+)/im;\n\nconst match = text.match(regex);\nconst companyName = match ? match[2].trim() : \"\";\n\n// Возвращаем объект с двумя полями: название компании и полный текст\nreturn { json: { companyName, fullText: text } };\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1700,
+        -740
+      ],
+      "id": "03c5e15f-43e4-48b7-b94c-2c613df17068",
+      "name": "Extracts company name from text"
+    },
+    {
+      "parameters": {
+        "operation": "createFromText",
+        "content": "={{ $json.joinedText }}",
+        "name": "={{ $json.text }} - deep research",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/folders/1eQ-7TJMXx1Yn7_1f7EikuL5DU8LKALU1",
+          "mode": "url"
+        },
+        "options": {
+          "convertToGoogleDocument": true
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        2180,
+        -380
+      ],
+      "id": "e970e91e-e318-47bd-900c-c1c825be8922",
+      "name": "Add Deep Reseach to the Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FVL3R6UcDkQOqfdz",
+          "name": "n8n Sales Google Drive"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем значение id из первого элемента входящих данных\nconst id = $input.first().json.id;\n\n// Формируем ссылку на Google Документ, подставляя id\nconst googleDocLink = `https://docs.google.com/document/d/${id}`;\n\n// Возвращаем объект с новым полем, содержащим ссылку на документ\nreturn [\n  {\n    json: {\n      id: id,\n      googleDocLink: googleDocLink,\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2440,
+        -380
+      ],
+      "id": "ac9938cd-618a-4ef6-baa8-ffa373e4373b",
+      "name": "Generates Google Document link"
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of $input.all()) {\n  // Получаем контент из входящих данных\n  const content = item.json.content || \"\";\n  \n  // Используем регулярное выражение для поиска текста после \"**company name**:\"\n  // - \\*\\*company name\\*\\* ищет буквальное \"**company name**:\" (без учёта регистра благодаря флагу i)\n  // - \\s* — допускает наличие пробелов после двоеточия\n  // - ([^\\n]+) — захватывает все символы до первого переноса строки, то есть само название компании\n  const match = content.match(/^\\*\\*\\s*(company[ _]name)\\s*\\*\\*:\\s*([^\\r\\n]+)/im);\n  const companyName = match ? match[1].trim() : \"Not found\";\n  \n  // Превращаем documentId в ссылку на Google Документ\n  const docId = item.json.documentId || \"\";\n  const googleDocLink = docId ? `https://docs.google.com/document/d/${docId}` : \"\";\n  \n  // Формируем поля для вывода:\n  // - companyName: извлечённое название компании\n  // - fullText: исходный текст\n  // - googleDocLink: полноценная ссылка на Google Документ\n  item.json.companyName = companyName;\n  item.json.fullText = content;\n  item.json.googleDocLink = googleDocLink;\n}\n\nreturn $input.all();\n"
+      },
+      "name": "Extracts company name and link",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2980,
+        -380
+      ],
+      "id": "f035b939-8ab2-46ba-b664-c42ce2a46e54"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "732698343951695963",
+          "mode": "list",
+          "cachedResultName": "Remote Helpers",
+          "cachedResultUrl": "https://discord.com/channels/732698343951695963"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1285235052615176263",
+          "mode": "id"
+        },
+        "content": "=Deepresearch of {{ $json.text }}:\n{{ $json.googleDocLink }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        3820,
+        -380
+      ],
+      "id": "62e68fa7-e775-484e-924f-fd4bedc0db31",
+      "name": "Sent Deep Research to Sales Comment chat",
+      "webhookId": "0dd4c953-a86e-41eb-9258-01d9a011e87a",
+      "credentials": {
+        "discordBotApi": {
+          "id": "oEHKlFa6ZgVOyl6U",
+          "name": "DD discord Report bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Сделай краткую выжимку (summary) из этого текста {{ $json.joinedText }} сохранив все самое важное для сейлзов\n\nPlease provide me output only with extracted information in structured format, without \"okay i need, i will give you or something else\"\n\nStart summary from \"Company name: \""
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        1780,
+        -20
+      ],
+      "id": "1a701696-6638-444e-8eb5-de12f45df77f",
+      "name": "Making Short Deep Research"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Обрабатываем все входящие элементы\nfor (const item of $input.all()) {\n  // Извлекаем текст\n  const text = item.json.text || '';\n\n  // С помощью RegExp ищем строку: \"Company Name: ....\"\n  const companyNameMatch = text.match(/Company Name:\\s*(.*)/i);\n  const companyName = companyNameMatch ? companyNameMatch[1].trim() : 'Not found';\n\n  // Добавляем в текущий элемент два новых поля:\n  // 1) companyName — название компании\n  // 2) fullText — исходный текст\n  item.json.companyName = companyName;\n  item.json.fullText = text;\n}\n\n// Возвращаем все обработанные элементы\nreturn $input.all();\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        380
+      ],
+      "id": "f7da6408-15c7-4208-8f60-89cd3c15ace4",
+      "name": "Finds company name in text"
+    },
+    {
+      "parameters": {
+        "operation": "createFromText",
+        "content": "={{ $json.text }}",
+        "name": "={{ $json.companyName }} - short deep research",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "https://drive.google.com/drive/folders/1X60VTZuBRmxan6w6cuvtRsZXRL8cC3E0",
+          "mode": "url"
+        },
+        "options": {
+          "convertToGoogleDocument": true
+        }
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        3200,
+        -20
+      ],
+      "id": "d7340ff0-b0b0-4cfe-abca-2902baa885e7",
+      "name": "Add Short Deep Reseach to the Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "FVL3R6UcDkQOqfdz",
+          "name": "n8n Sales Google Drive"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем значение id из первого элемента входящих данных\nconst id = $input.first().json.id;\n\n// Формируем ссылку на Google Документ, подставляя id\nconst googleDocLink = `https://docs.google.com/document/d/${id}`;\n\n// Возвращаем объект с новым полем, содержащим ссылку на документ\nreturn [\n  {\n    json: {\n      id: id,\n      googleDocLink: googleDocLink,\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3500,
+        -20
+      ],
+      "id": "7ef04883-564d-4888-8b95-93aa61a1e314",
+      "name": "Builds document link using ID"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "get",
+        "documentURL": "={{ $json.id }}"
+      },
+      "name": "Get Google Doc DR Metadata",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 1,
+      "position": [
+        2700,
+        -380
+      ],
+      "id": "d604f773-3289-4152-9e3a-fd845b39c65c",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "UGRtdL18RWBWUBkv",
+          "name": "Google Docs Sales API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "get",
+        "documentURL": "={{ $json.id }}"
+      },
+      "name": "Get Google Doc SDR Metadata",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 1,
+      "position": [
+        3820,
+        -20
+      ],
+      "id": "dc7a4371-f590-4990-b24b-a121801e5aab",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "UGRtdL18RWBWUBkv",
+          "name": "Google Docs Sales API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items\nfor (const item of $input.all()) {\n  // Достаём documentId и формируем полную ссылку\n  const docId = item.json.documentId;\n  const googleDocLink = `https://docs.google.com/document/d/${docId}`;\n\n  // Достаём content и ищем в нём Company Name\n  const content = item.json.content || '';\n  // С помощью RegExp ищем строку: \"Company Name: ....\"\n  const companyNameMatch = content.match(/^\\*\\*\\s*(company[ _]name)\\s*\\*\\*:\\s*([^\\r\\n]+)/im);\n\n  const companyName = companyNameMatch ? companyNameMatch[1].trim() : 'Not found';\n\n  // Добавляем новые поля к исходным данным\n  item.json.googleDocLink = googleDocLink;\n  item.json.companyName = companyName;\n}\n\nreturn $input.all();\n"
+      },
+      "name": "Adds link and company name",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4160,
+        -20
+      ],
+      "id": "f47840dd-acb9-4cea-a3e9-48abd01d5cf2"
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "732698343951695963",
+          "mode": "list",
+          "cachedResultName": "Remote Helpers",
+          "cachedResultUrl": "https://discord.com/channels/732698343951695963"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1285235052615176263",
+          "mode": "id"
+        },
+        "content": "=Summary of deepresearch {{ $json.text }}: \n{{ $json.googleDocLink }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        5160,
+        0
+      ],
+      "id": "7b42f9c2-8609-4da4-968b-b35c92a7bd79",
+      "name": "Sent Short Deep Research to Sales Comment chat",
+      "webhookId": "0dd4c953-a86e-41eb-9258-01d9a011e87a",
+      "credentials": {
+        "discordBotApi": {
+          "id": "oEHKlFa6ZgVOyl6U",
+          "name": "DD discord Report bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2ac36e0f-881e-4d63-9cbb-fc0e263a0ba7",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "No matching records found",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        40,
+        -220
+      ],
+      "id": "03833f26-fe90-4ecb-8a4d-2d650e332d11",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        240,
+        -320
+      ],
+      "id": "c504db6e-2b3d-4d18-890b-7d8edac9cd56",
+      "name": "If does not exists anything"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Ты фильтр. твоя задача в большом тексте, в начале найти предложение Company name: company name, и вывести название компании после двоеточия. БОЛЬше ничего не надо находить и выводить, только название компании и только в предложении Company name:  {{ $json.joinedText }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        1360,
+        -580
+      ],
+      "id": "008904a0-99c1-4b37-996d-72feb2bac985",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        -360
+      ],
+      "id": "51d623c1-4c87-42b6-9ffe-4ac7928f1cdc",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "PrqIbmbNAb3ME4eF",
+          "name": "OpenRouter Sales account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1880,
+        -380
+      ],
+      "id": "003fe689-ea29-4505-95dc-ac43904cd171",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Ты фильтр. твоя задача в большом тексте, в начале найти предложение Company name: company name, и вывести название компании после двоеточия. БОЛЬше ничего не надо находить и выводить, только название компании и только в предложении Company name:  {{ $json.content }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        3200,
+        -500
+      ],
+      "id": "854b5784-8ae9-43d6-96c5-ea8716bedac2",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        3240,
+        -340
+      ],
+      "id": "1dc6545d-b019-4793-b77f-a51934033ffd",
+      "name": "OpenRouter Chat Model2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "PrqIbmbNAb3ME4eF",
+          "name": "OpenRouter Sales account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        3600,
+        -380
+      ],
+      "id": "2f96198d-e317-4f37-a67b-956985cbfd9c",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Ты фильтр. твоя задача в большом тексте, в начале найти предложение Company name: company name, и вывести название компании после двоеточия. БОЛЬше ничего не надо находить и выводить, только название компании без \\n или маркдаун символов и только в предложении Company name: {{ $json.text }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        2220,
+        60
+      ],
+      "id": "15c9f0f0-b6c2-4a67-b884-6481dedcda4f",
+      "name": "Basic LLM Chain2"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        220
+      ],
+      "id": "0f1f4878-953f-4608-9331-84e391e1fc78",
+      "name": "OpenRouter Chat Model3",
+      "credentials": {
+        "openRouterApi": {
+          "id": "PrqIbmbNAb3ME4eF",
+          "name": "OpenRouter Sales account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2880,
+        -20
+      ],
+      "id": "f63ec7d3-34aa-4d1f-9a36-6c068142eb9a",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Retrieve the text from the input\nlet companyName = $input.first().json.text;\n\n// Create the new output with 'companyName' as the key\nreturn [\n  {\n    json: {\n      companyName: companyName\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2640,
+        40
+      ],
+      "id": "d7736b82-0ba9-4773-b62a-c7dc9fcbd7cf",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Ты фильтр. твоя задача в большом тексте, в начале найти предложение Company name: company name, и вывести название компании после двоеточия. БОЛЬше ничего не надо находить и выводить, только название компании без \\n или маркдаун символов и только в предложении Company name: {{ $json.content }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        4240,
+        120
+      ],
+      "id": "a7e443d9-c9af-448b-b82e-4103787f2b8a",
+      "name": "Basic LLM Chain3"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        4200,
+        260
+      ],
+      "id": "89e013e5-1ad1-41f2-b34f-3a1e8a510005",
+      "name": "OpenRouter Chat Model4",
+      "credentials": {
+        "openRouterApi": {
+          "id": "xM1Kdr0j4QvJ4iaw",
+          "name": "AdminN8N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        4860,
+        0
+      ],
+      "id": "e8886b2e-fb52-417d-b57a-5e67581e2dad",
+      "name": "Merge3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c3b8dabc-6a5d-435e-a1a0-d88aed61f945",
+              "leftValue": "{{ json.data }}",
+              "rightValue": "accepted",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        620,
+        -200
+      ],
+      "id": "784a6b2c-7cbf-4f98-8710-5230d59b0128",
+      "name": "If1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        800,
+        -380
+      ],
+      "id": "8aa990e5-e20a-44b6-9b2b-81fa98fe3b2d",
+      "name": "If exists accepted"
+    }
+  ],
+  "connections": {
+    "Google Calendar2": {
+      "main": [
+        [
+          {
+            "node": "If summary contains Remote Helpers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Making Short Deep Research",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If summary contains Remote Helpers": {
+      "main": [
+        [
+          {
+            "node": "Prepares and sorts unique events",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If summary does not contains Remote Helpers",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepares and sorts unique events": {
+      "main": [
+        [
+          {
+            "node": "Finds company website and closest date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finds company website and closest date": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request to make.com": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cleans text and splits into lines": {
+      "main": [
+        [
+          {
+            "node": "Joins lines into single text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Joins lines into single text": {
+      "main": [
+        [
+          {
+            "node": "Making Short Deep Research",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Extracts company name from text": {
+      "main": [
+        []
+      ]
+    },
+    "Add Deep Reseach to the Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Generates Google Document link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generates Google Document link": {
+      "main": [
+        [
+          {
+            "node": "Get Google Doc DR Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extracts company name and link": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Making Short Deep Research": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finds company name in text": {
+      "main": [
+        []
+      ]
+    },
+    "Add Short Deep Reseach to the Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Builds document link using ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Builds document link using ID": {
+      "main": [
+        [
+          {
+            "node": "Get Google Doc SDR Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Google Doc DR Metadata": {
+      "main": [
+        [
+          {
+            "node": "Extracts company name and link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Google Doc SDR Metadata": {
+      "main": [
+        [
+          {
+            "node": "Adds link and company name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adds link and company name": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "If does not exists anything",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request to make.com",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Add Deep Reseach to the Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Sent Deep Research to Sales Comment chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain2": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Add Short Deep Reseach to the Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain3": {
+      "main": [
+        []
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Sent Short Deep Research to Sales Comment chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "If exists accepted",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Cleans text and splits into lines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger1": {
+      "recurrenceRules": [
+        6
+      ]
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "7aece3fd-8b33-402b-b377-76f1fe14c1fa",
+  "triggerCount": 1,
+  "tags": [
+    {
+      "createdAt": "2025-03-17T12:52:07.245Z",
+      "updatedAt": "2025-03-17T12:52:07.245Z",
+      "id": "8gQGu3wLTaddTC1B",
+      "name": "report"
+    },
+    {
+      "createdAt": "2025-04-11T07:25:18.150Z",
+      "updatedAt": "2025-04-11T07:25:18.150Z",
+      "id": "F4yBYHrbQwB5aiFj",
+      "name": "Sales"
+    }
+  ]
+}

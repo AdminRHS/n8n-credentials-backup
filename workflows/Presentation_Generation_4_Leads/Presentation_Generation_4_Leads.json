@@ -1,0 +1,587 @@
+{
+  "createdAt": "2025-05-13T14:19:59.773Z",
+  "updatedAt": "2025-05-14T15:17:38.000Z",
+  "id": "H5UwmERdJxwu7W7A",
+  "name": "Presentation Generation 4 Leads",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "getAll",
+        "filters": {
+          "q": "=from: \"messaging-digest-noreply@linkedin.com\" subject:\"just messaged you\""
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        0
+      ],
+      "id": "975f8d58-666e-4e7b-9f8c-5d15903a65fc",
+      "name": "Gmail",
+      "webhookId": "c3c17dc9-e00c-4d66-8e1a-45835d151498",
+      "alwaysOutputData": false,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "fZIkqZJ7zUma0V9g",
+          "name": "Gmail account Presentation Gen Lead"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Access the \"From\" field from the incoming data\nconst fromField = $input.first().json[\"From\"];  // Adjusted to use $input.first().json.From\n\n// Regular expression to extract name before \"via LinkedIn\"\nconst regex = /^(.+?)\\s+via\\s+LinkedIn/;\nconst match = fromField.match(regex);\n\n// If a match is found, extract the lead name and generate the LinkedIn search URL\nif (match && match[1]) {\n  const leadName = match[1].trim();\n\n  // Generate the LinkedIn search URL by encoding the leadName\n  const searchUrl = `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(leadName)}`;\n\n  return [{\n    json: {\n      leadName: leadName,    // Store the extracted lead name\n      searchUrl: searchUrl   // Store the generated LinkedIn search URL\n    }\n  }];\n} else {\n  // If no match is found, return an error or empty array\n  return [{\n    json: {\n      error: \"No valid lead name found in 'From' field\"\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "ce481bb1-acd5-494f-be5b-5d3fb05a0d43",
+      "name": "Code"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        40,
+        0
+      ],
+      "id": "70e62c0f-9ae5-4119-9038-5ac8af1ac8f7",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Access the profile data from the PhantomBuster response\nconst profileData = $json; // Directly use $json to access the data\n\n// Create a personalized prompt for the lead\nconst prompt = `\n  Create a personalized presentation for a lead with the following details:\n  - Name: ${profileData.fullName}\n  - Job Title: ${profileData.jobTitle}\n  - Company: ${profileData.companyName}\n  - Location: ${profileData.location}\n  - Education: ${profileData.schoolName}\n  - Skills: ${profileData.specialties}\n  - Interests: ${profileData.industry}\n  \n  The presentation should focus on:\n  1. The lead's role and pain points (e.g., challenges they face in their industry).\n  2. How our product/solution can help them based on their job title and industry.\n  3. Relevant case studies that match their company size or industry.\n  4. A clear call to action.\n`;\n\n// Return the structured prompt\nreturn [\n  {\n    json: {\n      prompt: prompt\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        100,
+        300
+      ],
+      "id": "30737441-3dd0-451c-805b-68fe7d059ca4",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openrouter.ai/v1/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openRouterApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"model\": \"gemma-3-27b-it\",\n  \"prompt\": \"{{ $json['prompt'] }}\",\n  \"max_tokens\": 500,\n  \"temperature\": 0.7\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        320,
+        300
+      ],
+      "id": "ac90bca3-041a-48d1-98d0-903b0ae084fb",
+      "name": "HTTP Request1",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "kE4OK05nMptzbfwn",
+          "name": "Token_auth_crm_prospects"
+        },
+        "openRouterApi": {
+          "id": "xM1Kdr0j4QvJ4iaw",
+          "name": "AdminN8N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const openRouterResponse = items[0].json.choices[0].text;\n\nreturn [\n  {\n    json: {\n      presentationContent: openRouterResponse.trim()\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        540,
+        300
+      ],
+      "id": "1155cd3b-8f13-4c42-82a1-0a1ad1de9db9",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "agentId": "6762348867715429",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.phantombuster",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "35917fba-d576-481b-81be-598d284d3eb1",
+      "name": "Phantombuster1",
+      "credentials": {
+        "phantombusterApi": {
+          "id": "1JiR7YBHNd9EDLBm",
+          "name": "Phantombuster account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Access the profile data from the PhantomBuster response\nconst profileData = $json; // Directly use $json to access the data\n\n// Create a new object with only the required fields\nconst result = {\n  profileUrl: profileData.profileUrl,\n  fullName: profileData.fullName,\n  headline: profileData.headline,\n  jobTitle: profileData.jobTitle,\n  location: profileData.location,\n  summary: profileData.summary,\n  imgUrl: profileData.imgUrl,\n  schoolName: profileData.schoolName,\n  connectionsCount: profileData.connectionsCount,\n  connectionDegree: profileData.connectionDegree,\n  companyName: profileData.companyName,\n  companyUrl: profileData.companyUrl,\n  website: profileData.website,\n  industry: profileData.industry,\n  companySize: profileData.companySize,\n  headquarters: profileData.headquarters,\n  type: profileData.type,\n  founded: profileData.founded,\n  specialties: profileData.specialties,\n  industryCode: profileData.industryCode,\n  emailAddress: profileData.emailAddress,\n  emailQualification: profileData.emailQualification\n};\n\n// Return the structured data as a single object inside an array\nreturn [{\n  json: result\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        0
+      ],
+      "id": "66aabcac-2a01-434c-a168-1d467eaf30e9",
+      "name": "Code4"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1_Zrz0uHelmf7FsYGJGJddoM11uQMtyr8OfMxuu7UW00/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "OutreachList",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_Zrz0uHelmf7FsYGJGJddoM11uQMtyr8OfMxuu7UW00/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Search URL": "={{ $json['searchUrl'] }}",
+            "Name": "={{ $json['leadName'] }}"
+          },
+          "matchingColumns": [
+            "Name"
+          ],
+          "schema": [
+            {
+              "id": "Search URL",
+              "displayName": "Search URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        660,
+        0
+      ],
+      "id": "5b8e5fed-b6ff-4f66-ae72-86594d1914b7",
+      "name": "OutreachList",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Io07x49f6bMyXXQd",
+          "name": "Google Sheets account Presentation Gen Leads"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1_Zrz0uHelmf7FsYGJGJddoM11uQMtyr8OfMxuu7UW00/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1055782168,
+          "mode": "list",
+          "cachedResultName": "LeadInfo",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_Zrz0uHelmf7FsYGJGJddoM11uQMtyr8OfMxuu7UW00/edit#gid=1055782168"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "profileUrl": "={{ $json[\"profileUrl\"] }}",
+            "fullName": "={{ $json[\"fullName\"] }}",
+            "headline": "={{ $json[\"headline\"] }}",
+            "jobTitle": "={{ $json[\"jobTitle\"] }}",
+            "location": "={{ $json[\"location\"] }}",
+            "summary": "={{ $json[\"summary\"] }}",
+            "imgUrl": "={{ $json[\"imgUrl\"] }}",
+            "schoolName": "={{ $json[\"schoolName\"] }}",
+            "connectionsCount": "={{ $json[\"connectionsCount\"] }}",
+            "connectionDegree": "={{ $json[\"connectionDegree\"] }}",
+            "companyName": "={{ $json[\"companyName\"] }}",
+            "companyUrl": "={{ $json[\"companyUrl\"] }}",
+            "website": "={{ $json[\"website\"] }}",
+            "industry": "={{ $json[\"industry\"] }}",
+            "companySize": "={{ $json[\"companySize\"] }}",
+            "headquarters": "={{ $json[\"headquarters\"] }}",
+            "type": "={{ $json[\"type\"] }}",
+            "founded": "={{ $json[\"founded\"] }}",
+            "specialties": "={{ $json[\"specialties\"] }}",
+            "industryCode": "={{ $json[\"industryCode\"] }}",
+            "emailAddress": "={{ $json[\"emailAddress\"] }}",
+            "emailQualification": "={{ $json[\"emailQualification\"] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "profileUrl",
+              "displayName": "profileUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "fullName",
+              "displayName": "fullName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headline",
+              "displayName": "headline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "jobTitle",
+              "displayName": "jobTitle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "imgUrl",
+              "displayName": "imgUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "schoolName",
+              "displayName": "schoolName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "connectionsCount",
+              "displayName": "connectionsCount",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "connectionDegree",
+              "displayName": "connectionDegree",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "companyName",
+              "displayName": "companyName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "companyUrl",
+              "displayName": "companyUrl",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "website",
+              "displayName": "website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "industry",
+              "displayName": "industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "companySize",
+              "displayName": "companySize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "headquarters",
+              "displayName": "headquarters",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "founded",
+              "displayName": "founded",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "specialties",
+              "displayName": "specialties",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "industryCode",
+              "displayName": "industryCode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "emailAddress",
+              "displayName": "emailAddress",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "emailQualification",
+              "displayName": "emailQualification",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1300,
+        0
+      ],
+      "id": "03296b39-82d5-4643-921a-63149aafa672",
+      "name": "LeadInfo",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Io07x49f6bMyXXQd",
+          "name": "Google Sheets account Presentation Gen Leads"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "OutreachList",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Phantombuster1": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "LeadInfo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OutreachList": {
+      "main": [
+        [
+          {
+            "node": "Phantombuster1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LeadInfo": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "fdbb0387-d722-4c3f-8111-f7140cf000bb",
+  "triggerCount": 0,
+  "tags": []
+}
