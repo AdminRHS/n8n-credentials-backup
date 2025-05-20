@@ -1,0 +1,18 @@
+{
+  "createdAt": "2025-05-14T19:22:13.432Z",
+  "updatedAt": "2025-05-14T19:22:13.432Z",
+  "id": "WKW4KkCTQ9XiGoIA",
+  "name": "N8n-Notion Task Management Automation (write / post)",
+  "active": false,
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "203e537a-4615-44e1-9af7-092744f93ffd",
+  "triggerCount": 0,
+  "tags": []
+}
