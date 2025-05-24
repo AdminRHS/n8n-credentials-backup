@@ -1,0 +1,173 @@
+{
+  "createdAt": "2025-05-13T14:19:17.174Z",
+  "updatedAt": "2025-05-16T09:24:31.000Z",
+  "id": "VbQSEVRl8VWCiuXt",
+  "name": "CourseJSON Generator",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": " ",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "Сгенерируй ОДИН валидный JSON-объект для импорта на обучающую платформу по ДАННЫМ, которые я пришлю в следующем сообщении. Соблюдай ВСЕ правила, проверь себя по чек-листу и затем выведи только JSON. Если понял — ответь:  Да, жду следующее сообщение.   ⸻  1 Шаблон, который ОБЯЗАТЕЛЬНО следует клонировать  {   \"title\": \"\",   \"description\": \"\",   \"category\": \"681dfaab642ad2b18ee6e8d3\",   \"difficulty\": \"beginner\",   \"image\": \"\",   \"imagePreview\": \"\",   \"modules\": [     {       \"title\": \"\",       \"description\": \"\",       \"content\": \"\",       \"lessons\": [         {           \"title\": \"\",           \"content\": \"\",           \"duration\": 15,           \"type\": \"text\",           \"contentType\": \"standard\"         }       ],       \"tests\": []     }   ] }  Ни одного лишнего или пропущенного ключа, порядок свойств сохраняй.  ⸻  2 Как заполнять поля  Уровень\tПоле\tЧто писать Курс\ttitle, description\tБери дословно из моих данных. Курс\timage, imagePreview\tОставь \"\", если в данных нет ссылок. Модуль\ttitle, description\tКопируй дословно. Модуль\tcontent\tРовно одно предложение-саммари о сути модуля. Урок\ttitle\tКопируй заголовок урока. Урок\tcontent\tНумерованный список: 1. … \\\\n2. … без сокращений. Урок\tduration\tИспользуй число из данных или по умолчанию 15. Урок\ttype, contentType\tВсегда \"text\" и \"standard\". Модуль\ttests\tВсегда [].   ⸻  3 Формат ответа \t•\tВерни только JSON без Markdown-блоков, комментариев и пояснений. \t•\tОтвет должен начинаться с { и заканчиваться }. \t•\tВсе строки в кавычках \", все переносы в content — через \\\\n.  ⸻  4 Чек-лист перед отправкой \t•\tКол-во модулей и уроков точно совпадает с входными данными (ничего не потеряно). \t•\tУ каждого модуля есть минимум один урок. \t•\tcontent модуля = 1 предложение. \t•\tcontent урока = нумерованный список без сокращений. \t•\tВесь JSON валиден (скобки, запятые, кавычки).  ⸻  5 Типичные ошибки и как правильно  Ошибка\tПочему плохо\tПравильно Прерываешься после первого модуля { \"modules\":[ {…} ] }\tПотеря остальных модулей.\tВыведи все модули из данных, пример ↓ Пропускаешь уроки Модуль содержит 1 урок вместо 3.\tНарушена целостность курса.\tВключи каждый урок из данных. content модуля = много строк\tДолжно быть 1 предложение.\tcontent : “Summarise whole module in one sentence.” content урока = одно слово\tДолжен быть список 1., 2. …\tcontent : “1. Step one…\\n2. Step two…” Добавил комментарий // TODO или <!-- -->\tJSON станет невалидным.\tУбери комментарии, оставь только данные. Вывел Markdown  ```json …\tПлатформа не принимает.\tПросто JSON без обёртки.   ⸻  6 Два учебных примера (НЕ реальные данные)  Пример ошибочного ответа  {   \"title\": \"Demo\",   \"modules\": [     { \"title\": \"Only module\" }   ] }  Ошибки: отсутствуют обязательные поля, content не заполнен, пропущены уроки, JSON усечён.  Пример корректного ответа  {   \"title\": \"Demo Course\",   \"description\": \"Quick demo.\",   \"category\": \"681dfaab642ad2b18ee6e8d3\",   \"difficulty\": \"beginner\",   \"image\": \"\",   \"imagePreview\": \"\",   \"modules\": [     {       \"title\": \"Module A\",       \"description\": \"Intro module.\",       \"content\": \"This module gives an overview of the whole course.\",       \"lessons\": [         {           \"title\": \"Lesson 1\",           \"content\": \"1. Do X\\\\n2. Do Y\",           \"duration\": 15,           \"type\": \"text\",           \"contentType\": \"standard\"         }       ],       \"tests\": []     }   ] }  Все ключи на месте, content модуля = 1 предложение, content урока = список.  ⸻  Если всё понятно — ответь ровно:  Да, жду следующее сообщение."
+            },
+            {
+              "type": "AIMessagePromptTemplate",
+              "message": "Да, жду следующее сообщение."
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "={{ $json.body.message }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        480,
+        100
+      ],
+      "id": "2a4e80e3-64a6-40fa-8a6f-e1ae4bd35fe4",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        540,
+        340
+      ],
+      "id": "df966a9b-99cf-42a9-8f72-95edb2edb1aa",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "PrqIbmbNAb3ME4eF",
+          "name": "OpenRouter Sales account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "CourseJSONGenerator",
+        "responseMode": "lastNode",
+        "options": {
+          "responseContentType": "text/plain"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        60,
+        140
+      ],
+      "id": "e79b5b1b-d607-4c88-a363-6469394304e5",
+      "name": "Webhook",
+      "webhookId": "8f08ec5f-bc5e-4874-8c27-65ca21fc03a1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Приймає рядок з ```json … ``` і повертає чистий JSON-об’єкт\nreturn items.map(item => {\n  const raw = (item.json?.text || '').trim();\n\n  // Видаляємо всі варіанти позначень ```json та ```\n  const cleaned = raw\n    .replace(/```json/gi, '')\n    .replace(/```/g, '')\n    .trim();\n\n  const data = JSON.parse(cleaned);\n\n  return { json: data };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        100
+      ],
+      "id": "fb50ac14-1f6f-41d9-8744-76cf7f6f75b0",
+      "name": "Code"
+    }
+  ],
+  "connections": {
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "7832065f-f6de-4a0c-a639-b47f4b75a36e",
+  "triggerCount": 0,
+  "tags": [
+    {
+      "createdAt": "2025-05-13T14:20:15.668Z",
+      "updatedAt": "2025-05-13T14:20:15.668Z",
+      "id": "0VUURrJm77Y2zHCC",
+      "name": "generator"
+    },
+    {
+      "createdAt": "2025-05-13T14:20:13.639Z",
+      "updatedAt": "2025-05-13T14:20:13.639Z",
+      "id": "75ekeNpi1wLMIwAX",
+      "name": "json"
+    },
+    {
+      "createdAt": "2025-03-17T12:51:58.346Z",
+      "updatedAt": "2025-03-17T12:51:58.346Z",
+      "id": "CO1guCcQNZgNjhhs",
+      "name": "bot"
+    },
+    {
+      "createdAt": "2025-05-13T14:20:12.005Z",
+      "updatedAt": "2025-05-13T14:20:12.005Z",
+      "id": "Ca15t5dw65lILi6Y",
+      "name": "onboarding"
+    },
+    {
+      "createdAt": "2025-03-04T15:18:45.103Z",
+      "updatedAt": "2025-03-04T15:18:45.103Z",
+      "id": "Lv0IHVqEPpRYfyh7",
+      "name": "AI Onboarding"
+    }
+  ]
+}
