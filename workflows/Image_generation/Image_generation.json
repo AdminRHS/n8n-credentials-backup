@@ -1,0 +1,588 @@
+{
+  "createdAt": "2025-05-22T09:36:44.086Z",
+  "updatedAt": "2025-05-23T14:17:10.000Z",
+  "id": "goOeR0x3wzqwFy9y",
+  "name": "Image generation",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-image-1",
+          "mode": "list",
+          "cachedResultName": "GPT-IMAGE-1"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Держи промпт. 3D cartoon shark mascot, anthropomorphic, friendly blue shark with expressive eyes, wearing beige short-sleeve button-up shirt with name badge \"SHARKY\", blue cargo shorts, brown work boots, standing upright, holding notebook and pencil, friendly smile showing teeth, front view, professional 3D rendering, solid light teal background, character design, mascot logo --ar 1:1 --stylize 750. Если понял что на нем - напиши только понял"
+            },
+            {
+              "content": "понял",
+              "role": "assistant"
+            },
+            {
+              "content": "Сгенерируй изображение Sharky, который изучает на доске title. description"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1020,
+        0
+      ],
+      "id": "ab2816d0-bdf4-4775-8be9-b9ecb281efa0",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "45jXhPFAPKKR3KzB",
+          "name": "OpenAi account ПЛАТНА"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        280,
+        -200
+      ],
+      "id": "f62308fb-c5fc-40ce-ab93-3ae582dab5dc",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "xM1Kdr0j4QvJ4iaw",
+          "name": "AdminN8N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        20,
+        -360
+      ],
+      "id": "31437106-d65b-4ee3-a46a-8f3a964ca3e9",
+      "name": "AI Agent1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output }}",
+                    "rightValue": "AI",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "399d5487-56be-4466-9645-16f8d1d6e72b"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        800,
+        0
+      ],
+      "id": "ca991220-ccd3-4ea7-a673-63c970168da7",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "image-gen",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -520,
+        100
+      ],
+      "id": "8d8a64ed-4b35-4ad9-9092-759ead577c0e",
+      "name": "Webhook",
+      "webhookId": "bf6644cb-c428-407d-9636-e341b6e22331"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Напиши действие, к которому относится запрос пользователя\n1. Lead Generation\n2. Sales.\n3. HR\n4. AI\n\n\n<action>\n{{ $json.body.message }}\n</action> \n\nНапиши конкретное действие, не изменяя его и не заключая в теги, в ловеркейсе",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "123"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        460,
+        -340
+      ],
+      "id": "cce5b063-99db-4b05-ae52-64e7086c7f80",
+      "name": "Basic LLM Chain",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "resource": "assistant",
+        "assistantId": {
+          "__rl": true,
+          "value": "asst_b6z8vWl1scR0oZbNGQj5ZMfK",
+          "mode": "list",
+          "cachedResultName": "image generator"
+        },
+        "prompt": "define",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -380,
+        -260
+      ],
+      "id": "0ddc527c-73df-4397-aa47-d93ca4bd8629",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "45jXhPFAPKKR3KzB",
+          "name": "OpenAi account ПЛАТНА"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        340,
+        40
+      ],
+      "id": "bdb9d88c-eb39-4283-897a-acadfc65eba2",
+      "name": "Convert to File",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-image-1",
+          "mode": "list",
+          "cachedResultName": "GPT-IMAGE-1"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=take this photo  {{ $json.data }} like reference and generate a similar "
+            }
+          ]
+        },
+        "simplify": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        840,
+        -240
+      ],
+      "id": "95119229-5e98-490f-9038-7c4d763512b6",
+      "name": "OpenAI2",
+      "credentials": {
+        "openAiApi": {
+          "id": "gSBSrGd5aeP9FLIB",
+          "name": "OpenAi dev ПЛАТНА"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "id": "87c1cb37-13eb-4265-94c2-d890fe4a4afc",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -400,
+        580
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/edits",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "image",
+              "inputDataFieldName": "data"
+            },
+            {
+              "name": "prompt",
+              "value": "add a mask with horns"
+            },
+            {
+              "name": "model",
+              "value": "gpt-image-1"
+            },
+            {
+              "name": "n",
+              "value": "1"
+            },
+            {
+              "name": "size",
+              "value": "1024x1024"
+            },
+            {
+              "name": "quality",
+              "value": "high"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d46d1509-0cd2-46b9-b576-6c30448323ba",
+      "name": "Edit Image (OpenAI)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        520,
+        580
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "gpt-image-1"
+            },
+            {
+              "name": "prompt",
+              "value": "3D cartoon shark mascot, anthropomorphic, friendly blue shark with expressive eyes, wearing beige short-sleeve button-up shirt with name badge \"SHARKY\", blue cargo shorts, brown work boots, standing upright, holding notebook and pencil, friendly smile showing teeth, front view, professional 3D rendering, solid light teal background, character design, mascot logo --ar 1:1 --stylize 750"
+            },
+            {
+              "name": "n",
+              "value": "={{Number(1)}}"
+            },
+            {
+              "name": "size",
+              "value": "1536x1024"
+            },
+            {
+              "name": "moderation",
+              "value": "low"
+            },
+            {
+              "name": "background",
+              "value": "auto"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c59afd8e-de50-462a-8a3c-7d6a084d1298",
+      "name": "Create image call",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -100,
+        580
+      ],
+      "typeVersion": 4.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "gSBSrGd5aeP9FLIB",
+          "name": "OpenAi dev ПЛАТНА"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data[0].b64_json",
+        "options": {
+          "fileName": "name_example",
+          "mimeType": "image/png"
+        }
+      },
+      "id": "dd383ae7-3ec5-4f2a-9a26-6eff7a750448",
+      "name": "Convert json binary to File",
+      "type": "n8n-nodes-base.convertToFile",
+      "position": [
+        220,
+        580
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "operation": "toBinary",
+        "sourceProperty": "data[0].b64_json",
+        "options": {
+          "fileName": "",
+          "mimeType": "image/png"
+        }
+      },
+      "id": "199212bb-7db6-4a9f-8651-39e5d5af0ba5",
+      "name": "Convert json binary to File final",
+      "type": "n8n-nodes-base.convertToFile",
+      "position": [
+        840,
+        580
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "content": "### 🧪 Manual Trigger\nStarts the workflow manually. Ideal for testing and debugging purposes.\n",
+        "height": 320
+      },
+      "id": "9dc0d60f-0ae5-4524-b946-ad90d3df5d41",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -480,
+        420
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 🎨 Image Generation (OpenAI)\nSends a POST request to the OpenAI `/v1/images/generations` endpoint.\n\n- Uses `gpt-image-1` model\n- Generates an image from a given prompt\n- Returns a base64-encoded image (`b64_json`)\n\n📌 Output: `data[0].b64_json`\n",
+        "height": 440,
+        "width": 280,
+        "color": 3
+      },
+      "id": "dccf6694-4914-4d69-8710-0cbdc0b2a708",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -180,
+        300
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 🧾 Convert base64 to File\nConverts the `b64_json` field into a binary PNG file to use in the next step.\n\n📤 Output: Binary image under the `data` field\n",
+        "height": 320,
+        "width": 280,
+        "color": 5
+      },
+      "id": "b88a66e7-024b-40eb-8d61-b64a1d3c970c",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        120,
+        420
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### ✏️ Image Editing (OpenAI)\nSends the binary image to OpenAI’s `/v1/images/edits` endpoint with a descriptive prompt.\n\n- Model: `gpt-image-1`\n- Format: `multipart/form-data`\n- Requires a real file (not base64)\n- Supports optional `mask` input\n\n📥 Input: Binary image from `data`\n📤 Output: Edited image in `b64_json`\n",
+        "height": 440,
+        "width": 280,
+        "color": 3
+      },
+      "id": "9b74601c-5ae8-401e-a049-d9cce219c97b",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        440,
+        300
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### 🧾 Final Conversion (base64 → File)\nConverts the edited image (`b64_json`) into a downloadable or previewable PNG file.\n\n📤 Output: Final binary image\n",
+        "height": 360,
+        "width": 280,
+        "color": 5
+      },
+      "id": "aa7f0d07-a5b5-40f0-9d3d-4700cbe49038",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        760,
+        380
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -340,
+        100
+      ],
+      "id": "3e49a96a-ce21-41e2-9d6d-a3fb85809ac6",
+      "name": "OpenAI3",
+      "credentials": {
+        "openAiApi": {
+          "id": "eDeCJGAdal37Xkye",
+          "name": "Test"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        []
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "OpenAI3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        []
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Create image call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Image (OpenAI)": {
+      "main": [
+        [
+          {
+            "node": "Convert json binary to File final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create image call": {
+      "main": [
+        [
+          {
+            "node": "Convert json binary to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert json binary to File": {
+      "main": [
+        [
+          {
+            "node": "Edit Image (OpenAI)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "ce7038c4-3552-489d-a17e-f0279c401f98",
+  "triggerCount": 0,
+  "tags": []
+}
