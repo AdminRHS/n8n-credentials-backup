@@ -1,0 +1,2010 @@
+{
+  "createdAt": "2025-05-01T14:25:34.686Z",
+  "updatedAt": "2025-05-21T08:31:27.000Z",
+  "id": "4knuqjqMJ0PLaqoY",
+  "name": "YouTube AI analys",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "542dc144-25f4-47a2-9087-b1cfac13077e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UUPjNBjflYl0-HQtUvOx0Ibw",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        -500
+      ],
+      "id": "1a068f33-e325-47d8-8f29-c6dc7793defc",
+      "name": "Greg Isenberg",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UUbo-KbSjJDG6JWQ_MTZ_rNA",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        -300
+      ],
+      "id": "900640c4-c00f-49f5-8cd7-9d3829aac422",
+      "name": "Nick Saraev",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UU08Fah8EIryeOZRkjBRohcQ",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        -120
+      ],
+      "id": "40ca1cbc-5aef-48d0-aea3-089d799f6825",
+      "name": "Creator Magic",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UUMwVTLZIRRUyyVrkjDpn4pA",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        120
+      ],
+      "id": "3d5d3f74-d3e1-4b12-a8d6-3696dbbdfa84",
+      "name": "Cole Medin",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UUI4xxi0p97BghIqgEPYx6sw",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        320
+      ],
+      "id": "4d90034a-3366-42fd-8209-6bba486affdf",
+      "name": "Your AI Workflow",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "playlistItem",
+        "operation": "getAll",
+        "playlistId": "=UUc-FovAyBAQDw2Y7PQ_v0Zw",
+        "part": [
+          "snippet",
+          "contentDetails"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        220,
+        520
+      ],
+      "id": "57e2f9c8-48e9-4e6f-b229-b6ce5b8f9539",
+      "name": "Julian Goldie SEO",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "LnAQTPv3vaELYS2I",
+          "name": "YouTube Parser n8n"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// отфильтровать только элементы без ошибки и с определённым transcript\nreturn items.filter(item => {\n  // если есть поле error или transcript === undefined, пропускаем\n  if (item.json.error) return false;\n  if (item.json.transcript === undefined) return false;\n  return true;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        -1380
+      ],
+      "id": "bb78f923-8449-4bf6-88ff-f1028cb00ebf",
+      "name": "Error Filter"
+    },
+    {
+      "parameters": {
+        "url": "https://youtube-transcript3.p.rapidapi.com/api/transcript",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "videoId",
+              "value": "={{ $json.videoId }}"
+            },
+            {
+              "name": "Title",
+              "value": "={{ $json.title }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "=X-RapidAPI-Host",
+              "value": "=youtube-transcript3.p.rapidapi.com"
+            },
+            {
+              "name": "=X-RapidAPI-Key",
+              "value": "=f7f02f04f5mshc37f3e7eedb6f29p111f4djsn60e622f16916"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 100000
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1900,
+        -1540
+      ],
+      "id": "7ffd3eee-efff-4825-809b-33d7e0aa1757",
+      "name": "youtube video parser"
+    },
+    {
+      "parameters": {
+        "jsCode": "// вычисляем метку времени «неделю назад»\nconst oneWeekAgo = Date.now() - 1 * 48 * 60 * 60 * 1000;\n\n// фильтруем элементы по дате публикации из snippet.publishedAt\nconst recentItems = items.filter(item => {\n  const pubDate = new Date(item.json.snippet.publishedAt).getTime();\n  return pubDate >= oneWeekAgo;\n});\n\nreturn recentItems;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        -20
+      ],
+      "id": "25249b4c-315f-4cc3-96fc-91e00a76a907",
+      "name": "24 hours"
+    },
+    {
+      "parameters": {
+        "jsCode": "// объединим все сегменты transcript в один текст\nconst segs = $json.transcript || [];\nconst fullText = segs.map(s => s.text).join(' ');\n// передадим дальше оригинальные поля + новое\nreturn [{\n  json: {\n    ...$json,\n    transcript_original: fullText\n  }\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2620,
+        -1380
+      ],
+      "id": "11690ba9-a3f8-4925-9fd4-b52ca86461dc",
+      "name": "add transcript_original"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{\n  JSON.stringify({\n    model: \"google/gemini-2.5-pro-exp-03-25\",\n    messages: [\n      {\n        role: \"system\",\n        content: \"You are an instructional designer. Given the user’s transcript text, identify the 4–6 major topics covered and for each provide a concise, detailed description (2–3 sentences). Output the result as a JSON array of objects with the schema [{\\\"topic\\\":\\\"...\\\",\\\"detail\\\":\\\"...\\\"}, …]. Do not add any extra commentary.\"\n      },\n      {\n        role: \"user\",\n        content: $json.chunk\n      }\n    ]\n  })\n}}\n",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 10000
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3600,
+        -1520
+      ],
+      "id": "a4dd0a31-cf26-4290-bde5-defe8016e61e",
+      "name": "Chat Completion"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Берём исходный текст и метаданные из первого элемента\nconst input = items[0].json;\nconst fullText = input.choices[0].message.content;\nconst { title, url, publishedAt, videoId } = input;\n\n// Максимальная длина чанка\nconst maxLen = 3000;\n\n// Разбиваем на массив предложений (учитываем точки, воскл. и вопросит. знаки)\nconst sentences = fullText.match(/[^\\.!\\?]+[\\.!\\?]+/g) || [fullText];\n\n// Накопитель\nlet chunks = [];\nlet current = '';\n\n// Проходим по каждому предложению\nfor (const sentence of sentences) {\n  if ((current + sentence).length <= maxLen) {\n    current += sentence + ' ';\n  } else {\n    if (current) chunks.push(current.trim());\n    current = sentence + ' ';\n  }\n}\n// Последний чанк\nif (current) chunks.push(current.trim());\n\n// Преобразуем в items, добавляя метаданные только в первый\nreturn chunks.map((textChunk, index) => {\n  const base = { chunk: textChunk };\n  if (index === 0) {\n    // добавляем поля только для первого элемента\n    return {\n      json: {\n        ...base,\n        title,\n        url,\n        publishedAt,\n        videoId,\n      },\n    };\n  }\n  // последующие — только chunk\n  return { json: base };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3380,
+        -1380
+      ],
+      "id": "cfbef56e-90f4-4384-a1b4-3390054695a7",
+      "name": "Split to Chunks"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Инициализируем пустую строку для сбора текста из всех входных айтемов\nlet allFullText = '';\n\n// Переменные для метаданных, берем их из первого айтема\nlet title, url, publishedAt, videoId;\n\n// Берем метаданные только из первого входного айтема, если он существует\nif (items.length > 0 && items[0].json) {\n  const firstItemJson = items[0].json;\n  title = firstItemJson.title;\n  url = firstItemJson.url;\n  publishedAt = firstItemJson.publishedAt;\n  videoId = firstItemJson.videoId;\n}\n\n\n// Проходим по всем входным айтемам и собираем текст\nfor (const item of items) {\n  // Проверяем, существует ли поле с текстом в текущем айтеме\n  if (item.json && item.json.choices && item.json.choices[0] && item.json.choices[0].message && item.json.choices[0].message.content) {\n    // Добавляем текст текущего айтема к общей строке.\n    // Добавляем перевод строки между текстами разных айтемов для лучшего разделения.\n    allFullText += item.json.choices[0].message.content + '\\n';\n  }\n}\n\n// Максимальная длина чанка (остается прежней)\nconst maxLen = 3000;\n\n// Разбиваем объединенный текст на предложения\n// Учитываем случай, если allFullText пустой\nconst sentences = allFullText.match(/[^\\.!\\?]+[\\.!\\?]+/g) || (allFullText ? [allFullText] : []);\n\n\n// Собираем чанки из объединенных предложений (логика остается прежней)\nlet chunks = [];\nlet current = '';\nfor (const sentence of sentences) {\n  // Убираем лишние пробелы из начала/конца предложения перед проверкой длины\n  const trimmedSentence = sentence.trim();\n  if (!trimmedSentence) continue; // Пропускаем пустые строки после trim\n\n  // Проверяем, поместится ли предложение в текущий чанк\n  // Учитываем пробел, который добавим после предложения\n  if ((current + trimmedSentence).length + (current ? 1 : 0) <= maxLen) {\n    current += trimmedSentence + ' ';\n  } else {\n    // Если текущий чанк не пустой, добавляем его в список чанков\n    if (current) chunks.push(current.trim());\n    // Начинаем новый чанк с текущего предложения\n    current = trimmedSentence + ' ';\n  }\n}\n// Добавляем последний чанк, если он не пустой\nif (current) chunks.push(current.trim());\n\n\n// Преобразуем чанки в выходные айтемы.\n// Метаданные добавляем только к первому чанку общего текста.\nreturn chunks.map((text, idx) => {\n  const base = { summary_points: text };\n  if (idx === 0) {\n    // Только в первом выходном айтеме (первом чанке) добавляем метаданные из первого входного айтема\n    return {\n      json: {\n        ...base,\n        title, // Метаданные из первого входного айтема\n        url,\n        publishedAt,\n        videoId,\n      }\n    };\n  }\n  // Для последующих чанков возвращаем только текст\n  return { json: base };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4060,
+        -1380
+      ],
+      "id": "de080fd8-d7aa-4c0c-b76b-4634851217df",
+      "name": "Summarizer"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "60d0d292-7f04-40b4-acf3-8a64c13acd26",
+              "name": "title",
+              "value": "={{ $json.snippet.title }}",
+              "type": "string"
+            },
+            {
+              "id": "753c7ef6-4008-4b16-81f0-7fbe291f015a",
+              "name": "url",
+              "value": "=https://youtube.com/watch?v={{ $json.snippet.resourceId.videoId }}",
+              "type": "string"
+            },
+            {
+              "id": "b51008a2-7ca7-408c-b212-f8a441d7c3e5",
+              "name": "publishedAt",
+              "value": "={{ $json.snippet.publishedAt }}",
+              "type": "string"
+            },
+            {
+              "id": "32915e1e-22a5-452f-a234-8371d3993da3",
+              "name": "videoId",
+              "value": "={{ $json.snippet.resourceId.videoId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1680,
+        -1380
+      ],
+      "id": "d0e6b142-8d7d-4a02-af47-6f6dbc0be845",
+      "name": "Parse title ulr and publishedAt"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Node 1: Clean the raw string containing the JSON array\n\n// Инициализируем переменную для сбора всех частей сырой JSON строки из входных айтемов\nlet combinedRawJsonString = '';\n\n// Переменные для метаданных, берем их из первого входного айтема\nlet title, url;\n\n// Берем метаданные (title, url) только из первого входного айтема, если он существует\nif (items.length > 0 && items[0].json) {\n    const firstInputItemJson = items[0].json;\n    title = firstInputItemJson.title;\n    url = firstInputItemJson.url;\n    // publishedAt и videoId также доступны, но в оригинале не использовались в выходе этого узла.\n}\n\n// Проходим по всем входным айтемам и собираем содержимое поля summary_points\nfor (const item of items) {\n    // Проверяем, существует ли поле summary_points в текущем айтеме\n    if (item.json && item.json.summary_points) {\n        // Добавляем содержимое summary_points текущего айтема к общей строке\n        // Просто конкатенируем, т.к. чистка ниже должна справиться с возможными разрывами\n        combinedRawJsonString += item.json.summary_points;\n    }\n}\n\n// Теперь работаем с объединенной сырой строкой\nlet cleanedJsonString = combinedRawJsonString;\n\n// --- Cleaning Steps ---\n\n// 1. Remove potential leading 'json' marker and surrounding whitespace/newlines.\ncleanedJsonString = cleanedJsonString.replace(/^\\s*```?\\s*json\\s*\\n*/, '');\n\n// 2. Remove potential trailing backticks (``` or `) and surrounding whitespace/newlines.\ncleanedJsonString = cleanedJsonString.replace(/\\s*```?\\s*$/, '');\n\n// 3. Trim any remaining leading/trailing whitespace.\ncleanedJsonString = cleanedJsonString.trim();\n\n// --- !!! WARNING !!! ---\n// The following step removes JSON structure characters ([ ] { }).\n// As noted in the original code, this makes the string invalid JSON and JSON.parse() in the next node WILL FAIL\n// if the next node expects valid JSON. This logic is kept as per your original code.\n\n// 4. Remove square brackets ([ ]) and curly braces ({ }) using a regex\ncleanedJsonString = cleanedJsonString.replace(/[\\[\\]\\{\\}]/g, '');\n\n// --- Prepare Output for the next node ---\n// Мы возвращаем один айтем, содержащий очищенную объединенную строку и метаданные из первого входного айтема.\nreturn [{\n    json: {\n        cleanedJsonString: cleanedJsonString, // Очищенная объединенная строка\n        title: title,                         // Оригинальный title из первого входного айтема\n        url: url                              // Оригинальный URL из первого входного айтема\n    }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4320,
+        -1380
+      ],
+      "id": "1e5cc7c5-6547-44ce-b307-46945c4372ae",
+      "name": "remove json"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем очищенную строку из предыдущего узла\nconst cleanedJsonString = items[0].json.cleanedJsonString;\n\n// Шаблон для парсинга — регулярное выражение для извлечения topic и detail\nconst regex = /\"topic\":\\s*\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"\\s*,\\s*\"detail\":\\s*\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"/gs;\n\n// Массив для хранения результата\nlet result = [];\nlet match;\n\n// Извлекаем метаданные из первого элемента\nconst title = items[0].json.title;\nconst url = items[0].json.url;\n\n// Проходим по строкам и извлекаем значения для topic и description\nlet isFirstRow = true; // Переменная для отслеживания первой строки\nwhile ((match = regex.exec(cleanedJsonString)) !== null) {\n    // match[1] содержит значение 'topic'\n    // match[3] содержит значение 'detail'\n    let row = {\n        json: {\n            Topic: match[1],       // Тема\n            Description: match[3]  // Описание\n        }\n    };\n\n    // Добавляем title и url только для первой строки\n    if (isFirstRow) {\n        row.json.title = title;\n        row.json.url = url;\n        isFirstRow = false; // После первой строки устанавливаем флаг в false\n    }\n\n    result.push(row);\n}\n\n// Возвращаем результат в формате, где каждая строка представляет собой объект с Topic, Description, title и url (для первой строки)\nreturn result;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4540,
+        -1380
+      ],
+      "id": "a4710b64-f678-422a-b41b-9cb0433a109b",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1pongTk5EFZI1D6RRpYwz_Ex_Tt3lsHfD0jHcGgnAq0k/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Parsing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1pongTk5EFZI1D6RRpYwz_Ex_Tt3lsHfD0jHcGgnAq0k/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $json.title }}",
+            "Topic": "={{ $json.Topic }}",
+            "Description": "={{ $json.Description }}",
+            "Link": "={{ $json.url }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Topic",
+              "displayName": "Topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        4580,
+        100
+      ],
+      "id": "dfcc26a9-bcdd-4d32-9476-f205b0fe0c31",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JWf1dYTj83NVJtf5",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        4180,
+        -960
+      ],
+      "id": "ddbacad6-ee9f-4226-a888-5082dd83c405",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "xM1Kdr0j4QvJ4iaw",
+          "name": "AdminN8N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        4140,
+        -660
+      ],
+      "id": "ffd44774-8420-4578-b69b-ec3e33f4f469",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "xM1Kdr0j4QvJ4iaw",
+          "name": "AdminN8N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "=Authorization",
+              "value": "=Bearer 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"
+            },
+            {
+              "name": "=Content-Type",
+              "value": "=application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"model\": \"google/gemini-2.5-pro-exp-03-25\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a translator. Your only task is to take the user’s input and output its English translation — nothing more. Do not add any commentary, explanations, apologies or extra sentences. If the input is already English, return it verbatim.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"{{ $json.transcript_original }}\"\n    }\n  ]\n}\n",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2840,
+        -1520
+      ],
+      "id": "b8257f31-848d-430b-ba31-9362ca99fd9d",
+      "name": "HTTP OpenRouter Request"
+    },
+    {
+      "parameters": {
+        "numberInputs": 6
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        720,
+        -80
+      ],
+      "id": "c0794ac1-4a45-48bf-b6e2-71624e0e41a5",
+      "name": "Merge YouTube videos"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2120,
+        -1400
+      ],
+      "id": "72845b20-1e57-4adb-98f1-da266ced7ca4",
+      "name": "Merge transcribation and title, url,  etc"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        3120,
+        -1380
+      ],
+      "id": "6b565cff-30ed-4ca2-ae86-a18d07ecb4e4",
+      "name": "Merge OpenRouter and transcript"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        3840,
+        -1380
+      ],
+      "id": "d175c838-8fff-4687-8af1-03fd4f0a33f0",
+      "name": "Merge Chunks and title, url, etc"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем входные данные\nconst inputData = items;  // Это таблица с колонками Topic, Description и Title\n\n// Массив для хранения результата\nlet result = [];\n\n// Получаем title и url только из первого элемента\nconst title = inputData[0].json.title;\nconst url = inputData[0].json.url;\n\n// Переменная для отслеживания первой строки\nlet isFirstRow = true;\n\n// Проходим по всем строкам и добавляем title и url только для первой строки\ninputData.forEach(item => {\n    // Создаем объект для каждой строки\n    const row = {\n        json: {\n            Topic: item.json.Topic,          // Извлекаем Topic\n            Description: item.json.Description,  // Извлекаем Description\n            title: title  // Дублируем Title из первого элемента\n        }\n    };\n\n    // Добавляем url только для первой строки\n    if (isFirstRow) {\n        row.json.url = url;\n        isFirstRow = false; // После первой строки устанавливаем флаг в false\n    }\n\n    result.push(row);\n});\n\n// Возвращаем результат\nreturn result;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3860,
+        -1100
+      ],
+      "id": "47088f8f-6f3c-4c8c-a225-7fd9b4946038",
+      "name": "Add Titles to rows"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate a lesson theory without bullet points and description what students will be able to..., This project/learning centers/module... Write text like guide, not water AI answer using this materials:\nTitle: {{ $json.title }}\nTopic: {{ $json.Topic }}\nDescription: {{ $json.Description }}\n\nU need to write 2-3 paragraphs about Description that i gave you\n\nStart output from \"Lesson Description:\" \n\nDo not add any extra commentary\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        4080,
+        -1100
+      ],
+      "id": "2df03b0a-ea95-463b-aeda-af0ecfd917ff",
+      "name": "Theory Generator"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем все входные данные (input items)\nconst inputItems = items;\n\n// Массив для хранения результата\nlet mergedResult = [];\nlet fullText = '';  // Это будет наш объединенный текст\n\n// Проходим по всем входным данным и собираем текст\ninputItems.forEach(item => {\n    const lessonText = item.json.text;  // Извлекаем текст из каждого input\n\n    // Добавляем разрыв строки перед \"Lesson Description\", если это нужно\n    const formattedText = lessonText.replace(/(Lesson Description)/g, '\\n$1');\n    \n    // Добавляем к полному тексту\n    fullText += formattedText + ' ';\n});\n\n// Формируем итоговый объект\nmergedResult.push({\n    json: {\n        lessonText: fullText.trim()  // Склеиваем все Lesson Description в один блок\n    }\n});\n\n// Возвращаем объединенные данные\nreturn mergedResult;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4440,
+        -1100
+      ],
+      "id": "514c7f49-e326-45ec-b777-898d810593ed",
+      "name": "Theory Merger"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем динамический текст из входных данных\nconst inputString = $input.first().json.lessonText;\n\n// Функция для добавления числовых индексов перед каждым \"Lesson Description:\"\nconst addLessonNumber = (input) => {\n  let count = 1;\n  // Используем регулярное выражение для поиска всех вхождений \"Lesson Description:\"\n  return input.replace(/(Lesson Description:)/g, () => {\n    return `Lesson Description ${count++}:`;  // Вставляем номер урока перед \"Lesson Description:\"\n  });\n};\n\n// Применяем функцию добавления номеров уроков\nconst updatedString = addLessonNumber(inputString);\n\n// Возвращаем результат\nreturn [{ json: { updatedText: updatedString } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3860,
+        -820
+      ],
+      "id": "54831ec2-5b87-4a7a-86ca-ecd9418a8c13",
+      "name": "Add nums to Lesson Description"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Не пиши коментарии от себя\n\nЯ хочу преобразовать следующий текст в JSON-формат для описания онлайн-курса.\nОбщая информация о курсе:\nНа основе всего предоставленного текста сгенерируй общее название для курса (название не должно быть очень длинным, несколько слов).\nНа основе всего предоставленного текста сгенерируй общее описание для курса.\nКатегория курса: 680f332a16f8bb2b6ce9e71d\nУровень сложности: beginner\nИзображение курса: (оставьте пустым)\nПревью изображения курса: (оставьте пустым)\nМодули курса:\nДля каждого блока текста, начинающегося с \"Lesson Description\" и заканчивающегося перед следующим \"Lesson Description\" (или концом текста), создай отдельный модуль в массиве \"modules\".\nДля каждого модуля:\nЗаголовок модуля: Сгенерируй краткий заголовок, обобщающий содержание текущего \"Lesson Description\".\nОписание модуля: Сгенерируй краткое описание, обобщающее содержание текущего \"Lesson Description\".\nСодержание модуля (\"content\"): Скопируй полностью текст текущего \"Lesson Description\".\nУроки модуля (\"lessons\"): Создай массив, содержащий один объект урока.\nЗаголовок урока (\"title\"): Сформируй заголовок как \"Module №X\", где X - порядковый номер текущего \"Lesson Description\".\nСодержание урока (\"content\"): Скопируй полностью текст текущего \"Lesson Description\".\nДлительность урока (\"duration\"): 15\nТип урока (\"type\"): text\nТип контента (\"contentType\"): standard\nРесурсы урока (\"resources\"): []\nПрактические упражнения урока (\"practiceExercises\"): []\nБлоки контента урока (\"contentBlock\"): []\nТесты модуля (\"tests\"): []\nВходной текст:\n{{ $json.updatedText }}\nJSON Structure:\n{\n\"title\": \"(сгенерированное название курса)\",\n\"description\": \"(сгенерированное описание курса)\",\n\"category\": \"680f332a16f8bb2b6ce9e71d\",\n\"difficulty\": \"beginner\",\n\"image\": \"\",\n\"imagePreview\": \"\",\n\"modules\": [\n{\n\"title\": \"(сгенерированный заголовок модуля 1)\",\n\"description\": \"(сгенерированное описание модуля 1)\",\n\"content\": \"(текст Lesson Description 1)\",\n\"lessons\": [\n{\n\"title\": \"Module №1\",\n\"content\": \"(текст Lesson Description 1)\",\n\"duration\": 15,\n\"type\": \"text\",\n\"contentType\": \"standard\",\n\"resources\": [],\n\"practiceExercises\": [],\n\"contentBlocks\": []\n}\n],\n\"tests\": []\n},\n{\n\"title\": \"(сгенерированный заголовок модуля 2)\",\n\"description\": \"(сгенерированное описание модуля 2)\",\n\"content\": \"(текст Lesson Description 2)\",\n\"lessons\": [\n{\n\"title\": \"Module №2\",\n\"content\": \"(текст Lesson Description 2)\",\n\"duration\": 15,\n\"type\": \"text\",\n\"contentType\": \"standard\",\n\"resources\": [],\n\"practiceExercises\": [],\n\"contentBlocks\": []\n}\n],\n\"tests\": []\n},\n// ... и так далее для каждого Lesson Description должен быть сгенерирован модуль\n]\n}\nВажно: Обрати внимание, что общая информация о курсе (title, description, category, difficulty, image, imagePreview) указывается только один раз в начале JSON. Массив \"modules\" содержит объекты для каждого \"Lesson Description\". и Пиши на английском"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        4080,
+        -820
+      ],
+      "id": "285282a8-0eea-4415-a72b-48978fbee0cc",
+      "name": "JSON generator"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем динамический текст из входных данных\nconst inputString = $input.first().json.text;\n\n// Функция для удаления лишних символов\nconst cleanString = (input) => {\n  return input\n    .replace(/```json\\n/g, '') // Убираем начало блока json\n    .replace(/```/g, '') // Убираем окончание блока json\n    .replace(/\\n/g, ' ') // Заменяем все \\n на пробелы\n    .replace(/\\s+/g, ' ') // Убираем лишние пробелы (заменяем несколько пробелов на один)\n    .trim(); // Убираем пробелы в начале и в конце\n};\n\n// Применяем функцию очистки\nconst cleanedString = cleanString(inputString);\n\n// Возвращаем очищенную строку\nreturn [{ json: { cleanedText: cleanedString } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4440,
+        -820
+      ],
+      "id": "a0e348b8-e19b-4181-a19c-045bffd036c7",
+      "name": "Delete trash"
+    },
+    {
+      "parameters": {
+        "url": "https://youtube-transcript3.p.rapidapi.com/api/transcript",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "videoId",
+              "value": "={{ $json.videoId }}"
+            },
+            {
+              "name": "Title",
+              "value": "={{ $json.title }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "=X-RapidAPI-Host",
+              "value": "=youtube-transcript3.p.rapidapi.com"
+            },
+            {
+              "name": "=X-RapidAPI-Key",
+              "value": "=4ebd2c4b95mshc8ab3534e42bb1ep1d463fjsn32e3de965ce5"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 61000
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1600,
+        -180
+      ],
+      "id": "c1b6b6fe-f502-4dd9-ac0c-c9a2f24d796b",
+      "name": "youtube video parser1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Этот код предназначен для использования в узле \"Code\" в n8n.\n// Входные данные узла доступны в переменной 'items' как массив элементов.\n\n// Мы обработаем каждый входной элемент и добавим новое свойство\n// с объединенным текстом транскрипции ВНУТРИ объекта 'json'.\n\nconst outputItems = items.map(item => {\n  let concatenatedText = '';\n  let transcript = null;\n\n  // Безопасно получаем доступ к массиву транскрипции,\n  // ожидая структуру item.json.transcript.\n  // Используем оператор опциональной последовательности (?.) для безопасного доступа.\n  transcript = item?.json?.transcript;\n\n  // Проверяем, что полученный объект действительно является массивом\n  if (Array.isArray(transcript)) {\n    // Фильтруем записи, которые не являются валидными объектами\n    // или не имеют строкового свойства 'text'.\n    // Затем извлекаем только текст и объединяем его пробелом.\n    const textSegments = transcript\n      .filter(entry => entry && typeof entry === 'object' && typeof entry.text === 'string')\n      .map(entry => entry.text);\n\n    concatenatedText = textSegments.join(' ');\n  } else {\n    // Обрабатываем случаи, когда массив транскрипции отсутствует или не является массивом\n    console.warn(\"Элемент не содержит валидный массив 'json.transcript' или путь к нему:\", item);\n    // В этом случае concatenatedText останется пустой строкой ('').\n    // Вы можете изменить это поведение при необходимости.\n  }\n\n  // Создаем выходной элемент.\n  // Включаем все исходные свойства входного элемента.\n  // Добавляем или модифицируем свойство 'json', чтобы добавить объединенный текст внутрь него.\n  return {\n    ...item, // Копируем все свойства из исходного элемента на верхний уровень\n    json: { // Создаем или обращаемся к объекту 'json'\n      ...(item.json || {}), // Копируем все существующие свойства из item.json (если он есть)\n      concatenatedTranscript: concatenatedText // Добавляем сюда объединенный текст\n    }\n  };\n});\n\n// Узел \"Code\" должен возвращать массив элементов.\nreturn outputItems;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2140,
+        -40
+      ],
+      "id": "583ffc51-b7cc-4ba7-b308-3cef031a1c42",
+      "name": "Code5"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1500,
+        1260
+      ],
+      "id": "35a0c4da-e112-4b4b-bd3b-39995cad6839",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1pongTk5EFZI1D6RRpYwz_Ex_Tt3lsHfD0jHcGgnAq0k/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Parsing",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1pongTk5EFZI1D6RRpYwz_Ex_Tt3lsHfD0jHcGgnAq0k/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $json.title }}",
+            "Link": "={{ $json.url }}",
+            "channelLink": "={{ $json.channel_id }}",
+            "videoLink": "={{ $json.videoId }}",
+            "json": "={{ $json.cleanedText }}"
+          },
+          "matchingColumns": [
+            "Title"
+          ],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "json",
+              "displayName": "json",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "videoLink",
+              "displayName": "videoLink",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "channelLink",
+              "displayName": "channelLink",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Topic",
+              "displayName": "Topic",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1720,
+        1260
+      ],
+      "id": "f4b86897-b155-451c-9761-e2217ad3759d",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JWf1dYTj83NVJtf5",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Обрабатываем входной массив `items`, содержащий объекты с полем mergedChunk (строка с несколькими парами topic/detail)\nconst output = [];\nfor (let i = 0; i < items.length; i++) {\n    const current = items[i].json;\n    const chunk = current.mergedChunk;\n    if (typeof chunk !== 'string') {\n        // Если mergedChunk отсутствует или не является строкой, пропускаем этот элемент\n        continue;\n    }\n\n    // Разбиваем строку на строки по разделителям новой строки\n    const lines = chunk.split(/[\\r\\n]+/);\n    for (let j = 0; j < lines.length; j++) {\n        const topicLine = lines[j].trim();\n        if (topicLine === '') {\n            continue; // пропускаем пустые строки, если есть\n        }\n        if (!topicLine.startsWith('\"topic\":')) {\n            continue; // пропускаем строки, не начинающиеся с \"topic\":\n        }\n        // Проверяем, что следующая строка существует и начинается с \"detail\":\n        if (j + 1 >= lines.length) {\n            break; // достигнут конец без пары \"detail\"\n        }\n        const detailLine = lines[j + 1].trim();\n        if (!detailLine.startsWith('\"detail\":')) {\n            continue; // если по какой-то причине следующая строка не detail, пропускаем\n        }\n\n        // Извлекаем значения topic и detail, убирая префиксы и кавычки с возможной запятой\n        const topicValue = topicLine.replace(/^\"topic\":\\s*\"/, '').replace(/\",?\\s*$/, '');\n        const detailValue = detailLine.replace(/^\"detail\":\\s*\"/, '').replace(/\",?\\s*$/, '');\n\n        // Создаем новый объект с требуемыми полями, копируя поля из текущего элемента и добавляя topic и description\n        output.push({\n            json: {\n                title: current.title,\n                url: current.url,\n                channel_id: current.channel_id,\n                videoId: current.videoId,\n                topic: topicValue,\n                description: detailValue\n            }\n        });\n\n        j++; // пропускаем следующую строку (detail) в цикле, так как она уже обработана\n    }\n}\n// Возвращаем массив новых объектов\nreturn output;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        740
+      ],
+      "id": "8023a46d-75d4-48e3-a3f2-6854931fbb8d",
+      "name": "Add Columns"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Получаем входные данные\nconst inputItems = $input.all();\n\n// Обрабатываем каждый объект\nconst processedItems = inputItems.map(item => {\n  const inputText = item.json.text;\n  const processedText = inputText.replace(/- \\n\\n.*?Title:/s, 'Title:');\n  return {\n    json: {\n      processedText: processedText\n    }\n  };\n});\n\nreturn processedItems;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2140,
+        740
+      ],
+      "id": "bee8eb19-f5b9-4f63-b280-31762b50b204",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{\n  JSON.stringify({\n    model: \"google/gemma-3-27b-it\",\n    messages: [\n      {\n        role: \"system\",\n        content: \"You are an instructional designer. Given the user’s transcript text, identify the 4–6 major topics covered and for each provide a concise, detailed description (2–3 sentences). Output the result as a JSON array of objects with the schema [{\\\"topic\\\":\\\"...\\\",\\\"detail\\\":\\\"...\\\"}, …]. Do not add any extra commentary.\"\n      },\n      {\n        role: \"user\",\n        content: $json.chunk\n      }\n    ]\n  })\n}}\n",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 10000
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1660,
+        160
+      ],
+      "id": "f65bbee8-2ee7-482b-8c8b-344b9ae961df",
+      "name": "Chat Completion1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Этот код предназначен для использования в ноде \"Function\" в n8n.\n// Он принимает массив элементов, каждый из которых содержит JSON с полем\n// 'concatenatedTranscript' и метаданными.\n// Код разбивает каждый 'concatenatedTranscript' на более мелкие чанки,\n// стремясь заполнить чанки до maxLen и ища точку разбиения (конец предложения)\n// в \"окне\" перед концом чанка.\n// Метаданные из входного элемента дублируются в каждом выходном чанке\n// с использованием тех же имен полей, что и во входящих:\n// title, video_url, video_id, channel_url.\n\n// Массив для сбора всех результирующих чанков из всех входящих элементов.\n// Каждый элемент этого массива станет отдельным выходным элементом из ноды Function.\nconst outputItems = [];\n\n// Максимальная длина чанка в символах.\nconst maxLen = 3000;\n\n// Размер \"окна\" в символах в конце потенциального чанка,\n// в котором мы будем искать точку разбиения (конец предложения).\nconst splitWindow = 300; // Например, ищем в последних 300 символах перед лимитом\n\n// Проходим по каждому входящему элементу, который поступил в эту ноду.\nfor (const item of items) {\n\n    // --- Извлечение данных из текущего входящего элемента ---\n\n    // Получаем текст для разбивки. Предполагается, что он находится в item.json.concatenatedTranscript.\n    const fullText = item.json.concatenatedTranscript;\n\n    // Получаем метаданные. Используем имена полей, как в ваших примерах ($input.first().json....).\n    // !!! Убедитесь, что эти поля (title, video_url, video_id, channel_url)\n    // !!! точно соответствуют названиям полей в вашем входящем JSON.\n    const { title, url, videoId, channel_id } = item.json;\n\n    // --- Обработка и разбиение текста ---\n\n    // Проверяем, существует ли текст для обработки. Если нет, пропускаем этот элемент.\n    if (!fullText) {\n        console.warn('Skipping item with missing or empty concatenatedTranscript:', item);\n        continue; // Переходим к следующему входящему элементу\n    }\n\n    const itemChunksText = []; // Массив для строковых чанков, созданных из *текущего* входящего элемента\n    let currentIndex = 0; // Текущая позиция в исходном тексте\n\n    // Цикл продолжается, пока мы не обработаем весь текст\n    while (currentIndex < fullText.length) {\n\n        // Определяем максимально возможный конец текущего чанка ( currentIndex + maxLen )\n        let potentialChunkEndIndex = Math.min(currentIndex + maxLen, fullText.length);\n\n         // Если оставшийся текст меньше или равен maxLen (с небольшим запасом, чтобы не искать окно в конце),\n        // или мы в конце текста, просто берем весь оставшийся текст как последний чанк.\n        // Добавим условие: если оставшийся текст меньше окна + небольшой буфер, просто берем остаток.\n        if (fullText.length - currentIndex <= splitWindow * 1.5 || potentialChunkEndIndex === fullText.length) {\n             itemChunksText.push(fullText.substring(currentIndex).trim());\n             currentIndex = fullText.length; // Сдвигаем индекс на конец, чтобы выйти из цикла\n             break; // Выходим из цикла обработки текста для текущего элемента\n        }\n\n        // --- Поиск точки разбиения в \"окне\" ---\n\n        // Определяем начало окна для поиска точки разбиения.\n        // Ищем в последних 'splitWindow' символах потенциального чанка,\n        // но не раньше начала текущей позиции (currentIndex).\n        const searchStart = Math.max(currentIndex, potentialChunkEndIndex - splitWindow);\n\n        let bestSplitIndex = -1; // Индекс наилучшей найденной точки разбиения (после символа)\n\n        // Идем назад от конца потенциального чанка к началу окна поиска\n        for (let i = potentialChunkEndIndex - 1; i >= searchStart; i--) {\n            const char = fullText[i];\n\n            // Ищем конец предложения: точка, восклицательный или вопросительный знак\n            if (char === '.' || char === '!' || char === '?') {\n                 // Проверяем, что за знаком препинания следует пробел ИЛИ это конец строки в пределах потенциального чанка\n                 // /\\s/.test(fullText[i + 1]) проверяет, является ли следующий символ пробельным (пробел, табуляция, новая строка)\n                 if (i + 1 < fullText.length && /\\s/.test(fullText[i + 1]) || i + 1 === potentialChunkEndIndex) {\n                     bestSplitIndex = i + 1; // Точка разбиения - сразу ПОСЛЕ знака препинания (и пробела, если есть)\n                     break; // Нашли последнюю подходящую точку в окне, используем ее\n                 }\n            }\n        }\n\n        // --- Определение окончательной точки разбиения чанка ---\n\n        let finalSplitIndex;\n\n        if (bestSplitIndex !== -1) {\n            // Если нашли подходящую точку разбиения в окне, используем ее.\n            // Убедимся, что точка разбиения находится после начала текущего чанка.\n             if (bestSplitIndex > currentIndex) {\n                finalSplitIndex = bestSplitIndex;\n            } else {\n                 // Если bestSplitIndex <= currentIndex, это означает, что ближайшая точка\n                 // препинания с пробелом находится ДО начала текущего чанка или прямо в начале.\n                 // В этом случае делаем разбиение по maxLen как запасной вариант.\n                 finalSplitIndex = potentialChunkEndIndex;\n            }\n\n        } else {\n            // Если не нашли подходящую точку разбиения в окне,\n            // делаем разбиение по maxLen. Это может разорвать предложение.\n            finalSplitIndex = potentialChunkEndIndex;\n        }\n\n        // --- Создание чанка и обновление позиции ---\n\n        // Выделяем текст чанка от текущей позиции до найденной точки разбиения.\n        const chunkText = fullText.substring(currentIndex, finalSplitIndex).trim();\n\n        // Добавляем созданный текстовый чанк в массив чанков текущего элемента, если он не пуст.\n        if (chunkText.length > 0) {\n            itemChunksText.push(chunkText);\n        } else {\n             // Если получился пустой чанк (очень редко, но может быть), сдвигаем currentIndex\n             // хотя бы на 1, чтобы избежать бесконечного цикла.\n             console.warn(`Created an empty chunk for item ${item.id || 'N/A'} starting at index ${currentIndex}. Adjusting index.`);\n             currentIndex++; // Сдвигаем вперед, чтобы не зависнуть\n             continue; // Пропускаем добавление пустого чанка и переходим к следующей итерации\n        }\n\n\n        // Обновляем текущую позицию на конец только что созданного чанка.\n        currentIndex = finalSplitIndex;\n\n        // Пропускаем любые пробелы или символы новой строки сразу после точки разбиения,\n        // чтобы следующий чанк не начинался с них.\n         while (currentIndex < fullText.length && /\\s/.test(fullText[currentIndex])) {\n            currentIndex++;\n        }\n\n\n    } // Конец while цикла для обработки текста одного элемента\n\n\n    // --- Формирование выходных элементов для текущего входящего элемента ---\n\n    // Преобразуем созданные строковые чанки в формат элементов n8n\n    // и добавляем метаданные из текущего входящего элемента К КАЖДОМУ чанку.\n    // Используем имена полей, как в ваших примерах ($input.first().json....).\n    const outputItemChunks = itemChunksText.map(textChunk => {\n        return {\n            json: {\n                chunk: textChunk,       // Сам текст чанка\n                title: title,           // Метаданные: title\n                url: url,   // Метаданные: video_url\n                videoId: videoId,     // Метаданные: video_id\n                channel_id: channel_id, // Метаданные: channel_url\n                // Если у вас есть другие поля, которые должны дублироваться, добавьте их здесь.\n            },\n        };\n    });\n\n    // Добавляем все созданные для *текущего* входящего элемента чанки\n    // в общий массив результатов, который будет возвращен нодой.\n    outputItems.push(...outputItemChunks);\n\n} // Конец for цикла для обработки всех входящих элементов\n\n// Возвращаем общий массив всех чанков, собранных из всех входных элементов.\n// Каждый элемент в этом массиве станет отдельным выходным элементом из этой ноды.\nreturn outputItems;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1400,
+        260
+      ],
+      "id": "6f73922d-a565-4b1e-ac9f-9142c7f15f03",
+      "name": "Split to Chunks1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Предполагается, что $input.all() предоставляет массив объектов\nconst items = $input.all();\n\nif (!items || items.length === 0) {\n  return [];\n}\n\nconst mergedData = {}; // Объект для накопления данных\n// Переменные для статистики (если они вам нужны для других целей, иначе можно удалить)\n// let processedItemsCount = 0;\n// let skippedItemsCount = 0;\n// let skippedContentCount = 0;\n\nfor (const item of items) {\n  // processedItemsCount++; // Если статистика нужна\n\n  // Важно: Убедитесь, что данные действительно находятся в item.json.\n  // Если title, video_url, choices и т.д. находятся непосредственно в 'item',\n  // то нужно использовать 'const jsonData = item;'\n  const jsonData = item.json;\n\n  if (!jsonData || typeof jsonData !== 'object') {\n    // skippedItemsCount++; // Если статистика нужна\n    continue; // Пропускаем элемент, если нет jsonData или это не объект\n  }\n\n  const title = jsonData.title;\n  const url = jsonData.url;\n  const choices = jsonData.choices;\n  const channel_id = jsonData.channel_id;\n  const videoId = jsonData.videoId;\n  const userId = jsonData.userId; // user_id извлекается, но не используется для ключа группировки\n\n  // Проверка на наличие и корректность title и videoUrl для создания ключа\n  if (typeof title !== 'string' || title.trim().length === 0) {\n    // skippedItemsCount++; // Если статистика нужна\n    continue;\n  }\n  if (typeof url !== 'string' || url.trim().length === 0) {\n    // skippedItemsCount++; // Если статистика нужна\n    continue;\n  }\n\n  // Создаем комбинированный ключ для уникальной идентификации записи\n  const uniqueKey = `${title}_${url}`;\n\n  if (!mergedData[uniqueKey]) {\n    mergedData[uniqueKey] = {\n      title: title,\n      url: url,\n      allContents: [],\n      user_id: userId,\n      channel_id: channel_id,\n      videoId: videoId,\n    };\n  }\n\n  let contentFoundInChoices = false;\n  if (Array.isArray(choices)) {\n    for (const choice of choices) {\n      // Ожидаемая структура: choice.message.content\n      const content = choice?.message?.content;\n\n      if (typeof content === 'string' && content.trim().length > 0) {\n        mergedData[uniqueKey].allContents.push(content.trim());\n        contentFoundInChoices = true;\n      }\n    }\n  }\n\n  // Если текст не найден в 'choices', пытаемся найти его в других распространенных полях.\n  // Адаптируйте этот блок, если ваш текст находится в других специфических полях jsonData.\n  // Например, jsonData.text_content, jsonData.full_text и т.д.\n  if (!contentFoundInChoices) {\n    const alternativeTextSourceFields = [\n        jsonData.description,\n        jsonData.text,\n        jsonData.transcript,\n        jsonData.content, // Еще одно возможное поле\n        // Добавьте сюда другие имена полей, которые могут содержать нужный текст\n    ];\n\n    for (const sourceField of alternativeTextSourceFields) {\n        if (typeof sourceField === 'string' && sourceField.trim().length > 0) {\n            mergedData[uniqueKey].allContents.push(sourceField.trim());\n            // Если текст найден хотя бы в одном альтернативном источнике, можно прекратить поиск\n            // или продолжить, если нужно собрать текст из нескольких полей.\n            // Для данного примера, если нашли, то выходим из цикла по альтернативным полям:\n            break; \n        }\n    }\n  }\n  // Если после всех проверок allContents все еще пуст, значит текст не был найден\n  // в ожидаемых местах для данного uniqueKey.\n  // if (mergedData[uniqueKey].allContents.length === 0) {\n  //   skippedContentCount++; // Если статистика нужна\n  // }\n}\n\nconst outputItems = [];\n\nfor (const key in mergedData) {\n  if (Object.prototype.hasOwnProperty.call(mergedData, key)) {\n    const dataEntry = mergedData[key];\n\n    // Если dataEntry.allContents пуст, mergedChunk будет пустой строкой.\n    // Это ожидаемое поведение, если контент для данного ключа не был найден.\n    const mergedChunk = dataEntry.allContents.join(\"\\n\\n\");\n\n    outputItems.push({\n      json: {\n        title: dataEntry.title,\n        mergedChunk: mergedChunk,\n        user_id: dataEntry.user_id,\n        url: dataEntry.url,\n        channel_id: dataEntry.channel_id,\n        videoId: dataEntry.videoId,\n      },\n    });\n  }\n}\n\nreturn outputItems;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        460
+      ],
+      "id": "dafe9b64-9670-40f4-9491-8b6f6585e6cf",
+      "name": "Summarizer1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "60d0d292-7f04-40b4-acf3-8a64c13acd26",
+              "name": "title",
+              "value": "={{ $json.snippet.title }}",
+              "type": "string"
+            },
+            {
+              "id": "753c7ef6-4008-4b16-81f0-7fbe291f015a",
+              "name": "video_url",
+              "value": "={{ $json['Full Video Link'] }}",
+              "type": "string"
+            },
+            {
+              "id": "b51008a2-7ca7-408c-b212-f8a441d7c3e5",
+              "name": "video_id",
+              "value": "={{ $json['Video ID'] }}",
+              "type": "string"
+            },
+            {
+              "id": "79809b76-8c3c-4c95-ab49-6da5319bf6dc",
+              "name": "channel_url",
+              "value": "={{ $json['Full Channel Link'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3740,
+        -260
+      ],
+      "id": "ca68f367-5e39-4310-b6ec-0e4a04cbceb0",
+      "name": "Parse title ulr and publishedAt1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Этот код предназначен для узла Code в n8n.\n// Он обрабатывает массив входных элементов (items).\n// Для каждого элемента он проходит по всем свойствам его объекта 'json'.\n// Если свойство является строкой, к нему применяются шаги очистки\n// для удаления форматирования, похожего на JSON.\n\n// Вспомогательная функция для очистки строки\nfunction cleanString(inputString) {\n    // Если входное значение не является строкой, возвращаем его как есть.\n    if (typeof inputString !== 'string') {\n        return inputString;\n    }\n\n    let cleanedJsonString = inputString;\n\n    // --- Шаги очистки ---\n\n    // 1. Удалить потенциальный ведущий маркер 'json' (```json или ``json) и окружающие пробелы/переводы строк.\n    // Флаг 'i' добавлен для нечувствительного к регистру сопоставления 'json'.\n    // (?:```|``) соответствует трем или двум обратным кавычкам.\n    cleanedJsonString = cleanedJsonString.replace(/^\\s*(?:```|``)\\s*json\\s*\\n*/i, '');\n\n    // 2. Удалить потенциальные замыкающие обратные кавычки (``` или ``) и окружающие пробелы/переводы строк.\n    cleanedJsonString = cleanedJsonString.replace(/\\s*(?:```|``)\\s*$/, '');\n\n    // 3. Обрезать все оставшиеся ведущие/конечные пробелы.\n    cleanedJsonString = cleanedJsonString.trim();\n\n    // --- !!! ПРЕДУПРЕЖДЕНИЕ !!! ---\n    // Следующий шаг удаляет критически важные символы структуры JSON: квадратные скобки ([ ]) и фигурные скобки ({ }).\n    // Как указано в исходном описании проблемы, это сделает строку невалидным JSON.\n    // Если следующий узел n8n попытается выполнить JSON.parse() для этого вывода, он ОБЯЗАТЕЛЬНО ВЫДАСТ ОШИБКУ,\n    // если ожидает валидный JSON-объект или массив. Эта логика сохранена согласно вашему исходному заданию.\n    cleanedJsonString = cleanedJsonString.replace(/[\\[\\]\\{\\}]/g, '');\n\n    return cleanedJsonString;\n}\n\n// Обработка каждого элемента во входном массиве 'items'\nconst outputItems = items.map(item => {\n    const newItem = {\n        json: {},\n        // Сохраняем бинарные данные, если они есть\n        ...(item.binary && { binary: item.binary })\n    };\n\n    // Проверяем, существует ли объект item.json\n    if (item.json && typeof item.json === 'object' && item.json !== null) {\n        // Проходим по всем ключам в объекте item.json\n        for (const key in item.json) {\n            if (Object.prototype.hasOwnProperty.call(item.json, key)) {\n                // Применяем функцию очистки к значению свойства\n                newItem.json[key] = cleanString(item.json[key]);\n            }\n        }\n    } else if (item.json) {\n        // Если item.json не является объектом, но существует (например, строка, число),\n        // попробуем обработать его как единственное значение.\n        // Это может потребовать корректировки в зависимости от точной структуры ваших данных.\n        console.warn(`Warning: item.json for an item was not an object. Attempting to clean it directly. Value: ${item.json}`);\n        newItem.json.unknownProcessedValue = cleanString(item.json);\n    }\n\n\n    return newItem;\n});\n\n// --- Вывод ---\n// Возвращаем массив обработанных элементов.\nreturn outputItems;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        460
+      ],
+      "id": "377ca244-6ad5-4bb2-8852-25041747953c",
+      "name": "remove json1"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        820
+      ],
+      "id": "93a734ce-6ccb-4eac-bbb8-25cb387f30e7",
+      "name": "OpenRouter Chat Model2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "xM1Kdr0j4QvJ4iaw",
+          "name": "AdminN8N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1680,
+        1100
+      ],
+      "id": "357ac6e8-5010-423b-8794-5574f63b7db3",
+      "name": "OpenRouter Chat Model3",
+      "credentials": {
+        "openRouterApi": {
+          "id": "xM1Kdr0j4QvJ4iaw",
+          "name": "AdminN8N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1940,
+        240
+      ],
+      "id": "ee637d34-4422-4c47-9c48-e7210fbb6414",
+      "name": "Merge Chunks and title, url, etc1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate a lesson theory without bullet points and description what students will be able to..., This project/learning centers/module... Write text like guide, not water AI answer using this materials:\nTitle: {{ $json.title }}\nTopic: {{ $json.topic }}\nDescription: {{ $json.description }}\n\nU need to write 2-3 paragraphs about Description that i gave you\n\nStart output from \"Title: \"{{ $json.title }} \\n\"Lesson Description:\" (each item need \"Title: \" without ## )\n\nDo not add any extra commentary\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        1780,
+        740
+      ],
+      "id": "8261817e-19cb-4e94-a4dd-a632b75b4770",
+      "name": "Theory Generator1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Предполагается, что 'items' - это ваш входной массив.\n// const items = [\n// /* примеры ваших данных:\n// { json: { text: \"\\n\\nTitle: Введение в Python\\nLesson Description:\\nPython это весело.\" } },\n// { json: { text: \"Title: Продвинутый JS\\nLesson Description:\\nJS это мощно.\" } },\n// { json: { text: \"Title: Введение в Python\\nLesson Description:\\nИзучаем переменные.\" } }\n// */\n// ];\n\n// Получаем все входные данные (input items)\nconst inputItems = items; // Замените 'items' на вашу переменную с входными данными\n\n// Объект для хранения описаний, сгруппированных по заголовкам\nconst groupedByTitle = {};\n\ninputItems.forEach(item => {\n    const fullTextFromItem = item.json.processedText;\n\n    // 1. Извлечение заголовка (Title)\n    let title = \"Untitled\"; // Заголовок по умолчанию\n    // Ищем \"Title:\" в начале строки (с учетом многострочности) или просто \"Title:\"\n    const titleMatchStrict = fullTextFromItem.match(/^Title:([^\\n]+)/m);\n    const titleMatchGeneral = fullTextFromItem.match(/Title:([^\\n]+)/);\n\n    if (titleMatchStrict && titleMatchStrict[1]) {\n        title = titleMatchStrict[1].trim();\n    } else if (titleMatchGeneral && titleMatchGeneral[1]) {\n        title = titleMatchGeneral[1].trim();\n    }\n    // Если заголовок не найден, он останется \"Untitled\"\n\n    // 2. Извлечение описания урока (Lesson Description)\n    let description = \"\";\n    const lessonDescMarker = \"Lesson Description:\";\n    const lessonDescStartIndex = fullTextFromItem.indexOf(lessonDescMarker);\n\n    if (lessonDescStartIndex !== -1) {\n        // Извлекаем текст после \"Lesson Description:\" и удаляем лишние пробелы/переводы строк по краям\n        description = fullTextFromItem.substring(lessonDescStartIndex + lessonDescMarker.length).trim();\n    } else {\n        // Если \"Lesson Description:\" не найдено, пытаемся взять текст после строки заголовка (если заголовок был найден)\n        const titlePatternMatch = titleMatchStrict || titleMatchGeneral;\n        if (titlePatternMatch && titlePatternMatch[0]) {\n            const textAfterTitleLine = fullTextFromItem.substring(fullTextFromItem.indexOf(titlePatternMatch[0]) + titlePatternMatch[0].length);\n            description = textAfterTitleLine.trim();\n        } else {\n            // Если ни заголовок, ни маркер описания не найдены,\n            // и текст элемента не пустой, считаем весь текст описанием для \"Untitled\"\n            if (title === \"Untitled\" && fullTextFromItem.trim().length > 0) {\n                description = fullTextFromItem.trim();\n            }\n        }\n    }\n\n    // Добавляем описание в группу, только если оно не пустое\n    if (description) {\n        if (!groupedByTitle[title]) {\n            groupedByTitle[title] = []; // Инициализируем массив для нового заголовка\n        }\n        groupedByTitle[title].push(description);\n    }\n});\n\n// Формируем итоговый массив объединенных данных\nconst mergedResult = [];\nfor (const title in groupedByTitle) {\n    if (groupedByTitle.hasOwnProperty(title)) {\n        const descriptionsArray = groupedByTitle[title];\n        let combinedLessonText = \"\";\n\n        if (descriptionsArray.length > 0) {\n            // Первое описание для данного заголовка\n            // Форматируем в соответствии с исходным требованием пользователя (новая строка перед \"Lesson Description\")\n            combinedLessonText = '\\nLesson Description:\\n' + descriptionsArray[0];\n\n            // Добавляем последующие описания для того же заголовка\n            for (let i = 1; i < descriptionsArray.length; i++) {\n                // Используем две новые строки для визуального разделения между разными блоками описаний\n                combinedLessonText += '\\n\\nLesson Description:\\n' + descriptionsArray[i];\n            }\n        }\n\n        // Собираем финальный текст: Заголовок + объединенные описания\n        let finalOutputText = `Title: ${title}`;\n        if (combinedLessonText) { // Добавляем блок описаний, только если он не пуст\n            finalOutputText += combinedLessonText;\n        }\n\n        mergedResult.push({\n            json: {\n                lessonText: finalOutputText.trim() // Удаляем лишние пробелы по краям всего блока\n            }\n        });\n    }\n}\n\n// Возвращаем объединенные данные\nreturn mergedResult;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2360,
+        740
+      ],
+      "id": "412ca9ba-2c6f-4916-9a92-e441c5cd0d18",
+      "name": "Theory Merger1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// --- Начало кода для узла \"Code\" в n8n ---\n\n// Ваша функция для добавления номеров уроков (остается без изменений)\nconst addLessonNumber = (inputText) => {\n  if (typeof inputText !== 'string') {\n    // Эта проверка важна, если поле может быть не строкой\n    // console.warn(\"Входные данные не являются строкой:\", inputText);\n    return inputText; // Возвращаем как есть, если не строка\n  }\n  let lessonCounter = 1;\n  // Заменяем \"Lesson Description:\" на \"Lesson Description X:\"\n  return inputText.replace(/Lesson Description:/g, () => {\n    return `Lesson Description ${lessonCounter++}:`;\n  });\n};\n\n// Получаем все входные элементы (items)\nconst items = $input.all(); // или items = $items в зависимости от настроек/версии\nconst outputItems = []; // Будем собирать сюда обработанные items\n\n// Перебираем каждый элемент (item)\nfor (const item of items) {\n  const newItem = { ...item }; // Создаем копию item, чтобы не изменять оригинал напрямую в цикле (хорошая практика)\n\n  // --- ОТЛАДКА ---\n  // Вы можете добавить эти поля для проверки, что происходит внутри узла\n  // newItem.json.debug_input_lessonText_exists = newItem.json.hasOwnProperty('lessonText');\n  // newItem.json.debug_input_lessonText_value = newItem.json.lessonText;\n  // ---------------\n\n  // Получаем текст из поля lessonText\n  const originalText = newItem.json.lessonText;\n\n  if (originalText && typeof originalText === 'string') {\n    // Применяем вашу функцию\n    const modifiedText = addLessonNumber(originalText);\n    \n    // Сохраняем результат в новое поле ИЛИ перезаписываем старое.\n    // Вариант 1: Сохранить в новое поле (рекомендуется для отладки)\n    newItem.json.processedLessonText = modifiedText;\n    \n    // Вариант 2: Перезаписать оригинальное поле lessonText\n    // newItem.json.lessonText = modifiedText; \n\n    // --- ОТЛАДКА ---\n    // newItem.json.debug_output_modifiedText = modifiedText;\n    // ---------------\n\n  } else {\n    // Если поле lessonText отсутствует, пустое или не строка,\n    // можно просто пропустить обработку или записать в него null/оригинальное значение.\n    // Если вы создавали новое поле processedLessonText:\n    newItem.json.processedLessonText = originalText; // или null, или специальное значение\n    //newItem.json.debug_skipped_processing = true;\n  }\n  \n  outputItems.push(newItem);\n}\n\n// Возвращаем массив обработанных элементов\nreturn outputItems;\n\n// --- Конец кода для узла \"Code\" в n8n ---"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        980
+      ],
+      "id": "ddb1420f-cff2-49c1-b70b-cc64e62879da",
+      "name": "Add nums to Lesson Description1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Сгенерируй ОДИН валидный JSON-объект для импорта на обучающую платформу по ДАННЫМ, которые я пришлю в следующем сообщении. Соблюдай ВСЕ правила, проверь себя по чек-листу и затем выведи только JSON. Если понял — ответь:  Да, жду следующее сообщение.   ⸻  1 Шаблон, который ОБЯЗАТЕЛЬНО следует клонировать  {   \"title\": \"\",   \"description\": \"\",   \"category\": \"681dfaab642ad2b18ee6e8d3\",   \"difficulty\": \"beginner\",   \"image\": \"\",   \"imagePreview\": \"\",   \"modules\": [     {       \"title\": \"\",       \"description\": \"\",       \"content\": \"\",       \"lessons\": [         {           \"title\": \"\",           \"content\": \"\",           \"duration\": 15,           \"type\": \"text\",           \"contentType\": \"standard\"         }       ],       \"tests\": []     }   ] }  Ни одного лишнего или пропущенного ключа, порядок свойств сохраняй.  ⸻  2 Как заполнять поля  Уровень\tПоле\tЧто писать Курс\ttitle, description\tБери дословно из моих данных. Курс\timage, imagePreview\tОставь \"\", если в данных нет ссылок. Модуль\ttitle, description\tКопируй дословно. Модуль\tcontent\tРовно одно предложение-саммари о сути модуля. Урок\ttitle\tКопируй заголовок урока. Урок\tcontent\tНумерованный список: 1. … \\\\n2. … без сокращений. Урок\tduration\tИспользуй число из данных или по умолчанию 15. Урок\ttype, contentType\tВсегда \"text\" и \"standard\". Модуль\ttests\tВсегда [].   ⸻  3 Формат ответа \t•\tВерни только JSON без Markdown-блоков, комментариев и пояснений. \t•\tОтвет должен начинаться с { и заканчиваться }. \t•\tВсе строки в кавычках \", все переносы в content — через \\\\n.  ⸻  4 Чек-лист перед отправкой \t•\tКол-во модулей и уроков точно совпадает с входными данными (ничего не потеряно). \t•\tУ каждого модуля есть минимум один урок. \t•\tcontent модуля = 1 предложение. \t•\tcontent урока = нумерованный список без сокращений. \t•\tВесь JSON валиден (скобки, запятые, кавычки).  ⸻  5 Типичные ошибки и как правильно  Ошибка\tПочему плохо\tПравильно Прерываешься после первого модуля { \"modules\":[ {…} ] }\tПотеря остальных модулей.\tВыведи все модули из данных, пример ↓ Пропускаешь уроки Модуль содержит 1 урок вместо 3.\tНарушена целостность курса.\tВключи каждый урок из данных. content модуля = много строк\tДолжно быть 1 предложение.\tcontent : “Summarise whole module in one sentence.” content урока = одно слово\tДолжен быть список 1., 2. …\tcontent : “1. Step one…\\n2. Step two…” Добавил комментарий // TODO или <!-- -->\tJSON станет невалидным.\tУбери комментарии, оставь только данные. Вывел Markdown  ```json …\tПлатформа не принимает.\tПросто JSON без обёртки.   ⸻  6 Два учебных примера (НЕ реальные данные)  Пример ошибочного ответа  {   \"title\": \"Demo\",   \"modules\": [     { \"title\": \"Only module\" }   ] }  Ошибки: отсутствуют обязательные поля, content не заполнен, пропущены уроки, JSON усечён.  Пример корректного ответа  {   \"title\": \"Demo Course\",   \"description\": \"Quick demo.\",   \"category\": \"681dfaab642ad2b18ee6e8d3\",   \"difficulty\": \"beginner\",   \"image\": \"\",   \"imagePreview\": \"\",   \"modules\": [     {       \"title\": \"Module A\",       \"description\": \"Intro module.\",       \"content\": \"This module gives an overview of the whole course.\",       \"lessons\": [         {           \"title\": \"Lesson 1\",           \"content\": \"1. Do X\\\\n2. Do Y\",           \"duration\": 15,           \"type\": \"text\",           \"contentType\": \"standard\"         }       ],       \"tests\": []     }   ] }  Все ключи на месте, content модуля = 1 предложение, content урока = список.  ⸻  Если всё понятно — ответь ровно:  Да, жду следующее сообщение.\n\nВходной текст:\n{{ $json.processedLessonText }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        1780,
+        1000
+      ],
+      "id": "ebf436fd-3a0f-4910-ab26-ed367db4393d",
+      "name": "JSON generator1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Функция для удаления лишних символов из строки\nconst cleanString = (inputText) => {\n  let text = inputText;\n  // Убедимся, что на вход подается именно строка\n  if (typeof text !== 'string') {\n    // Если это не строка, преобразуем ее в строку, чтобы избежать ошибок при дальнейшей обработке.\n    // В зависимости от требований, здесь можно было бы также вернуть пустую строку или ошибку.\n    text = String(text);\n  }\n  return text\n    .replace(/```json\\n/g, '') // Убираем возможное начало блока json-кода, если оно есть\n    .replace(/```/g, '')       // Убираем возможные символы окончания блока кода\n    .replace(/\\n/g, ' ')      // Заменяем все символы переноса строки на пробелы\n    .replace(/\\s+/g, ' ')    // Заменяем последовательности из нескольких пробельных символов на один пробел\n    .trim();                   // Удаляем пробелы в начале и в конце строки\n};\n\n// Инициализируем массив, в который будем собирать все входные элементы для обработки.\nlet allInputItems = [];\n\n// Определяем, каким образом получить все входные элементы.\n// В исходном коде использовался метод $input.first(), что характерно для сред,\n// где $input является специальным объектом-хелпером для доступа к входным данным.\n// В таких средах обычно есть и метод для получения всех элементов.\n\nif (typeof $input.all === 'function') {\n  // Это стандартный способ во многих платформах (например, n8n) для получения массива всех входящих элементов.\n  allInputItems = $input.all();\n} else if (Array.isArray($input)) {\n  // Если переменная $input сама по себе уже является массивом элементов.\n  allInputItems = $input;\n} else if ($input && Array.isArray($input.items)) {\n  // Если элементы хранятся в свойстве 'items' объекта $input (другой распространенный паттерн).\n  allInputItems = $input.items;\n} else if ($input && typeof $input.first === 'function') {\n  // Если есть метод .first(), но нет очевидного стандартного способа получить все элементы (типа .all() или .items).\n  // Это может означать, что платформа не передает все элементы сразу таким образом,\n  // или что код изначально не был рассчитан на пакетную обработку.\n  // Поскольку задача — обработать \"все\" элементы, простое использование .first() здесь будет\n  // некорректным, если элементов на входе больше одного.\n  console.warn(\"Обнаружен метод $input.first(), но не найден стандартный способ получения всех элементов (например, $input.all() или $input.items). Будет предпринята попытка обработать $input как одиночный элемент, если он соответствует ожидаемой структуре.\");\n  // Попытка обработать $input как одиночный элемент, если он имеет структуру item.json.text\n  if ($input && $input.json && typeof $input.json.text === 'string') {\n     allInputItems = [$input]; // Обрабатываем сам $input как массив из одного элемента\n  } else {\n      // Если $input.first() есть, но $input не является одиночным элементом нужной структуры,\n      // и нет $input.all(), то мы не можем надежно получить \"все\" элементы.\n      console.error(\"Не удалось получить все элементы из $input. $input не является массивом, не имеет метода .all() или свойства .items, и сам не является одиночным элементом нужной структуры. Попытка использовать $input.first() как единственный элемент.\");\n      try {\n        const firstItem = $input.first();\n        if (firstItem && firstItem.json && typeof firstItem.json.text === 'string') {\n            allInputItems = [firstItem]; // Обрабатываем только первый, так как другие не найдены\n        } else {\n            allInputItems = []; // Не удалось получить даже первый элемент в нужном формате\n        }\n      } catch(e) {\n        console.error(\"Ошибка при попытке доступа к $input.first() после неудачных попыток получить все элементы:\", e);\n        allInputItems = [];\n      }\n  }\n} else if ($input && $input.json && typeof $input.json.text === 'string') {\n  // Если $input — это сам по себе одиночный элемент (не массив и не хелпер),\n  // но он соответствует ожидаемой структуре { json: { text: \"...\" } }.\n  allInputItems = [$input];\n} else {\n  // Если ни один из известных способов не подошел.\n  console.error(\"Неизвестная структура $input. Не удалось извлечь элементы для обработки. $input:\", $input);\n  allInputItems = []; // Инициализируем пустым массивом, чтобы избежать ошибок далее\n}\n\n// Дополнительная проверка: убедимся, что allInputItems действительно является массивом.\nif (!Array.isArray(allInputItems)) {\n  console.error(\"Переменная allInputItems не является массивом после попыток ее определения. Невозможно обработать элементы. Текущее значение allInputItems:\", allInputItems);\n  // Возвращаем пустой массив, чтобы не прерывать выполнение всего потока ошибкой,\n  // но при этом сигнализируем о проблеме в логах.\n  return [];\n}\n\n// Если массив allInputItems пуст (например, на вход ничего не пришло или не удалось распознать структуру),\n// нет смысла продолжать обработку.\nif (allInputItems.length === 0) {\n    console.log(\"Входные данные для обработки отсутствуют или не были корректно распознаны.\");\n    return []; // Возвращаем пустой массив\n}\n\n// Теперь обрабатываем каждый элемент в полученном массиве allInputItems\nconst results = allInputItems.map((item, index) => {\n  // Проверяем, что текущий 'item' существует, содержит ключ 'json',\n  // и 'item.json' содержит ключ 'text' со строковым значением.\n  // Эта структура должна соответствовать тому, что возвращал $input.first() в вашем оригинальном коде.\n  if (item && item.json && typeof item.json.text === 'string') {\n    const inputString = item.json.text;\n    // Применяем функцию очистки к текстовому содержимому\n    const cleanedString = cleanString(inputString);\n    // Возвращаем объект в требуемом формате\n    return { json: { cleanedText: cleanedString } };\n  } else {\n    // Если элемент имеет неверную структуру или отсутствует необходимое текстовое поле,\n    // логируем это и возвращаем объект с информацией об ошибке.\n    // Это позволяет не прерывать всю обработку из-за одного \"плохого\" элемента.\n    console.warn(`Элемент с индексом ${index} имеет неверную структуру или отсутствует обязательное поле 'item.json.text'. Элемент:`, item);\n    return { json: { error: \"Неверная структура элемента или отсутствует поле 'json.text'\", originalItem: item } };\n  }\n});\n\n// Возвращаем массив обработанных элементов.\n// Каждый элемент этого массива будет объектом вида { json: { cleanedText: \"...\" } }\n// или { json: { error: \"...\", originalItem: ... } } в случае проблем с конкретным элементом.\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        1000
+      ],
+      "id": "56870e14-2cfa-4a91-be64-97c5142c1549",
+      "name": "Delete trash1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1920,
+        -40
+      ],
+      "id": "d6facbc7-040f-4e24-a13f-a5bb3ad062da",
+      "name": "Merge transcribation and title, url,  etc1"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/12taRIjIV0oAO9yn1B-LfwZXGAqz4I6mG1zm1UZ3SOUA/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Part1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12taRIjIV0oAO9yn1B-LfwZXGAqz4I6mG1zm1UZ3SOUA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "={{ $json.title }}",
+            "Topic and Detail": "={{ $json.mergedChunk }}",
+            "UserId": "={{ $json.user_id }}",
+            "VideoURL": "={{ $json.video_url }}",
+            "ChannelURL": "={{ $json.channel_url }}",
+            "VideoID": "={{ $json.video_id }}"
+          },
+          "matchingColumns": [
+            "Title"
+          ],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Topic and Detail",
+              "displayName": "Topic and Detail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "UserId",
+              "displayName": "UserId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "VideoURL",
+              "displayName": "VideoURL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ChannelURL",
+              "displayName": "ChannelURL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "VideoID",
+              "displayName": "VideoID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1880,
+        460
+      ],
+      "id": "14cb3cd2-db4c-42d0-987a-91aefb7414cb",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "JWf1dYTj83NVJtf5",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "60d0d292-7f04-40b4-acf3-8a64c13acd26",
+              "name": "title",
+              "value": "={{ $json.snippet.title }}",
+              "type": "string"
+            },
+            {
+              "id": "753c7ef6-4008-4b16-81f0-7fbe291f015a",
+              "name": "url",
+              "value": "=https://youtube.com/watch?v={{ $json.snippet.resourceId.videoId }}",
+              "type": "string"
+            },
+            {
+              "id": "b51008a2-7ca7-408c-b212-f8a441d7c3e5",
+              "name": "publishedAt",
+              "value": "={{ $json.snippet.publishedAt }}",
+              "type": "string"
+            },
+            {
+              "id": "32915e1e-22a5-452f-a234-8371d3993da3",
+              "name": "videoId",
+              "value": "={{ $json.snippet.resourceId.videoId }}",
+              "type": "string"
+            },
+            {
+              "id": "081f3dd5-08ce-455f-9275-e10a8078a5b5",
+              "name": "channel_id",
+              "value": "=https://www.youtube.com/channel/{{ $json.snippet.channelId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1260,
+        -20
+      ],
+      "id": "00c3761b-fc66-418b-a18f-e6e3400cdc8e",
+      "name": "Parse title ulr and publishedAt2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7f472442-7031-477a-91e5-7c4c1f395342",
+              "name": "transcript",
+              "value": "={{ $json.transcript }}",
+              "type": "array"
+            },
+            {
+              "id": "a31a1ac5-1b68-4555-a3b2-185871443971",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "9a348f4d-6993-4c14-8843-0f8526b66538",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "8cb5f6fc-103c-4632-be0f-bd20d2a871bd",
+              "name": "videoId",
+              "value": "={{ $json.videoId }}",
+              "type": "string"
+            },
+            {
+              "id": "8bf407f6-c4ca-42c1-b0d1-a870f4d533a5",
+              "name": "concatenatedTranscript",
+              "value": "={{ $json.concatenatedTranscript }}",
+              "type": "string"
+            },
+            {
+              "id": "148d1f7d-10dc-448a-960b-533f4113ee53",
+              "name": "channel_id",
+              "value": "={{ $json.channel_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2360,
+        -40
+      ],
+      "id": "c03734b2-b626-4dc0-93f9-494794bf8303",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Не пиши коментарии от себя\n\nЯ хочу преобразовать следующий текст в JSON-формат для описания онлайн-курса(курсов, если поступает несколько рядов).\nОбщая информация о курсе:\nНа основе всего предоставленного текста сгенерируй общее название для курса (оно указано в самом начале текста, до Lesson Description).\nНа основе всего предоставленного текста сгенерируй общее описание для курса.\nКатегория курса: 680f332a16f8bb2b6ce9e71d\nУровень сложности: beginner\nИзображение курса: (оставьте пустым)\nПревью изображения курса: (оставьте пустым)\nМодули курса:\nДля каждого блока текста, начинающегося с \"Lesson Description\" и заканчивающегося перед следующим \"Lesson Description\" (или концом текста), создай отдельный модуль в массиве \"modules\".\nДля каждого модуля:\nЗаголовок модуля: Сгенерируй **краткий заголовок**, обобщающий содержание текущего \"Lesson Description\".\nОписание модуля: Сгенерируй **краткое описание**, обобщающее содержание текущего \"Lesson Description\".\nСодержание модуля (\"content\"): Скопируй полностью текст текущего \"Lesson Description\".\nУроки модуля (\"lessons\"): Создай массив, содержащий один объект урока.\nЗаголовок урока (\"title\"): Сформируй заголовок как \"Module №X\", где X - порядковый номер текущего \"Lesson Description\".\nСодержание урока (\"content\"): Скопируй полностью текст текущего \"Lesson Description\", но не только пунктами, должна быть и обычная теория, но должно стать понятным, что надо делать исходя из того что написано\nДлительность урока (\"duration\"): 15\nТип урока (\"type\"): text\nТип контента (\"contentType\"): standard\nРесурсы урока (\"resources\"): []\nПрактические упражнения урока (\"practiceExercises\"): []\nБлоки контента урока (\"contentBlock\"): []\nТесты модуля (\"tests\"): []\nВходной текст:\n{{ $json.processedLessonText }}\nJSON Structure:\n{\n\"title\": \"(Название курса указано в тексте до Lesson Description 1)\",\n\"description\": \"(сгенерированное описание курса)\",\n\"category\": \"680f332a16f8bb2b6ce9e71d\",\n\"difficulty\": \"beginner\",\n\"image\": \"\",\n\"imagePreview\": \"\",\n\"modules\": [\n{\n\"title\": \"(сгенерированный заголовок модуля 1)\",\n\"description\": \"(сгенерированное короткое описание модуля 1)\",\n\"content\": \"(короткий текст Lesson Description 1)\",\n\"lessons\": [\n{\n\"title\": \"Module №1\",\n\"content\": \"(текст Lesson Description 1 переделанный под план, но не только пунктами, должна быть и обычная теория, но должно стать понятным, что надо делать исходя из того что написано)\",\n\"duration\": 15,\n\"type\": \"text\",\n\"contentType\": \"standard\",\n\"resources\": [],\n\"practiceExercises\": [],\n\"contentBlocks\": []\n}\n],\n\"tests\": []\n},\n{\n\"title\": \"(сгенерированный заголовок модуля 2)\",\n\"description\": \"(сгенерированное короткое описание модуля 2)\",\n\"content\": \"(короткий текст Lesson Description 2)\",\n\"lessons\": [\n{\n\"title\": \"Module №2\",\n\"content\": \"(текст Lesson Description 2 переделанный под план что надо делать исходя из того что написано)\",\n\"duration\": 15,\n\"type\": \"text\",\n\"contentType\": \"standard\",\n\"resources\": [],\n\"practiceExercises\": [],\n\"contentBlocks\": []\n}\n],\n\"tests\": []\n},\n// ... и так далее для каждого Lesson Description должен быть сгенерирован модуль\n]\n}\nВажно: Обрати внимание, что общая информация о курсе(курсах) (title, description, category, difficulty, image, imagePreview) указывается только один раз в начале JSON. Массив \"modules\" содержит объекты для каждого \"Lesson Description\". Проверь, чтобы все \",\" и {} были проставлены и Пиши на английском"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        2440,
+        1000
+      ],
+      "id": "bdded2e2-b7ed-4cf2-af69-b6505600a0cb",
+      "name": "JSON generator2"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Greg Isenberg",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Nick Saraev",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Creator Magic",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Cole Medin",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Your AI Workflow",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Julian Goldie SEO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Greg Isenberg": {
+      "main": [
+        [
+          {
+            "node": "Merge YouTube videos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Nick Saraev": {
+      "main": [
+        [
+          {
+            "node": "Merge YouTube videos",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Creator Magic": {
+      "main": [
+        [
+          {
+            "node": "Merge YouTube videos",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Cole Medin": {
+      "main": [
+        [
+          {
+            "node": "Merge YouTube videos",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Your AI Workflow": {
+      "main": [
+        [
+          {
+            "node": "Merge YouTube videos",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Julian Goldie SEO": {
+      "main": [
+        [
+          {
+            "node": "Merge YouTube videos",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "youtube video parser": {
+      "main": [
+        [
+          {
+            "node": "Merge transcribation and title, url,  etc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "24 hours": {
+      "main": [
+        [
+          {
+            "node": "Parse title ulr and publishedAt2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Filter": {
+      "main": [
+        [
+          {
+            "node": "add transcript_original",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add transcript_original": {
+      "main": [
+        [
+          {
+            "node": "HTTP OpenRouter Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge OpenRouter and transcript",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Split to Chunks": {
+      "main": [
+        [
+          {
+            "node": "Chat Completion",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge Chunks and title, url, etc",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Chat Completion": {
+      "main": [
+        [
+          {
+            "node": "Merge Chunks and title, url, etc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarizer": {
+      "main": [
+        [
+          {
+            "node": "remove json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse title ulr and publishedAt": {
+      "main": [
+        [
+          {
+            "node": "youtube video parser",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge transcribation and title, url,  etc",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "remove json": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Add Titles to rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Theory Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "JSON generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP OpenRouter Request": {
+      "main": [
+        [
+          {
+            "node": "Merge OpenRouter and transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge YouTube videos": {
+      "main": [
+        [
+          {
+            "node": "24 hours",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge transcribation and title, url,  etc": {
+      "main": [
+        [
+          {
+            "node": "Error Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge OpenRouter and transcript": {
+      "main": [
+        [
+          {
+            "node": "Split to Chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Chunks and title, url, etc": {
+      "main": [
+        [
+          {
+            "node": "Summarizer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Titles to rows": {
+      "main": [
+        [
+          {
+            "node": "Theory Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Theory Generator": {
+      "main": [
+        [
+          {
+            "node": "Theory Merger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Theory Merger": {
+      "main": [
+        [
+          {
+            "node": "Add nums to Lesson Description",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add nums to Lesson Description": {
+      "main": [
+        [
+          {
+            "node": "JSON generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON generator": {
+      "main": [
+        [
+          {
+            "node": "Delete trash",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "youtube video parser1": {
+      "main": [
+        [
+          {
+            "node": "Merge transcribation and title, url,  etc1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code5": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Columns": {
+      "main": [
+        [
+          {
+            "node": "Theory Generator1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Theory Merger1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Completion1": {
+      "main": [
+        [
+          {
+            "node": "Merge Chunks and title, url, etc1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split to Chunks1": {
+      "main": [
+        [
+          {
+            "node": "Chat Completion1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge Chunks and title, url, etc1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Summarizer1": {
+      "main": [
+        [
+          {
+            "node": "remove json1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse title ulr and publishedAt1": {
+      "main": [
+        []
+      ]
+    },
+    "remove json1": {
+      "main": [
+        [
+          {
+            "node": "Add Columns",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Theory Generator1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "JSON generator1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Chunks and title, url, etc1": {
+      "main": [
+        [
+          {
+            "node": "Summarizer1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Theory Generator1": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Theory Merger1": {
+      "main": [
+        [
+          {
+            "node": "Add nums to Lesson Description1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add nums to Lesson Description1": {
+      "main": [
+        [
+          {
+            "node": "JSON generator1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "JSON generator1": {
+      "main": [
+        [
+          {
+            "node": "Delete trash1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete trash1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge transcribation and title, url,  etc1": {
+      "main": [
+        [
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse title ulr and publishedAt2": {
+      "main": [
+        [
+          {
+            "node": "Merge transcribation and title, url,  etc1",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "youtube video parser1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Split to Chunks1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "61e111ef-8047-4d70-b276-ae5904250baf",
+  "triggerCount": 1,
+  "tags": []
+}

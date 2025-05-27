@@ -1,0 +1,512 @@
+{
+  "createdAt": "2025-05-26T08:19:12.350Z",
+  "updatedAt": "2025-05-26T13:10:02.000Z",
+  "id": "x2Z3mqz9F4AZPFcG",
+  "name": "Email Lead before and after call",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -540,
+        -60
+      ],
+      "id": "adf32a29-5758-411d-a3ba-227c6499264c",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "sales@rh-s.com",
+          "mode": "list",
+          "cachedResultName": "sales@rh-s.com"
+        },
+        "returnAll": true,
+        "timeMin": "={{ $now.minus({ minutes: 30 })}}",
+        "timeMax": "={{ $now.plus({ minutes: 30 }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -320,
+        -60
+      ],
+      "id": "e036f7b6-290c-4107-bb9a-357bc56a5510",
+      "name": "Google Calendar",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "dCmWpdsYiSYHC7XA",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "if sales and lg email contains",
+        "height": 220,
+        "width": 160
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        -140
+      ],
+      "id": "e0ce92d6-7f39-4e0c-8d85-7cb514c03b75",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "find all events in next 30 minutes\n\n",
+        "height": 240,
+        "width": 150
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        -140
+      ],
+      "id": "72971877-6c38-4696-855a-7700612cbb87",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "86dc75c5-7f61-4654-939a-522d39c5b75c",
+              "leftValue": "={{$json[\"attendees\"].map(a => a.email).includes(\"sales@rh-s.com\")}}",
+              "rightValue": "sales@rh-s.com\"",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "59df0d05-2343-4d8a-bb42-6e7a6c1df1b0",
+              "leftValue": "={{$json[\"attendees\"].map(a => a.email).includes(\"lg@rh-s.com\")}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -100,
+        -60
+      ],
+      "id": "96e98a8b-6852-413e-abf1-3c446294431c",
+      "name": "If (attendees)"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0df23e22-e47e-4593-a111-0a70db76e6d0",
+              "name": "leadEmail",
+              "value": "={{$json[\"attendees\"]     .filter(a => a.email !== \"sales@rh-s.com\" && a.email !== \"lg@rh-s.com\")[0].email}}",
+              "type": "string"
+            },
+            {
+              "id": "9e8a72bc-84a0-47e3-a105-d9fe7eb2f03c",
+              "name": "diffToStart",
+              "value": "={{ Math.floor((Date.parse($json.start.dateTime) - Date.now()) / 60000) }}",
+              "type": "number"
+            },
+            {
+              "id": "2f3540d8-2a35-4712-99c7-96a92940fd69",
+              "name": "diffFromStart",
+              "value": "={{ Math.floor((Date.now() - Date.parse($json.start.dateTime)) / 60000) }}",
+              "type": "number"
+            },
+            {
+              "id": "dabc1969-153a-4718-8d06-397b8e52c0d1",
+              "name": "googleMeet",
+              "value": "={{ $json.conferenceData.entryPoints[0].uri }}",
+              "type": "string"
+            },
+            {
+              "id": "6f33f675-4aca-40f3-825e-dd8842ef4345",
+              "name": "eventColor",
+              "value": "={{ $json.colorId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        120,
+        -120
+      ],
+      "id": "dd8a535a-7e74-4562-b84b-df4c12ad3765",
+      "name": "Calc diff + lead"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.leadEmail }}",
+        "subject": "=Remote Helpers call reminder",
+        "emailType": "text",
+        "message": "=Hello,  \nI hope you are doing well.   \nWe have a call with you today in 1 Hour.   \nHere is a link {{ $json.googleMeet }} \nKind Regards, \nRemote Helpers",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        780,
+        -280
+      ],
+      "id": "6af257ef-0902-4643-93bb-f623c1606b02",
+      "name": "Gmail",
+      "webhookId": "554eb516-9177-43e3-8de8-b4f3a744aff9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s09JnuCcx9ezdMBU",
+          "name": "Sales N8N gmail "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "114af4a3-3ff5-43d8-9be4-5a14bba9dc58",
+              "leftValue": "={{$json.diffFromStart}}",
+              "rightValue": 106,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            },
+            {
+              "id": "3e540b64-66bf-47ad-8a88-60cacc26ed70",
+              "leftValue": "={{ $json.diffFromStart }}",
+              "rightValue": 89,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        780,
+        -80
+      ],
+      "id": "16b9ac18-6c92-423f-a929-2cfdf89a3499",
+      "name": "If – Post-call 90 min"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.leadEmail }}",
+        "subject": "=Remote Helpers call reminder",
+        "emailType": "text",
+        "message": "=Thank you for joining the call today!\nFollowing our conversation, I am sending you our presentation to summarise the information we were talking about.Here is our website, where you can find additional information about our company and video CVs of our candidates: https://rh-s.com/\nMoreover, I would like to share with you the summary of our call:\n\nAdditionally, I am attaching a sample of our Agreement for your review.\n\nBest regards,\nRemote Helpers",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1000,
+        -80
+      ],
+      "id": "2f42edae-feb8-4999-89a7-911b04407dd8",
+      "name": "Gmail1",
+      "webhookId": "554eb516-9177-43e3-8de8-b4f3a744aff9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s09JnuCcx9ezdMBU",
+          "name": "Sales N8N gmail "
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "172bd565-b419-4229-ac88-e5aa1b8f16e4",
+              "leftValue": "={{ $json.diffToStart }}",
+              "rightValue": 61,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            },
+            {
+              "id": "5c3027c0-361a-4fda-a0c9-1ae7a5e69bd0",
+              "leftValue": "={{ $json.diffToStart }}",
+              "rightValue": 59,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        -260
+      ],
+      "id": "a2b7e7b6-f590-4683-a23c-b184e4252c92",
+      "name": "IF – Pre-call 60 min"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "26af0482-6f15-4ce8-9951-a255a80fbef1",
+              "leftValue": "={{ $json.eventColor }}",
+              "rightValue": "8",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        460,
+        -60
+      ],
+      "id": "baea5d24-e2d8-4750-abac-05aed00ff0ee",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "26af0482-6f15-4ce8-9951-a255a80fbef1",
+              "leftValue": "={{ $json.eventColor }}",
+              "rightValue": "8",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        320,
+        -240
+      ],
+      "id": "03ce3fc0-1ce8-459b-81cb-696e2ab0e2c0",
+      "name": "If1"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "If (attendees)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If (attendees)": {
+      "main": [
+        [
+          {
+            "node": "Calc diff + lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calc diff + lead": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If – Post-call 90 min": {
+      "main": [
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF – Pre-call 60 min": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "If – Post-call 90 min",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "IF – Pre-call 60 min",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "7c0d5b62-5c2c-4378-aace-13c0df958044",
+  "triggerCount": 1,
+  "tags": [
+    {
+      "createdAt": "2025-05-26T08:19:31.387Z",
+      "updatedAt": "2025-05-26T08:19:31.387Z",
+      "id": "88wzasaPaH1WJbuK",
+      "name": "email"
+    },
+    {
+      "createdAt": "2025-04-09T08:40:45.366Z",
+      "updatedAt": "2025-04-09T08:40:45.366Z",
+      "id": "dKqcegeoPjVG9LGn",
+      "name": "LeadGen"
+    },
+    {
+      "createdAt": "2025-05-26T08:19:27.141Z",
+      "updatedAt": "2025-05-26T08:19:27.141Z",
+      "id": "zkxNry4QTgYT3RWH",
+      "name": "sales"
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "createdAt": "2025-05-22T08:38:48.137Z",
+  "updatedAt": "2025-05-26T12:11:56.000Z",
+  "id": "4B2gfGjXmqGnQGxR",
+  "name": "Presentation Generator (kal)",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ai-lesson-generator",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -120,
+        0
+      ],
+      "id": "ecdc024f-8155-4f7b-b9a1-1e8cc8bd6d37",
+      "name": "Webhook",
+      "webhookId": "f0309876-3126-4957-9122-7109fb421d3b"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        0
+      ],
+      "id": "6229d4d0-65d1-40d2-9c34-11ed7f4ead92",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an assistant that converts lesson materials into clean HTML structure with placeholders for images",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "Generate HTML for the following lesson, using <h1>, <h2>, <p>, <ul><li>, and <img src='IMAGE1' alt='…'> where needed. Do not add extra wrappers"
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "={{ $json.body.lesson }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        140,
+        -240
+      ],
+      "id": "7d616845-338a-480c-a341-4d88544f8265",
+      "name": "Basic LLM Chain",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4.1",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        340,
+        300
+      ],
+      "id": "cf9ffa35-1e64-42ab-82a1-fdfa3c94e78c",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "xM1Kdr0j4QvJ4iaw",
+          "name": "AdminN8N"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an advanced HTML Generator AI. Your primary function is to convert textual content (extracted from a PDF) and associated image URLs into a single, self-contained HTML structure.",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "This HTML will be injected directly into the `<body>` of an HTML page.  **Input I will provide:**  1.  **PDF Content:** Textual data representing the content of a PDF document. This might include headings, paragraphs, lists, etc. 2.  **Image URLs:** For specific slides or sections, I will provide image URLs in one of the following formats:     *   `image on slide [slide_number] - [image_url]`     *   `[slide_number]. [image_url]`     You must use these URLs for the images; you cannot generate or illustrate images yourself.  **Your HTML Output Requirements:**  Convert the content into HTML that goes inside the <body>. Use inline CSS for all styles (no <style> blocks or external stylesheets). Ensure that the layout, colors, icons, and text exactly match the image.  Animations:  On page load: each block should fade in and slide up one after another with a short delay (staggered effect).  On scroll into view: each block should fade in and slide up when the user scrolls down the page. The animation should only trigger when the block comes into view (as the user scrolls).  For larger images: when the image scrolls into view, apply a subtle zoom effect (slightly enlarge the image) as it fades in.  Use only inline styles and keyframes for the animations.  Responsive Design:  Ensure that the layout is fully responsive, meaning it should adapt to different screen sizes. For example, on smaller screens, the blocks should stack vertically instead of horizontally.  Use media queries to adjust font sizes, padding, and layout for mobile and tablet devices.  Ensure that all content remains legible and visually appealing on various screen sizes.  Important Note:  The HTML will be inserted into the page using dangerouslySetInnerHTML (e.g., <Box sx={{ mb: 2, overflow: 'hidden' }} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(lesson.content) }} />). Therefore, inline JavaScript may not always be executable.  AOS (Animate On Scroll) should be used for animations triggered on scroll. Ensure that the HTML elements include the necessary data-aos attributes to activate AOS animations.  For images the background do not generate, it is already there, because the image is in PNG  **Your Goal:** Produce clean, efficient, and highly presentable HTML that faithfully replicates the PDF's content and visual style, incorporates the specified animations, and is fully responsive, all while adhering strictly to the inline CSS and `dangerouslySetInnerHTML` constraints.  Let's begin. I will provide the PDF content and image URLs."
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "={{ $json.body.lesson }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        240,
+        0
+      ],
+      "id": "898d0063-ef98-4363-a40e-16999d44fad4",
+      "name": "Basic LLM Chain1"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        []
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "eaf38060-94f6-491f-bca3-ae65d3c748be",
+  "triggerCount": 0,
+  "tags": []
+}

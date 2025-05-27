@@ -1,0 +1,279 @@
+{
+  "createdAt": "2025-05-23T08:30:42.663Z",
+  "updatedAt": "2025-05-23T12:54:20.000Z",
+  "id": "ysrR7vx0He4TNNCy",
+  "name": "HR FAQ Bot",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "c0b22399-1bbf-4864-b196-0031424a6502",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "42a867c7-4a86-42dd-baff-21a36aa14e55",
+      "name": "Webhook",
+      "webhookId": "c0b22399-1bbf-4864-b196-0031424a6502"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1xRN6ZyKFft-D2-GvZrbIw2C75Bc6xAjZo-d7htws-WQ/edit?usp=drivesdk",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1782062212,
+          "mode": "list",
+          "cachedResultName": "FAQ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xRN6ZyKFft-D2-GvZrbIw2C75Bc6xAjZo-d7htws-WQ/edit#gid=1782062212"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        220,
+        0
+      ],
+      "id": "cef18660-13e3-44cd-86e8-842f71de461e",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "M7rjHAzLHxn6Kc02",
+          "name": "Google Sheets HR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Найди самый релевантный вопрос из этого списка\n\n {{ $json.Question }}\n\nВот вопрос пользователя  \n\n{{ $('Webhook').item.json.body.message }}\n\nВыведи только результат. Если нет подходящего  напиши нет одним словом  если есть вывели сам релевантный вопрос без изменений.\n\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        660,
+        0
+      ],
+      "id": "c31b55db-8fda-4919-92d7-977ebdc25e5d",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-3-27b-it",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        700,
+        220
+      ],
+      "id": "9b07fb43-fbea-46bb-884b-9280d56ece65",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "PrqIbmbNAb3ME4eF",
+          "name": "OpenRouter Sales account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "Question"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        440,
+        0
+      ],
+      "id": "5da1734e-5a1c-4e51-89f0-eb6e08ac1800",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.Answer }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1460,
+        0
+      ],
+      "id": "ed6277c2-cb06-46df-b365-52196be12471",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ff75dcc8-fffc-4725-a6c8-4018552c3555",
+              "name": "output",
+              "value": "={{ $json.output.trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1020,
+        0
+      ],
+      "id": "804f75e5-71a6-48bd-a015-474baf6bcac0",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "=https://docs.google.com/spreadsheets/d/1xRN6ZyKFft-D2-GvZrbIw2C75Bc6xAjZo-d7htws-WQ/edit?usp=drivesdk",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1782062212,
+          "mode": "list",
+          "cachedResultName": "FAQ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1xRN6ZyKFft-D2-GvZrbIw2C75Bc6xAjZo-d7htws-WQ/edit#gid=1782062212"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Question",
+              "lookupValue": "={{ $json.output }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1240,
+        0
+      ],
+      "id": "97b1e0b4-3314-4a22-b873-ed9923a0f039",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "M7rjHAzLHxn6Kc02",
+          "name": "Google Sheets HR"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "420236ed-acaa-4c93-87cb-d34f04fb1efe",
+  "triggerCount": 1,
+  "tags": []
+}

@@ -1,0 +1,181 @@
+{
+  "createdAt": "2025-05-22T14:25:24.136Z",
+  "updatedAt": "2025-05-26T13:41:19.000Z",
+  "id": "qFz6FXfTnj6ueSlx",
+  "name": "My workflow 3",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# https://www.magicslides.app/docs-api\n## dev@rh-s.com\n## Access Token: 2dee12f9-d64f-496b-900b-ff4d9cf17374",
+        "width": 1040
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        -420
+      ],
+      "id": "26b75d02-b083-4587-ac14-25fc4c972aaf",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -200
+      ],
+      "id": "077a0dda-b766-479f-a51b-ef02636d9317",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.magicslides.app/public/api/ppt_from_topic",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        40,
+        -200
+      ],
+      "id": "c432b9bd-6f18-45c7-a21b-a1295e704ca2",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "model": "sonar-deep-research",
+        "additionalFields": {}
+      },
+      "type": "@watzon/n8n-nodes-perplexity.perplexity",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        260
+      ],
+      "id": "90ca8ecf-041d-408d-bc57-81cd33f9d99e",
+      "name": "Perplexity",
+      "credentials": {
+        "perplexityApi": {
+          "id": "lck0eqLEsQ988F6B",
+          "name": "Perplexity account Admin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getPrompt",
+        "promptName": "123"
+      },
+      "type": "n8n-nodes-mcp.mcpClient",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        100
+      ],
+      "id": "2c9f0999-c8f4-4a38-9a8b-896c32343ba7",
+      "name": "MCP Client"
+    },
+    {
+      "parameters": {
+        "options": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-deepseek.deepSeek",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        580
+      ],
+      "id": "139db9b0-8627-4a99-b719-98eab0572746",
+      "name": "DeepSeek",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "pW8pvLgdEeYSppLa",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        420
+      ],
+      "id": "36717113-d3f0-450f-b8fd-3f8a1874113f",
+      "name": "Google Sheets Trigger"
+    },
+    {
+      "parameters": {
+        "value": "hello",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-discord-trigger.discordTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -40
+      ],
+      "id": "46970eee-bc92-4dc6-a7f2-e133559f9138",
+      "name": "Discord Trigger",
+      "credentials": {
+        "discordBotTriggerApi": {
+          "id": "yCeJNqkruJ5YaAyc",
+          "name": "Discord Bot Trigger account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "222ef4d3-1ae5-490a-9020-9f4fec4bd80f",
+  "triggerCount": 0,
+  "tags": []
+}
